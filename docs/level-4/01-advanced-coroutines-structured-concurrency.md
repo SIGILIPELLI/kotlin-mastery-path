@@ -5,5 +5,4 @@
     `supervisorScope`, coroutine exception handling, and cancellation
     propagation.
 
-Check the task ledger or ask your virtual employee for a status update on
-remaining content.
+More lessons are on the way — check back soon.

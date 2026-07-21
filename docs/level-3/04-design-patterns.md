@@ -5,5 +5,4 @@
     Singleton, Factory, Builder, and Strategy patterns implemented
     idiomatically in Kotlin.
 
-Check the task ledger or ask your virtual employee for a status update on
-remaining content.
+More lessons are on the way — check back soon.

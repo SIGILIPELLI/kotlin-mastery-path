@@ -5,5 +5,4 @@
     Generic functions and classes, variance (`in`/`out`), and reified type
     parameters.
 
-Check the task ledger or ask your virtual employee for a status update on
-remaining content.
+More lessons are on the way — check back soon.

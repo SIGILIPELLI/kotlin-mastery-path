@@ -5,5 +5,4 @@
     A production-shaped capstone project combining coroutines, Ktor, a
     database layer, testing, CI, and Docker deployment.
 
-Check the task ledger or ask your virtual employee for a status update on
-remaining content.
+More lessons are on the way — check back soon.

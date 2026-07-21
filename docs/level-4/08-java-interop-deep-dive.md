@@ -5,5 +5,4 @@
     Calling Java from Kotlin and vice versa, and the annotations that smooth
     over interop rough edges.
 
-Check the task ledger or ask your virtual employee for a status update on
-remaining content.
+More lessons are on the way — check back soon.
