@@ -15,9 +15,9 @@ each level.
 | Level | Focus | Modules |
 |-------|-------|---------|
 | [Level 1 · Entry](level-1/index.md) | Language foundations | 9 topics + 1 project |
-| [Level 2 · Intermediate](level-2/index.md) | Coroutines, testing, real apps | 9 topics + 1 project |
-| [Level 3 · Advanced](level-3/index.md) | Ktor, databases, multiplatform | 9 topics + 1 project |
-| [Level 4 · Master](level-4/index.md) | Production systems & architecture | 9 topics + 1 capstone |
+| Level 2 · Intermediate (coming soon) | Coroutines, testing, real apps | 9 topics + 1 project |
+| Level 3 · Advanced (coming soon) | Ktor, databases, multiplatform | 9 topics + 1 project |
+| Level 4 · Master (coming soon) | Production systems & architecture | 9 topics + 1 capstone |
 
 ## How to use this site
 
