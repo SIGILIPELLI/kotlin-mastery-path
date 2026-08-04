@@ -1,0 +1,2210 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A structured, module-wise Kotlin training program from entry level to master level.">
+      
+      
+      
+        <link rel="canonical" href="https://sigilipelli.github.io/kotlin-mastery-path/level-2/10-project-weather-cli/">
+      
+      
+        <link rel="prev" href="../09-generics/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>10 · Project — Weather CLI - Kotlin Mastery Path</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Kotlin Mastery Path">
+  <meta property="og:title" content="10 · Project — Weather CLI">
+  <meta property="og:description" content="A structured, module-wise Kotlin training program from entry level to master level — free, with runnable code in every module.">
+  <meta property="og:url" content="https://sigilipelli.github.io/kotlin-mastery-path/level-2/10-project-weather-cli/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="10 · Project — Weather CLI">
+  <meta name="twitter:description" content="A structured, module-wise Kotlin training program from entry level to master level — free, with runnable code in every module.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9440969811959397"
+     crossorigin="anonymous"></script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#10-project-weather-cli" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Kotlin Mastery Path" class="md-header__button md-logo" aria-label="Kotlin Mastery Path" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kotlin Mastery Path
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              10 · Project — Weather CLI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SIGILIPELLI/kotlin-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    kotlin-mastery-path
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../privacy/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Privacy Policy
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-1/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 1 · Entry
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 2 · Intermediate
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Kotlin Mastery Path" class="md-nav__button md-logo" aria-label="Kotlin Mastery Path" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Kotlin Mastery Path
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SIGILIPELLI/kotlin-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    kotlin-mastery-path
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../privacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Privacy Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 1 · Entry
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 1 · Entry
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/01-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Setup & First Program
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/02-variables-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Variables & Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/03-control-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Control Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/04-functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/05-classes-objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Classes & Objects Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/06-null-safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Null Safety Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/07-collections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Collections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/08-data-classes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Data Classes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/09-extension-functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Extension Functions Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/10-project-todo-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — CLI To-Do App
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 2 · Intermediate
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 2 · Intermediate
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-oop-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · OOP Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-lambdas-higher-order-functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Lambdas & Higher-Order Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-coroutines-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Coroutines Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-null-safety-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Null Safety Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-collections-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Collections Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-testing-junit-kotest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Testing with JUnit/Kotest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-working-with-json/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Working with JSON
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-gradle-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Gradle Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-generics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Generics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Weather CLI
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Weather CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-youll-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you'll build
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The API
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#buildgradlekts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        build.gradle.kts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modelskt-the-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models.kt — the shapes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formatkt-pure-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Format.kt — pure functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weatherapikt-the-coroutine-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WeatherApi.kt — the coroutine layer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mainkt-fetching-concurrently" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main.kt — fetching concurrently
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weathertestkt-testing-without-the-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WeatherTest.kt — testing without the network
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-each-level-2-idea-shows-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where each Level 2 idea shows up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stretch-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stretch goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-youll-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you'll build
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The API
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#buildgradlekts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        build.gradle.kts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modelskt-the-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models.kt — the shapes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formatkt-pure-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Format.kt — pure functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weatherapikt-the-coroutine-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WeatherApi.kt — the coroutine layer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mainkt-fetching-concurrently" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main.kt — fetching concurrently
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weathertestkt-testing-without-the-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WeatherTest.kt — testing without the network
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-each-level-2-idea-shows-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where each Level 2 idea shows up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stretch-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stretch goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="10-project-weather-cli">10 · Project — Weather CLI<a class="headerlink" href="#10-project-weather-cli" title="Permanent link">&para;</a></h1>
+<p>The Level 1 capstone was a single <code>.kt</code> file compiled straight with
+<code>kotlinc</code>. This one is a real Gradle project: multiple source files, two
+external dependencies, a test suite, and live network calls. It pulls
+together nearly everything in Level 2 —
+<a href="../03-coroutines-basics/">coroutines</a> for concurrent HTTP,
+<a href="../04-null-safety-advanced/">advanced null safety</a> for API fields that may
+simply not be there, <a href="../05-collections-deep-dive/">collections</a> for
+reshaping the response, <a href="../01-oop-deep-dive/">sealed types</a> for modelling
+per-city outcomes, <a href="../07-working-with-json/">kotlinx.serialization</a> for
+parsing, <a href="../08-gradle-basics/">Gradle</a> for building, and
+<a href="../06-testing-junit-kotest/">tests</a> for the parts that don't need a
+network.</p>
+<h2 id="what-youll-build">What you'll build<a class="headerlink" href="#what-youll-build" title="Permanent link">&para;</a></h2>
+<p>A <code>weather</code> command that takes one or more city names and prints current
+conditions plus a three-day outlook for each:</p>
+<ul>
+<li>Resolves each city name to coordinates via Open-Meteo's geocoding API</li>
+<li>Fetches the forecast for those coordinates</li>
+<li>Runs every city's lookup <strong>concurrently</strong>, not one after another</li>
+<li>Handles "city doesn't exist" and "network blew up" as ordinary results
+  rather than crashes</li>
+<li>Reports which of the requested cities is warmest right now</li>
+</ul>
+<h2 id="the-api">The API<a class="headerlink" href="#the-api" title="Permanent link">&para;</a></h2>
+<p><a href="https://open-meteo.com">Open-Meteo</a> is free for non-commercial use and
+needs <strong>no API key</strong> — which is exactly why it's a good teaching target.
+Two endpoints are involved.</p>
+<p><strong>Geocoding</strong>, to turn a name into coordinates:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>https://geocoding-api.open-meteo.com/v1/search?name=Hyderabad&amp;count=1&amp;language=en&amp;format=json
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span><span class="nt">&quot;results&quot;</span><span class="p">:[{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">1269843</span><span class="p">,</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Hyderabad&quot;</span><span class="p">,</span><span class="nt">&quot;latitude&quot;</span><span class="p">:</span><span class="mf">17.38405</span><span class="p">,</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;longitude&quot;</span><span class="p">:</span><span class="mf">78.45636</span><span class="p">,</span><span class="nt">&quot;elevation&quot;</span><span class="p">:</span><span class="mf">515.0</span><span class="p">,</span><span class="nt">&quot;country_code&quot;</span><span class="p">:</span><span class="s2">&quot;IN&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">&quot;timezone&quot;</span><span class="p">:</span><span class="s2">&quot;Asia/Kolkata&quot;</span><span class="p">,</span><span class="nt">&quot;population&quot;</span><span class="p">:</span><span class="mi">6993262</span><span class="p">,</span><span class="nt">&quot;country&quot;</span><span class="p">:</span><span class="s2">&quot;India&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">&quot;admin1&quot;</span><span class="p">:</span><span class="s2">&quot;Telangana&quot;</span><span class="p">,</span><span class="nt">&quot;admin2&quot;</span><span class="p">:</span><span class="s2">&quot;Hyderabad District&quot;</span><span class="p">}],</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w"> </span><span class="nt">&quot;generationtime_ms&quot;</span><span class="p">:</span><span class="mf">0.386</span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Forecast</strong>, to get the weather at those coordinates:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>https://api.open-meteo.com/v1/forecast?latitude=51.5&amp;longitude=-0.13
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  &amp;current=temperature_2m,wind_speed_10m,weather_code&amp;timezone=auto
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="nt">&quot;latitude&quot;</span><span class="p">:</span><span class="mf">51.51</span><span class="p">,</span><span class="nt">&quot;longitude&quot;</span><span class="p">:</span><span class="mf">-0.13</span><span class="p">,</span><span class="nt">&quot;timezone&quot;</span><span class="p">:</span><span class="s2">&quot;Europe/London&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w"> </span><span class="nt">&quot;current&quot;</span><span class="p">:{</span><span class="nt">&quot;time&quot;</span><span class="p">:</span><span class="s2">&quot;2026-08-04T15:15&quot;</span><span class="p">,</span><span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="mi">900</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">            </span><span class="nt">&quot;temperature_2m&quot;</span><span class="p">:</span><span class="mf">27.7</span><span class="p">,</span><span class="nt">&quot;wind_speed_10m&quot;</span><span class="p">:</span><span class="mf">21.2</span><span class="p">,</span><span class="nt">&quot;weather_code&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">}}</span>
+</code></pre></div>
+<p>Two details shape the whole design. First, when nothing matches a search
+the <code>results</code> key is <strong>absent entirely</strong> — not an empty list — so the
+Kotlin field has to be <code>List&lt;Place&gt;?</code> with a default. Second, the daily
+forecast comes back as <em>parallel arrays</em> (<code>time</code>, <code>temperature_2m_max</code>,
+<code>temperature_2m_min</code>, <code>weather_code</code>), not a list of day objects, so
+something has to zip them back together.</p>
+<h2 id="project-layout">Project layout<a class="headerlink" href="#project-layout" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>weather-cli/
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    build.gradle.kts
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    settings.gradle.kts
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    src/
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>        main/kotlin/com/example/weather/
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>            Models.kt        -- @Serializable API shapes + the sealed result type
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>            Format.kt        -- pure functions: codes, dates, rendering
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>            WeatherApi.kt    -- suspend functions that do the HTTP
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>            Main.kt          -- argument parsing + concurrent fetch
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        test/kotlin/com/example/weather/
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>            WeatherTest.kt
+</code></pre></div>
+<h2 id="buildgradlekts"><code>build.gradle.kts</code><a class="headerlink" href="#buildgradlekts" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">plugins</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;jvm&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s">&quot;2.4.10&quot;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;plugin.serialization&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s">&quot;2.4.10&quot;</span><span class="w">   </span><span class="c1">// the serialization compiler plugin</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">application</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">}</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;1.0.0&quot;</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">repositories</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="n">mavenCentral</span><span class="p">()</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="p">}</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">dependencies</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="n">testImplementation</span><span class="p">(</span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">))</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="p">}</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="n">application</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="n">mainClass</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;com.example.weather.MainKt&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="p">}</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="n">tasks</span><span class="p">.</span><span class="na">test</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">    </span><span class="n">useJUnitPlatform</span><span class="p">()</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">    </span><span class="n">testLogging</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">        </span><span class="n">events</span><span class="p">(</span><span class="s">&quot;passed&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;failed&quot;</span><span class="p">)</span><span class="w">   </span><span class="c1">// print one line per test</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// settings.gradle.kts</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">rootProject</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;weather-cli&quot;</span>
+</code></pre></div>
+<p>There's no HTTP library dependency — the JDK's built-in
+<code>java.net.http.HttpClient</code> is enough.</p>
+<h2 id="modelskt-the-shapes"><code>Models.kt</code> — the shapes<a class="headerlink" href="#modelskt-the-shapes" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">package</span><span class="w"> </span><span class="nn">com.example.weather</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.serialization.SerialName</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.serialization.Serializable</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="cm">/** One match from the geocoding API. `country`/`admin1` are often absent. */</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nd">@Serializable</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">Place</span><span class="p">(</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">name</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">latitude</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">longitude</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">country</span><span class="p">:</span><span class="w"> </span><span class="kt">String?</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">admin1</span><span class="p">:</span><span class="w"> </span><span class="kt">String?</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">    </span><span class="cm">/** &quot;London, England, United Kingdom&quot; -- skipping whichever parts are null. */</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">label</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">        </span><span class="k">get</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOfNotNull</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">admin1</span><span class="p">,</span><span class="w"> </span><span class="n">country</span><span class="p">).</span><span class="na">joinToString</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">)</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="p">}</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="cm">/** `results` is missing entirely -- not an empty list -- when nothing matches. */</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="nd">@Serializable</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">GeocodingResponse</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">results</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Place</span><span class="o">&gt;?</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="nd">@Serializable</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">CurrentWeather</span><span class="p">(</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">time</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="w">    </span><span class="nd">@SerialName</span><span class="p">(</span><span class="s">&quot;temperature_2m&quot;</span><span class="p">)</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">temperature</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="w">    </span><span class="nd">@SerialName</span><span class="p">(</span><span class="s">&quot;wind_speed_10m&quot;</span><span class="p">)</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">windSpeed</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="w">    </span><span class="nd">@SerialName</span><span class="p">(</span><span class="s">&quot;weather_code&quot;</span><span class="p">)</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">weatherCode</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="p">)</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a><span class="cm">/** The API returns parallel arrays, one entry per day, not a list of objects. */</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="nd">@Serializable</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">DailyBlock</span><span class="p">(</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">time</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">,</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a><span class="w">    </span><span class="nd">@SerialName</span><span class="p">(</span><span class="s">&quot;temperature_2m_max&quot;</span><span class="p">)</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">maxTemps</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">Double</span><span class="o">&gt;</span><span class="p">,</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a><span class="w">    </span><span class="nd">@SerialName</span><span class="p">(</span><span class="s">&quot;temperature_2m_min&quot;</span><span class="p">)</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">minTemps</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">Double</span><span class="o">&gt;</span><span class="p">,</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a><span class="w">    </span><span class="nd">@SerialName</span><span class="p">(</span><span class="s">&quot;weather_code&quot;</span><span class="p">)</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">weatherCodes</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">,</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a><span class="p">)</span>
+<a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a>
+<a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a><span class="nd">@Serializable</span>
+<a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">ForecastResponse</span><span class="p">(</span>
+<a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">timezone</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">current</span><span class="p">:</span><span class="w"> </span><span class="n">CurrentWeather</span><span class="p">,</span>
+<a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">daily</span><span class="p">:</span><span class="w"> </span><span class="n">DailyBlock</span><span class="p">,</span>
+<a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a><span class="p">)</span>
+<a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a>
+<a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a><span class="cm">/** One day, after the parallel arrays have been zipped back together. */</span>
+<a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">DayForecast</span><span class="p">(</span>
+<a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">date</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">minTemp</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span>
+<a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">maxTemp</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span>
+<a id="__codelineno-7-53" name="__codelineno-7-53" href="#__codelineno-7-53"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">weatherCode</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+<a id="__codelineno-7-54" name="__codelineno-7-54" href="#__codelineno-7-54"></a><span class="p">)</span>
+<a id="__codelineno-7-55" name="__codelineno-7-55" href="#__codelineno-7-55"></a>
+<a id="__codelineno-7-56" name="__codelineno-7-56" href="#__codelineno-7-56"></a><span class="cm">/** What the CLI actually prints: a place plus its weather. */</span>
+<a id="__codelineno-7-57" name="__codelineno-7-57" href="#__codelineno-7-57"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">Report</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">place</span><span class="p">:</span><span class="w"> </span><span class="n">Place</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">forecast</span><span class="p">:</span><span class="w"> </span><span class="n">ForecastResponse</span><span class="p">)</span>
+<a id="__codelineno-7-58" name="__codelineno-7-58" href="#__codelineno-7-58"></a>
+<a id="__codelineno-7-59" name="__codelineno-7-59" href="#__codelineno-7-59"></a><span class="cm">/**</span>
+<a id="__codelineno-7-60" name="__codelineno-7-60" href="#__codelineno-7-60"></a><span class="cm"> * A per-city outcome. Sealed, so the `when` in `render()` is exhaustive and</span>
+<a id="__codelineno-7-61" name="__codelineno-7-61" href="#__codelineno-7-61"></a><span class="cm"> * the compiler will flag any new case we forget to handle.</span>
+<a id="__codelineno-7-62" name="__codelineno-7-62" href="#__codelineno-7-62"></a><span class="cm"> */</span>
+<a id="__codelineno-7-63" name="__codelineno-7-63" href="#__codelineno-7-63"></a><span class="kd">sealed</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nc">CityResult</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-64" name="__codelineno-7-64" href="#__codelineno-7-64"></a><span class="w">    </span><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">Success</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">report</span><span class="p">:</span><span class="w"> </span><span class="n">Report</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">CityResult</span>
+<a id="__codelineno-7-65" name="__codelineno-7-65" href="#__codelineno-7-65"></a><span class="w">    </span><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">NotFound</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">query</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">CityResult</span>
+<a id="__codelineno-7-66" name="__codelineno-7-66" href="#__codelineno-7-66"></a><span class="w">    </span><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">Failed</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">query</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">reason</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">CityResult</span>
+<a id="__codelineno-7-67" name="__codelineno-7-67" href="#__codelineno-7-67"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>@SerialName</code> maps snake_case JSON keys onto idiomatic Kotlin names, so
+nothing downstream has to say <code>temperature_2m</code>. <code>listOfNotNull(...)</code> in
+<code>label</code> is the null-safety idiom doing real work: a city with no <code>admin1</code>
+just prints one fewer comma-separated part, with no <code>if</code> ladder.</p>
+<h2 id="formatkt-pure-functions"><code>Format.kt</code> — pure functions<a class="headerlink" href="#formatkt-pure-functions" title="Permanent link">&para;</a></h2>
+<p>Everything here is deterministic and network-free, which is what makes the
+test suite easy.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">package</span><span class="w"> </span><span class="nn">com.example.weather</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.time.LocalDate</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.time.format.DateTimeFormatter</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.util.Locale</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="cm">/** WMO weather interpretation codes -- the subset Open-Meteo actually emits. */</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">WEATHER_CODES</span><span class="p">:</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="kt">String</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mapOf</span><span class="p">(</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="m">0</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Clear sky&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Mainly clear&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Partly cloudy&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Overcast&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="m">45</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Fog&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">48</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Depositing rime fog&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">    </span><span class="m">51</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Light drizzle&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">53</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Moderate drizzle&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">55</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Dense drizzle&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="m">61</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Slight rain&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">63</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Moderate rain&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">65</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Heavy rain&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="m">71</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Slight snow&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">73</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Moderate snow&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">75</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Heavy snow&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">    </span><span class="m">80</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Rain showers&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">81</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Moderate rain showers&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">82</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Violent rain showers&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">    </span><span class="m">95</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Thunderstorm&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">96</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Thunderstorm with hail&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="p">)</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">describeWeatherCode</span><span class="p">(</span><span class="n">code</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">):</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WEATHER_CODES</span><span class="o">[</span><span class="n">code</span><span class="o">]</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="s">&quot;Unknown (</span><span class="si">$</span><span class="n">code</span><span class="s">)&quot;</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">DAY_FORMAT</span><span class="p">:</span><span class="w"> </span><span class="n">DateTimeFormatter</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">    </span><span class="n">DateTimeFormatter</span><span class="p">.</span><span class="na">ofPattern</span><span class="p">(</span><span class="s">&quot;EEE dd MMM&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Locale</span><span class="p">.</span><span class="na">ENGLISH</span><span class="p">)</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">formatDate</span><span class="p">(</span><span class="n">isoDate</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">    </span><span class="n">runCatching</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="n">isoDate</span><span class="p">).</span><span class="na">format</span><span class="p">(</span><span class="n">DAY_FORMAT</span><span class="p">)</span><span class="w"> </span><span class="p">}.</span><span class="na">getOrDefault</span><span class="p">(</span><span class="n">isoDate</span><span class="p">)</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="cm">/**</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="cm"> * Zip the API&#39;s four parallel arrays back into one object per day, stopping at</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="cm"> * the shortest array so a truncated response can&#39;t blow up with an index error.</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="cm"> */</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="kd">fun</span><span class="w"> </span><span class="n">DailyBlock</span><span class="p">.</span><span class="nf">toDays</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">DayForecast</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">minOf</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="na">size</span><span class="p">,</span><span class="w"> </span><span class="n">minTemps</span><span class="p">.</span><span class="na">size</span><span class="p">,</span><span class="w"> </span><span class="n">maxTemps</span><span class="p">.</span><span class="na">size</span><span class="p">,</span><span class="w"> </span><span class="n">weatherCodes</span><span class="p">.</span><span class="na">size</span><span class="p">)</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="m">0</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="n">count</span><span class="p">).</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="w">        </span><span class="n">DayForecast</span><span class="p">(</span><span class="n">time</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">minTemps</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">maxTemps</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">weatherCodes</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">)</span>
+<a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="p">}</span>
+<a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a>
+<a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a><span class="kd">fun</span><span class="w"> </span><span class="n">Double</span><span class="p">.</span><span class="nf">asTemp</span><span class="p">():</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;%.1f°C&quot;</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">Locale</span><span class="p">.</span><span class="na">ENGLISH</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">)</span>
+<a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a>
+<a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a><span class="kd">fun</span><span class="w"> </span><span class="n">Report</span><span class="p">.</span><span class="nf">render</span><span class="p">():</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buildString</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a><span class="w">    </span><span class="n">appendLine</span><span class="p">(</span><span class="s">&quot;</span><span class="si">${</span><span class="n">place</span><span class="p">.</span><span class="na">label</span><span class="si">}</span><span class="s">  (</span><span class="si">${</span><span class="n">forecast</span><span class="p">.</span><span class="na">timezone</span><span class="si">}</span><span class="s">)&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a><span class="w">    </span><span class="n">appendLine</span><span class="p">(</span>
+<a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a><span class="w">        </span><span class="s">&quot;  Now: </span><span class="si">${</span><span class="n">forecast</span><span class="p">.</span><span class="na">current</span><span class="p">.</span><span class="na">temperature</span><span class="p">.</span><span class="na">asTemp</span><span class="p">()</span><span class="si">}</span><span class="s">, &quot;</span><span class="w"> </span><span class="o">+</span>
+<a id="__codelineno-8-43" name="__codelineno-8-43" href="#__codelineno-8-43"></a><span class="w">            </span><span class="s">&quot;</span><span class="si">${</span><span class="n">describeWeatherCode</span><span class="p">(</span><span class="n">forecast</span><span class="p">.</span><span class="na">current</span><span class="p">.</span><span class="na">weatherCode</span><span class="p">)</span><span class="si">}</span><span class="s">, &quot;</span><span class="w"> </span><span class="o">+</span>
+<a id="__codelineno-8-44" name="__codelineno-8-44" href="#__codelineno-8-44"></a><span class="w">            </span><span class="s">&quot;wind %.1f km/h&quot;</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">Locale</span><span class="p">.</span><span class="na">ENGLISH</span><span class="p">,</span><span class="w"> </span><span class="n">forecast</span><span class="p">.</span><span class="na">current</span><span class="p">.</span><span class="na">windSpeed</span><span class="p">)</span>
+<a id="__codelineno-8-45" name="__codelineno-8-45" href="#__codelineno-8-45"></a><span class="w">    </span><span class="p">)</span>
+<a id="__codelineno-8-46" name="__codelineno-8-46" href="#__codelineno-8-46"></a><span class="w">    </span><span class="n">forecast</span><span class="p">.</span><span class="na">daily</span><span class="p">.</span><span class="na">toDays</span><span class="p">().</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">day</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-8-47" name="__codelineno-8-47" href="#__codelineno-8-47"></a><span class="w">        </span><span class="n">appendLine</span><span class="p">(</span>
+<a id="__codelineno-8-48" name="__codelineno-8-48" href="#__codelineno-8-48"></a><span class="w">            </span><span class="s">&quot;  </span><span class="si">${</span><span class="n">formatDate</span><span class="p">(</span><span class="n">day</span><span class="p">.</span><span class="na">date</span><span class="p">)</span><span class="si">}</span><span class="s">  &quot;</span><span class="w"> </span><span class="o">+</span>
+<a id="__codelineno-8-49" name="__codelineno-8-49" href="#__codelineno-8-49"></a><span class="w">                </span><span class="s">&quot;</span><span class="si">${</span><span class="n">day</span><span class="p">.</span><span class="na">minTemp</span><span class="p">.</span><span class="na">asTemp</span><span class="p">()</span><span class="si">}</span><span class="s"> - </span><span class="si">${</span><span class="n">day</span><span class="p">.</span><span class="na">maxTemp</span><span class="p">.</span><span class="na">asTemp</span><span class="p">()</span><span class="si">}</span><span class="s">  &quot;</span><span class="w"> </span><span class="o">+</span>
+<a id="__codelineno-8-50" name="__codelineno-8-50" href="#__codelineno-8-50"></a><span class="w">                </span><span class="n">describeWeatherCode</span><span class="p">(</span><span class="n">day</span><span class="p">.</span><span class="na">weatherCode</span><span class="p">)</span>
+<a id="__codelineno-8-51" name="__codelineno-8-51" href="#__codelineno-8-51"></a><span class="w">        </span><span class="p">)</span>
+<a id="__codelineno-8-52" name="__codelineno-8-52" href="#__codelineno-8-52"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-53" name="__codelineno-8-53" href="#__codelineno-8-53"></a><span class="p">}.</span><span class="na">trimEnd</span><span class="p">()</span>
+<a id="__codelineno-8-54" name="__codelineno-8-54" href="#__codelineno-8-54"></a>
+<a id="__codelineno-8-55" name="__codelineno-8-55" href="#__codelineno-8-55"></a><span class="cm">/** Exhaustive over the sealed CityResult -- no `else` branch needed. */</span>
+<a id="__codelineno-8-56" name="__codelineno-8-56" href="#__codelineno-8-56"></a><span class="kd">fun</span><span class="w"> </span><span class="n">CityResult</span><span class="p">.</span><span class="nf">render</span><span class="p">():</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-57" name="__codelineno-8-57" href="#__codelineno-8-57"></a><span class="w">    </span><span class="k">is</span><span class="w"> </span><span class="n">CityResult</span><span class="p">.</span><span class="na">Success</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">report</span><span class="p">.</span><span class="na">render</span><span class="p">()</span>
+<a id="__codelineno-8-58" name="__codelineno-8-58" href="#__codelineno-8-58"></a><span class="w">    </span><span class="k">is</span><span class="w"> </span><span class="n">CityResult</span><span class="p">.</span><span class="na">NotFound</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;</span><span class="si">$</span><span class="n">query</span><span class="s">: no matching place found&quot;</span>
+<a id="__codelineno-8-59" name="__codelineno-8-59" href="#__codelineno-8-59"></a><span class="w">    </span><span class="k">is</span><span class="w"> </span><span class="n">CityResult</span><span class="p">.</span><span class="na">Failed</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;</span><span class="si">$</span><span class="n">query</span><span class="s">: lookup failed (</span><span class="si">$</span><span class="n">reason</span><span class="s">)&quot;</span>
+<a id="__codelineno-8-60" name="__codelineno-8-60" href="#__codelineno-8-60"></a><span class="p">}</span>
+<a id="__codelineno-8-61" name="__codelineno-8-61" href="#__codelineno-8-61"></a>
+<a id="__codelineno-8-62" name="__codelineno-8-62" href="#__codelineno-8-62"></a><span class="cm">/** Warmest city among the successful lookups, or null if none succeeded. */</span>
+<a id="__codelineno-8-63" name="__codelineno-8-63" href="#__codelineno-8-63"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">List</span><span class="o">&lt;</span><span class="n">CityResult</span><span class="o">&gt;</span><span class="p">.</span><span class="na">warmest</span><span class="p">():</span><span class="w"> </span><span class="n">Report? </span><span class="o">=</span>
+<a id="__codelineno-8-64" name="__codelineno-8-64" href="#__codelineno-8-64"></a><span class="w">    </span><span class="n">filterIsInstance</span><span class="o">&lt;</span><span class="n">CityResult</span><span class="p">.</span><span class="na">Success</span><span class="o">&gt;</span><span class="p">()</span>
+<a id="__codelineno-8-65" name="__codelineno-8-65" href="#__codelineno-8-65"></a><span class="w">        </span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">report</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-8-66" name="__codelineno-8-66" href="#__codelineno-8-66"></a><span class="w">        </span><span class="p">.</span><span class="na">maxByOrNull</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">forecast</span><span class="p">.</span><span class="na">current</span><span class="p">.</span><span class="na">temperature</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><code>warmest()</code> is a three-line pipeline that would be a loop with a
+<code>bestSoFar</code> variable in most languages: <code>filterIsInstance</code> narrows the
+sealed type <em>and</em> casts in one step, and <code>maxByOrNull</code> returns <code>null</code>
+rather than throwing on an empty list, which the caller then handles with
+an Elvis.</p>
+<h2 id="weatherapikt-the-coroutine-layer"><code>WeatherApi.kt</code> — the coroutine layer<a class="headerlink" href="#weatherapikt-the-coroutine-layer" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">package</span><span class="w"> </span><span class="nn">com.example.weather</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.net.URI</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.net.URLEncoder</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.net.http.HttpClient</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.net.http.HttpRequest</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.net.http.HttpResponse</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.charset.StandardCharsets</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.time.Duration</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.coroutines.Dispatchers</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.coroutines.withContext</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.serialization.json.Json</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="kd">class</span><span class="w"> </span><span class="nc">WeatherApi</span><span class="p">(</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">client</span><span class="p">:</span><span class="w"> </span><span class="n">HttpClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HttpClient</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">()</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">        </span><span class="p">.</span><span class="na">connectTimeout</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofSeconds</span><span class="p">(</span><span class="m">10</span><span class="p">))</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">(),</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">    </span><span class="c1">// Open-Meteo sends far more fields than we model, so be lenient.</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Json</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ignoreUnknownKeys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">    </span><span class="cm">/** Blocking HTTP, moved off the caller&#39;s thread onto the IO dispatcher. */</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="na">IO</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HttpRequest</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">(</span><span class="n">URI</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="w">            </span><span class="p">.</span><span class="na">timeout</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofSeconds</span><span class="p">(</span><span class="m">15</span><span class="p">))</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="w">            </span><span class="p">.</span><span class="na">header</span><span class="p">(</span><span class="s">&quot;Accept&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="w">            </span><span class="p">.</span><span class="na">GET</span><span class="p">()</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpResponse</span><span class="p">.</span><span class="na">BodyHandlers</span><span class="p">.</span><span class="na">ofString</span><span class="p">())</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">statusCode</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">WeatherApiException</span><span class="p">(</span><span class="s">&quot;HTTP </span><span class="si">${</span><span class="n">response</span><span class="p">.</span><span class="na">statusCode</span><span class="p">()</span><span class="si">}</span><span class="s"> from </span><span class="si">${</span><span class="n">URI</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">url</span><span class="p">).</span><span class="na">host</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a><span class="w">        </span><span class="n">response</span><span class="p">.</span><span class="na">body</span><span class="p">()</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a>
+<a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a><span class="w">    </span><span class="cm">/** Returns null when the API has no match for [city] -- not an exception. */</span>
+<a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a><span class="w">    </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">geocode</span><span class="p">(</span><span class="n">city</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="n">Place? </span><span class="p">{</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">encoded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">URLEncoder</span><span class="p">.</span><span class="na">encode</span><span class="p">(</span><span class="n">city</span><span class="p">,</span><span class="w"> </span><span class="n">StandardCharsets</span><span class="p">.</span><span class="na">UTF_8</span><span class="p">)</span>
+<a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">get</span><span class="p">(</span><span class="s">&quot;</span><span class="si">$</span><span class="n">GEOCODING_URL</span><span class="s">?name=</span><span class="si">$</span><span class="n">encoded</span><span class="s">&amp;count=1&amp;language=en&amp;format=json&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">json</span><span class="p">.</span><span class="na">decodeFromString</span><span class="o">&lt;</span><span class="n">GeocodingResponse</span><span class="o">&gt;</span><span class="p">(</span><span class="n">body</span><span class="p">).</span><span class="na">results</span><span class="o">?.</span><span class="na">firstOrNull</span><span class="p">()</span>
+<a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a>
+<a id="__codelineno-9-43" name="__codelineno-9-43" href="#__codelineno-9-43"></a><span class="w">    </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">forecast</span><span class="p">(</span><span class="n">place</span><span class="p">:</span><span class="w"> </span><span class="n">Place</span><span class="p">,</span><span class="w"> </span><span class="n">days</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">):</span><span class="w"> </span><span class="n">ForecastResponse</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-44" name="__codelineno-9-44" href="#__codelineno-9-44"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">get</span><span class="p">(</span>
+<a id="__codelineno-9-45" name="__codelineno-9-45" href="#__codelineno-9-45"></a><span class="w">            </span><span class="n">buildString</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-46" name="__codelineno-9-46" href="#__codelineno-9-46"></a><span class="w">                </span><span class="n">append</span><span class="p">(</span><span class="n">FORECAST_URL</span><span class="p">)</span>
+<a id="__codelineno-9-47" name="__codelineno-9-47" href="#__codelineno-9-47"></a><span class="w">                </span><span class="n">append</span><span class="p">(</span><span class="s">&quot;?latitude=</span><span class="si">${</span><span class="n">place</span><span class="p">.</span><span class="na">latitude</span><span class="si">}</span><span class="s">&amp;longitude=</span><span class="si">${</span><span class="n">place</span><span class="p">.</span><span class="na">longitude</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-48" name="__codelineno-9-48" href="#__codelineno-9-48"></a><span class="w">                </span><span class="n">append</span><span class="p">(</span><span class="s">&quot;&amp;current=temperature_2m,wind_speed_10m,weather_code&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-49" name="__codelineno-9-49" href="#__codelineno-9-49"></a><span class="w">                </span><span class="n">append</span><span class="p">(</span><span class="s">&quot;&amp;daily=temperature_2m_max,temperature_2m_min,weather_code&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-50" name="__codelineno-9-50" href="#__codelineno-9-50"></a><span class="w">                </span><span class="n">append</span><span class="p">(</span><span class="s">&quot;&amp;forecast_days=</span><span class="si">$</span><span class="n">days</span><span class="s">&amp;timezone=auto&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-51" name="__codelineno-9-51" href="#__codelineno-9-51"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-9-52" name="__codelineno-9-52" href="#__codelineno-9-52"></a><span class="w">        </span><span class="p">)</span>
+<a id="__codelineno-9-53" name="__codelineno-9-53" href="#__codelineno-9-53"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">json</span><span class="p">.</span><span class="na">decodeFromString</span><span class="o">&lt;</span><span class="n">ForecastResponse</span><span class="o">&gt;</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<a id="__codelineno-9-54" name="__codelineno-9-54" href="#__codelineno-9-54"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-55" name="__codelineno-9-55" href="#__codelineno-9-55"></a>
+<a id="__codelineno-9-56" name="__codelineno-9-56" href="#__codelineno-9-56"></a><span class="w">    </span><span class="cm">/** Geocode then forecast -- the two calls a single city needs. */</span>
+<a id="__codelineno-9-57" name="__codelineno-9-57" href="#__codelineno-9-57"></a><span class="w">    </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">lookup</span><span class="p">(</span><span class="n">city</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">days</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">):</span><span class="w"> </span><span class="n">CityResult</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-9-58" name="__codelineno-9-58" href="#__codelineno-9-58"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-59" name="__codelineno-9-59" href="#__codelineno-9-59"></a><span class="w">            </span><span class="kd">val</span><span class="w"> </span><span class="nv">place</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">geocode</span><span class="p">(</span><span class="n">city</span><span class="p">)</span>
+<a id="__codelineno-9-60" name="__codelineno-9-60" href="#__codelineno-9-60"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">place</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-61" name="__codelineno-9-61" href="#__codelineno-9-61"></a><span class="w">                </span><span class="n">CityResult</span><span class="p">.</span><span class="na">NotFound</span><span class="p">(</span><span class="n">city</span><span class="p">)</span>
+<a id="__codelineno-9-62" name="__codelineno-9-62" href="#__codelineno-9-62"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-63" name="__codelineno-9-63" href="#__codelineno-9-63"></a><span class="w">                </span><span class="n">CityResult</span><span class="p">.</span><span class="na">Success</span><span class="p">(</span><span class="n">Report</span><span class="p">(</span><span class="n">place</span><span class="p">,</span><span class="w"> </span><span class="n">forecast</span><span class="p">(</span><span class="n">place</span><span class="p">,</span><span class="w"> </span><span class="n">days</span><span class="p">)))</span>
+<a id="__codelineno-9-64" name="__codelineno-9-64" href="#__codelineno-9-64"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-9-65" name="__codelineno-9-65" href="#__codelineno-9-65"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-66" name="__codelineno-9-66" href="#__codelineno-9-66"></a><span class="w">            </span><span class="n">CityResult</span><span class="p">.</span><span class="na">Failed</span><span class="p">(</span><span class="n">city</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="n">e</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">simpleName</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="s">&quot;unknown error&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-67" name="__codelineno-9-67" href="#__codelineno-9-67"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-68" name="__codelineno-9-68" href="#__codelineno-9-68"></a>
+<a id="__codelineno-9-69" name="__codelineno-9-69" href="#__codelineno-9-69"></a><span class="w">    </span><span class="kd">companion</span><span class="w"> </span><span class="kd">object</span><span class="w"> </span><span class="err">{</span>
+<a id="__codelineno-9-70" name="__codelineno-9-70" href="#__codelineno-9-70"></a><span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">GEOCODING_URL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://geocoding-api.open-meteo.com/v1/search&quot;</span>
+<a id="__codelineno-9-71" name="__codelineno-9-71" href="#__codelineno-9-71"></a><span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">FORECAST_URL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://api.open-meteo.com/v1/forecast&quot;</span>
+<a id="__codelineno-9-72" name="__codelineno-9-72" href="#__codelineno-9-72"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-73" name="__codelineno-9-73" href="#__codelineno-9-73"></a><span class="p">}</span>
+<a id="__codelineno-9-74" name="__codelineno-9-74" href="#__codelineno-9-74"></a>
+<a id="__codelineno-9-75" name="__codelineno-9-75" href="#__codelineno-9-75"></a><span class="kd">class</span><span class="w"> </span><span class="nc">WeatherApiException</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</code></pre></div>
+<p><code>HttpClient.send()</code> blocks the calling thread, so it's wrapped in
+<code>withContext(Dispatchers.IO)</code> — the pattern from
+<a href="../03-coroutines-basics/">Module 3</a> for making a blocking API safe to call
+from a coroutine. Note the <em>two</em> different failure styles: a city that
+doesn't exist is a normal <code>null</code>/<code>NotFound</code> value, while a broken network
+is an exception, caught once in <code>lookup</code> and converted into a <code>Failed</code>
+result. Nothing above this layer ever needs a <code>try</code>/<code>catch</code>.</p>
+<h2 id="mainkt-fetching-concurrently"><code>Main.kt</code> — fetching concurrently<a class="headerlink" href="#mainkt-fetching-concurrently" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">package</span><span class="w"> </span><span class="nn">com.example.weather</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlin.system.exitProcess</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.coroutines.async</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.coroutines.awaitAll</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.coroutines.coroutineScope</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.coroutines.runBlocking</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">USAGE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Usage: weather &lt;city&gt; [city ...]&quot;</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="cm">/** Fetch every city concurrently instead of one after another. */</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">fetchAll</span><span class="p">(</span><span class="n">api</span><span class="p">:</span><span class="w"> </span><span class="n">WeatherApi</span><span class="p">,</span><span class="w"> </span><span class="n">cities</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">):</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">CityResult</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">    </span><span class="n">coroutineScope</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">        </span><span class="n">cities</span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">city</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">async</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">api</span><span class="p">.</span><span class="na">lookup</span><span class="p">(</span><span class="n">city</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}.</span><span class="na">awaitAll</span><span class="p">()</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span><span class="w"> </span><span class="n">Array</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">runBlocking</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">cities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="p">.</span><span class="na">filter</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">isNotBlank</span><span class="p">()</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cities</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="n">USAGE</span><span class="p">)</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="w">        </span><span class="n">exitProcess</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fetchAll</span><span class="p">(</span><span class="n">WeatherApi</span><span class="p">(),</span><span class="w"> </span><span class="n">cities</span><span class="p">)</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="w">    </span><span class="n">results</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">println</span><span class="p">(</span><span class="nb">it</span><span class="p">.</span><span class="na">render</span><span class="p">())</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cities</span><span class="p">.</span><span class="na">size</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">warmest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">results</span><span class="p">.</span><span class="na">warmest</span><span class="p">()</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">warmest</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;No city could be resolved.&quot;</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="s">&quot;Warmest right now: </span><span class="si">${</span><span class="n">warmest</span><span class="p">.</span><span class="na">place</span><span class="p">.</span><span class="na">name</span><span class="si">}</span><span class="s"> &quot;</span><span class="w"> </span><span class="o">+</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="w">                </span><span class="s">&quot;at </span><span class="si">${</span><span class="n">warmest</span><span class="p">.</span><span class="na">forecast</span><span class="p">.</span><span class="na">current</span><span class="p">.</span><span class="na">temperature</span><span class="p">.</span><span class="na">asTemp</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span>
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="w">        </span><span class="p">)</span>
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>
+<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">results</span><span class="p">.</span><span class="na">any</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nb">it</span><span class="w"> </span><span class="k">!is</span><span class="w"> </span><span class="n">CityResult</span><span class="p">.</span><span class="na">Success</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="n">exitProcess</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>fetchAll</code> is the heart of it: <code>map { async { ... } }</code> starts every city's
+lookup immediately, and <code>awaitAll()</code> waits for all of them. Three cities
+take about as long as the slowest one, not the sum of all three — but
+<code>awaitAll</code> still returns results <strong>in argument order</strong>, so output stays
+predictable. Because it's a <code>coroutineScope</code>, a crash in one lookup would
+cancel the rest instead of leaking a runaway coroutine.</p>
+<h2 id="weathertestkt-testing-without-the-network"><code>WeatherTest.kt</code> — testing without the network<a class="headerlink" href="#weathertestkt-testing-without-the-network" title="Permanent link">&para;</a></h2>
+<p>The pure functions and the parsing are all testable offline; only
+<code>WeatherApi.get()</code> touches the internet.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">package</span><span class="w"> </span><span class="nn">com.example.weather</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlin.test.Test</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlin.test.assertEquals</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlin.test.assertNull</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlin.test.assertTrue</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.serialization.json.Json</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="kd">class</span><span class="w"> </span><span class="nc">WeatherTest</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Json</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ignoreUnknownKeys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="nd">@Test</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`known weather codes map to descriptions`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;Clear sky&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">describeWeatherCode</span><span class="p">(</span><span class="m">0</span><span class="p">))</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;Overcast&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">describeWeatherCode</span><span class="p">(</span><span class="m">3</span><span class="p">))</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;Thunderstorm&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">describeWeatherCode</span><span class="p">(</span><span class="m">95</span><span class="p">))</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">    </span><span class="nd">@Test</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`unknown weather codes degrade gracefully`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;Unknown (999)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">describeWeatherCode</span><span class="p">(</span><span class="m">999</span><span class="p">))</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="w">    </span><span class="nd">@Test</span>
+<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`parallel daily arrays zip into one object per day`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">block</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DailyBlock</span><span class="p">(</span>
+<a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="w">            </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="s">&quot;2026-08-04&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2026-08-05&quot;</span><span class="p">),</span>
+<a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="w">            </span><span class="n">maxTemps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="m">29.4</span><span class="p">,</span><span class="w"> </span><span class="m">24.4</span><span class="p">),</span>
+<a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="w">            </span><span class="n">minTemps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="m">20.0</span><span class="p">,</span><span class="w"> </span><span class="m">18.3</span><span class="p">),</span>
+<a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="w">            </span><span class="n">weatherCodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">61</span><span class="p">),</span>
+<a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="w">        </span><span class="p">)</span>
+<a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">days</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">block</span><span class="p">.</span><span class="na">toDays</span><span class="p">()</span>
+<a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">days</span><span class="p">.</span><span class="na">size</span><span class="p">)</span>
+<a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">DayForecast</span><span class="p">(</span><span class="s">&quot;2026-08-04&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">20.0</span><span class="p">,</span><span class="w"> </span><span class="m">29.4</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">days</span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="p">)</span>
+<a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="m">61</span><span class="p">,</span><span class="w"> </span><span class="n">days</span><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="p">.</span><span class="na">weatherCode</span><span class="p">)</span>
+<a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a>
+<a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a><span class="w">    </span><span class="nd">@Test</span>
+<a id="__codelineno-11-40" name="__codelineno-11-40" href="#__codelineno-11-40"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`a truncated daily block stops at the shortest array`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-41" name="__codelineno-11-41" href="#__codelineno-11-41"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">block</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DailyBlock</span><span class="p">(</span>
+<a id="__codelineno-11-42" name="__codelineno-11-42" href="#__codelineno-11-42"></a><span class="w">            </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="s">&quot;2026-08-04&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2026-08-05&quot;</span><span class="p">),</span>
+<a id="__codelineno-11-43" name="__codelineno-11-43" href="#__codelineno-11-43"></a><span class="w">            </span><span class="n">maxTemps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="m">29.4</span><span class="p">),</span><span class="w">          </span><span class="c1">// one value short</span>
+<a id="__codelineno-11-44" name="__codelineno-11-44" href="#__codelineno-11-44"></a><span class="w">            </span><span class="n">minTemps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="m">20.0</span><span class="p">,</span><span class="w"> </span><span class="m">18.3</span><span class="p">),</span>
+<a id="__codelineno-11-45" name="__codelineno-11-45" href="#__codelineno-11-45"></a><span class="w">            </span><span class="n">weatherCodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">61</span><span class="p">),</span>
+<a id="__codelineno-11-46" name="__codelineno-11-46" href="#__codelineno-11-46"></a><span class="w">        </span><span class="p">)</span>
+<a id="__codelineno-11-47" name="__codelineno-11-47" href="#__codelineno-11-47"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">block</span><span class="p">.</span><span class="na">toDays</span><span class="p">().</span><span class="na">size</span><span class="p">)</span><span class="w">   </span><span class="c1">// no IndexOutOfBoundsException</span>
+<a id="__codelineno-11-48" name="__codelineno-11-48" href="#__codelineno-11-48"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-49" name="__codelineno-11-49" href="#__codelineno-11-49"></a>
+<a id="__codelineno-11-50" name="__codelineno-11-50" href="#__codelineno-11-50"></a><span class="w">    </span><span class="nd">@Test</span>
+<a id="__codelineno-11-51" name="__codelineno-11-51" href="#__codelineno-11-51"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`place label skips null parts`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-52" name="__codelineno-11-52" href="#__codelineno-11-52"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span>
+<a id="__codelineno-11-53" name="__codelineno-11-53" href="#__codelineno-11-53"></a><span class="w">            </span><span class="s">&quot;London, England, United Kingdom&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-54" name="__codelineno-11-54" href="#__codelineno-11-54"></a><span class="w">            </span><span class="n">Place</span><span class="p">(</span><span class="s">&quot;London&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">51.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="m">0.13</span><span class="p">,</span><span class="w"> </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;United Kingdom&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">admin1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;England&quot;</span><span class="p">).</span><span class="na">label</span><span class="p">,</span>
+<a id="__codelineno-11-55" name="__codelineno-11-55" href="#__codelineno-11-55"></a><span class="w">        </span><span class="p">)</span>
+<a id="__codelineno-11-56" name="__codelineno-11-56" href="#__codelineno-11-56"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;Atlantis&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Place</span><span class="p">(</span><span class="s">&quot;Atlantis&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">0.0</span><span class="p">,</span><span class="w"> </span><span class="m">0.0</span><span class="p">).</span><span class="na">label</span><span class="p">)</span>
+<a id="__codelineno-11-57" name="__codelineno-11-57" href="#__codelineno-11-57"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-58" name="__codelineno-11-58" href="#__codelineno-11-58"></a>
+<a id="__codelineno-11-59" name="__codelineno-11-59" href="#__codelineno-11-59"></a><span class="w">    </span><span class="nd">@Test</span>
+<a id="__codelineno-11-60" name="__codelineno-11-60" href="#__codelineno-11-60"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`geocoding response with no results decodes to null`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-61" name="__codelineno-11-61" href="#__codelineno-11-61"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;&quot;{&quot;generationtime_ms&quot;:0.6}&quot;&quot;&quot;</span>
+<a id="__codelineno-11-62" name="__codelineno-11-62" href="#__codelineno-11-62"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">decoded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="p">.</span><span class="na">decodeFromString</span><span class="o">&lt;</span><span class="n">GeocodingResponse</span><span class="o">&gt;</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<a id="__codelineno-11-63" name="__codelineno-11-63" href="#__codelineno-11-63"></a><span class="w">        </span><span class="n">assertNull</span><span class="p">(</span><span class="n">decoded</span><span class="p">.</span><span class="na">results</span><span class="o">?.</span><span class="na">firstOrNull</span><span class="p">())</span>
+<a id="__codelineno-11-64" name="__codelineno-11-64" href="#__codelineno-11-64"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-65" name="__codelineno-11-65" href="#__codelineno-11-65"></a>
+<a id="__codelineno-11-66" name="__codelineno-11-66" href="#__codelineno-11-66"></a><span class="w">    </span><span class="nd">@Test</span>
+<a id="__codelineno-11-67" name="__codelineno-11-67" href="#__codelineno-11-67"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`forecast json decodes into the model`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-68" name="__codelineno-11-68" href="#__codelineno-11-68"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;&quot;</span>
+<a id="__codelineno-11-69" name="__codelineno-11-69" href="#__codelineno-11-69"></a><span class="s">            {&quot;latitude&quot;:51.51,&quot;longitude&quot;:-0.13,&quot;elevation&quot;:16.0,&quot;timezone&quot;:&quot;Europe/London&quot;,</span>
+<a id="__codelineno-11-70" name="__codelineno-11-70" href="#__codelineno-11-70"></a><span class="s">             &quot;current&quot;:{&quot;time&quot;:&quot;2026-08-04T10:30&quot;,&quot;interval&quot;:900,&quot;temperature_2m&quot;:25.3,</span>
+<a id="__codelineno-11-71" name="__codelineno-11-71" href="#__codelineno-11-71"></a><span class="s">                        &quot;wind_speed_10m&quot;:8.6,&quot;weather_code&quot;:2},</span>
+<a id="__codelineno-11-72" name="__codelineno-11-72" href="#__codelineno-11-72"></a><span class="s">             &quot;daily&quot;:{&quot;time&quot;:[&quot;2026-08-04&quot;],&quot;temperature_2m_max&quot;:[29.4],</span>
+<a id="__codelineno-11-73" name="__codelineno-11-73" href="#__codelineno-11-73"></a><span class="s">                      &quot;temperature_2m_min&quot;:[20.0],&quot;weather_code&quot;:[3]}}</span>
+<a id="__codelineno-11-74" name="__codelineno-11-74" href="#__codelineno-11-74"></a><span class="s">        &quot;&quot;&quot;</span><span class="p">.</span><span class="na">trimIndent</span><span class="p">()</span>
+<a id="__codelineno-11-75" name="__codelineno-11-75" href="#__codelineno-11-75"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">forecast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="p">.</span><span class="na">decodeFromString</span><span class="o">&lt;</span><span class="n">ForecastResponse</span><span class="o">&gt;</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<a id="__codelineno-11-76" name="__codelineno-11-76" href="#__codelineno-11-76"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="m">25.3</span><span class="p">,</span><span class="w"> </span><span class="n">forecast</span><span class="p">.</span><span class="na">current</span><span class="p">.</span><span class="na">temperature</span><span class="p">)</span>
+<a id="__codelineno-11-77" name="__codelineno-11-77" href="#__codelineno-11-77"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;Partly cloudy&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">describeWeatherCode</span><span class="p">(</span><span class="n">forecast</span><span class="p">.</span><span class="na">current</span><span class="p">.</span><span class="na">weatherCode</span><span class="p">))</span>
+<a id="__codelineno-11-78" name="__codelineno-11-78" href="#__codelineno-11-78"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">forecast</span><span class="p">.</span><span class="na">daily</span><span class="p">.</span><span class="na">toDays</span><span class="p">().</span><span class="na">size</span><span class="p">)</span>
+<a id="__codelineno-11-79" name="__codelineno-11-79" href="#__codelineno-11-79"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-80" name="__codelineno-11-80" href="#__codelineno-11-80"></a>
+<a id="__codelineno-11-81" name="__codelineno-11-81" href="#__codelineno-11-81"></a><span class="w">    </span><span class="nd">@Test</span>
+<a id="__codelineno-11-82" name="__codelineno-11-82" href="#__codelineno-11-82"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`failed and not-found results render without throwing`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-83" name="__codelineno-11-83" href="#__codelineno-11-83"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;Narnia: no matching place found&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">CityResult</span><span class="p">.</span><span class="na">NotFound</span><span class="p">(</span><span class="s">&quot;Narnia&quot;</span><span class="p">).</span><span class="na">render</span><span class="p">())</span>
+<a id="__codelineno-11-84" name="__codelineno-11-84" href="#__codelineno-11-84"></a><span class="w">        </span><span class="n">assertTrue</span><span class="p">(</span><span class="n">CityResult</span><span class="p">.</span><span class="na">Failed</span><span class="p">(</span><span class="s">&quot;Paris&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;timeout&quot;</span><span class="p">).</span><span class="na">render</span><span class="p">().</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;timeout&quot;</span><span class="p">))</span>
+<a id="__codelineno-11-85" name="__codelineno-11-85" href="#__codelineno-11-85"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-86" name="__codelineno-11-86" href="#__codelineno-11-86"></a>
+<a id="__codelineno-11-87" name="__codelineno-11-87" href="#__codelineno-11-87"></a><span class="w">    </span><span class="nd">@Test</span>
+<a id="__codelineno-11-88" name="__codelineno-11-88" href="#__codelineno-11-88"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`warmest picks the highest current temperature and ignores failures`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-89" name="__codelineno-11-89" href="#__codelineno-11-89"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span>
+<a id="__codelineno-11-90" name="__codelineno-11-90" href="#__codelineno-11-90"></a><span class="w">            </span><span class="n">CityResult</span><span class="p">.</span><span class="na">Success</span><span class="p">(</span><span class="n">sampleReport</span><span class="p">(</span><span class="s">&quot;Oslo&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">14.2</span><span class="p">)),</span>
+<a id="__codelineno-11-91" name="__codelineno-11-91" href="#__codelineno-11-91"></a><span class="w">            </span><span class="n">CityResult</span><span class="p">.</span><span class="na">NotFound</span><span class="p">(</span><span class="s">&quot;Narnia&quot;</span><span class="p">),</span>
+<a id="__codelineno-11-92" name="__codelineno-11-92" href="#__codelineno-11-92"></a><span class="w">            </span><span class="n">CityResult</span><span class="p">.</span><span class="na">Success</span><span class="p">(</span><span class="n">sampleReport</span><span class="p">(</span><span class="s">&quot;Cairo&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">36.8</span><span class="p">)),</span>
+<a id="__codelineno-11-93" name="__codelineno-11-93" href="#__codelineno-11-93"></a><span class="w">        </span><span class="p">)</span>
+<a id="__codelineno-11-94" name="__codelineno-11-94" href="#__codelineno-11-94"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;Cairo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">results</span><span class="p">.</span><span class="na">warmest</span><span class="p">()</span><span class="o">?.</span><span class="na">place</span><span class="o">?.</span><span class="na">name</span><span class="p">)</span>
+<a id="__codelineno-11-95" name="__codelineno-11-95" href="#__codelineno-11-95"></a><span class="w">        </span><span class="n">assertNull</span><span class="p">(</span><span class="n">listOf</span><span class="o">&lt;</span><span class="n">CityResult</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CityResult</span><span class="p">.</span><span class="na">NotFound</span><span class="p">(</span><span class="s">&quot;Narnia&quot;</span><span class="p">)).</span><span class="na">warmest</span><span class="p">())</span>
+<a id="__codelineno-11-96" name="__codelineno-11-96" href="#__codelineno-11-96"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-97" name="__codelineno-11-97" href="#__codelineno-11-97"></a>
+<a id="__codelineno-11-98" name="__codelineno-11-98" href="#__codelineno-11-98"></a><span class="w">    </span><span class="nd">@Test</span>
+<a id="__codelineno-11-99" name="__codelineno-11-99" href="#__codelineno-11-99"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`dates format as English day labels`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-100" name="__codelineno-11-100" href="#__codelineno-11-100"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;Tue 04 Aug&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">formatDate</span><span class="p">(</span><span class="s">&quot;2026-08-04&quot;</span><span class="p">))</span>
+<a id="__codelineno-11-101" name="__codelineno-11-101" href="#__codelineno-11-101"></a><span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;not-a-date&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">formatDate</span><span class="p">(</span><span class="s">&quot;not-a-date&quot;</span><span class="p">))</span><span class="w">   </span><span class="c1">// falls back to the raw string</span>
+<a id="__codelineno-11-102" name="__codelineno-11-102" href="#__codelineno-11-102"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-103" name="__codelineno-11-103" href="#__codelineno-11-103"></a>
+<a id="__codelineno-11-104" name="__codelineno-11-104" href="#__codelineno-11-104"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">sampleReport</span><span class="p">(</span><span class="n">city</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">temp</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Report</span><span class="p">(</span>
+<a id="__codelineno-11-105" name="__codelineno-11-105" href="#__codelineno-11-105"></a><span class="w">        </span><span class="n">place</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Place</span><span class="p">(</span><span class="n">city</span><span class="p">,</span><span class="w"> </span><span class="m">0.0</span><span class="p">,</span><span class="w"> </span><span class="m">0.0</span><span class="p">),</span>
+<a id="__codelineno-11-106" name="__codelineno-11-106" href="#__codelineno-11-106"></a><span class="w">        </span><span class="n">forecast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ForecastResponse</span><span class="p">(</span>
+<a id="__codelineno-11-107" name="__codelineno-11-107" href="#__codelineno-11-107"></a><span class="w">            </span><span class="n">timezone</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;UTC&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-108" name="__codelineno-11-108" href="#__codelineno-11-108"></a><span class="w">            </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CurrentWeather</span><span class="p">(</span><span class="s">&quot;2026-08-04T10:30&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">temp</span><span class="p">,</span><span class="w"> </span><span class="m">5.0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">),</span>
+<a id="__codelineno-11-109" name="__codelineno-11-109" href="#__codelineno-11-109"></a><span class="w">            </span><span class="n">daily</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DailyBlock</span><span class="p">(</span><span class="n">listOf</span><span class="p">(</span><span class="s">&quot;2026-08-04&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">temp</span><span class="p">),</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">temp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">5</span><span class="p">),</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="m">0</span><span class="p">)),</span>
+<a id="__codelineno-11-110" name="__codelineno-11-110" href="#__codelineno-11-110"></a><span class="w">        </span><span class="p">),</span>
+<a id="__codelineno-11-111" name="__codelineno-11-111" href="#__codelineno-11-111"></a><span class="w">    </span><span class="p">)</span>
+<a id="__codelineno-11-112" name="__codelineno-11-112" href="#__codelineno-11-112"></a><span class="p">}</span>
+</code></pre></div>
+<p>That extra <code>"interval":900</code> field in the test JSON is deliberate: it isn't
+in <code>CurrentWeather</code>, and the test proves <code>ignoreUnknownKeys = true</code> copes
+with the real API sending more than you modelled.</p>
+<h2 id="running-it">Running it<a class="headerlink" href="#running-it" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>./gradlew<span class="w"> </span><span class="nb">test</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>&gt; Task :test
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>WeatherTest &gt; forecast json decodes into the model() PASSED
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>WeatherTest &gt; warmest picks the highest current temperature and ignores failures() PASSED
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>WeatherTest &gt; known weather codes map to descriptions() PASSED
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>WeatherTest &gt; a truncated daily block stops at the shortest array() PASSED
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>WeatherTest &gt; parallel daily arrays zip into one object per day() PASSED
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>WeatherTest &gt; dates format as English day labels() PASSED
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>WeatherTest &gt; failed and not-found results render without throwing() PASSED
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>WeatherTest &gt; unknown weather codes degrade gracefully() PASSED
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>WeatherTest &gt; geocoding response with no results decodes to null() PASSED
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>WeatherTest &gt; place label skips null parts() PASSED
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>BUILD SUCCESSFUL in 3s
+</code></pre></div>
+<p><code>installDist</code> builds a launcher script, which is nicer than <code>./gradlew run</code>
+for a CLI that returns meaningful exit codes:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>./gradlew<span class="w"> </span>installDist
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>./build/install/weather-cli/bin/weather-cli<span class="w"> </span>London<span class="w"> </span>Hyderabad<span class="w"> </span>Reykjavik
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>London, England, United Kingdom  (Europe/London)
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>  Now: 27.6°C, Overcast, wind 21.2 km/h
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>  Tue 04 Aug  20.0°C - 29.7°C  Overcast
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>  Wed 05 Aug  18.2°C - 24.3°C  Overcast
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>  Thu 06 Aug  14.9°C - 22.1°C  Overcast
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>Hyderabad, Telangana, India  (Asia/Kolkata)
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>  Now: 25.5°C, Light drizzle, wind 6.0 km/h
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>  Tue 04 Aug  23.2°C - 28.8°C  Thunderstorm
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>  Wed 05 Aug  22.7°C - 29.9°C  Dense drizzle
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>  Thu 06 Aug  23.6°C - 29.7°C  Moderate drizzle
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>Reykjavik, Capital Region, Iceland  (Atlantic/Reykjavik)
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>  Now: 13.2°C, Mainly clear, wind 11.9 km/h
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>  Tue 04 Aug  10.1°C - 13.4°C  Overcast
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>  Wed 05 Aug  10.4°C - 13.0°C  Overcast
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>  Thu 06 Aug  10.0°C - 11.7°C  Slight rain
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>Warmest right now: London at 27.6°C
+</code></pre></div>
+<p>An unresolvable city degrades instead of crashing — the other cities still
+print, and the process exits <code>2</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>$ ./build/install/weather-cli/bin/weather-cli Zzqqxyz Oslo
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Zzqqxyz: no matching place found
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>Oslo, Oslo, Norway  (Europe/Oslo)
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>  Now: 23.3°C, Overcast, wind 15.1 km/h
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>  Tue 04 Aug  14.1°C - 23.6°C  Dense drizzle
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>  Wed 05 Aug  14.7°C - 18.3°C  Heavy rain
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>  Thu 06 Aug  16.7°C - 20.1°C  Slight rain
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>Warmest right now: Oslo at 23.3°C
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>$ echo $?
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>2
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Try a name you think is fictional</p>
+<p><code>Narnia</code> resolves — there's a real place by that name in Bangladesh.
+Geocoders match far more strings than you'd expect, which is exactly
+why <code>NotFound</code> has to be a normal, printable result rather than an
+edge case you hope never happens.</p>
+</div>
+<h2 id="where-each-level-2-idea-shows-up">Where each Level 2 idea shows up<a class="headerlink" href="#where-each-level-2-idea-shows-up" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>In this project</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01 · OOP</td>
+<td><code>sealed interface CityResult</code> with an exhaustive <code>when</code> in <code>render()</code></td>
+</tr>
+<tr>
+<td>02 · Lambdas</td>
+<td><code>map</code>/<code>filter</code>/<code>forEach</code> pipelines; <code>runCatching { }.getOrDefault(...)</code></td>
+</tr>
+<tr>
+<td>03 · Coroutines</td>
+<td><code>suspend</code> HTTP, <code>withContext(Dispatchers.IO)</code>, <code>async</code>/<code>awaitAll</code> in a <code>coroutineScope</code></td>
+</tr>
+<tr>
+<td>04 · Null safety</td>
+<td><code>List&lt;Place&gt;?</code>, <code>?.firstOrNull()</code>, <code>listOfNotNull</code>, Elvis fallbacks</td>
+</tr>
+<tr>
+<td>05 · Collections</td>
+<td><code>filterIsInstance</code>, <code>maxByOrNull</code>, zipping the parallel daily arrays</td>
+</tr>
+<tr>
+<td>06 · Testing</td>
+<td>Offline tests over the pure functions and JSON decoding</td>
+</tr>
+<tr>
+<td>07 · JSON</td>
+<td><code>@Serializable</code>, <code>@SerialName</code>, <code>ignoreUnknownKeys</code></td>
+</tr>
+<tr>
+<td>08 · Gradle</td>
+<td>Two plugins, two dependencies, <code>application</code>, <code>installDist</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="stretch-goals">Stretch goals<a class="headerlink" href="#stretch-goals" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Cache lookups.</strong> Geocoding results never change; store them in a
+  <code>Map&lt;String, Place&gt;</code> on disk as JSON so repeat runs skip a request.</li>
+<li><strong>Add units.</strong> A <code>--fahrenheit</code> flag — Open-Meteo accepts
+  <code>&amp;temperature_unit=fahrenheit</code>, but doing the conversion in <code>asTemp()</code>
+  keeps the API layer unchanged.</li>
+<li><strong>Make it testable without the network.</strong> Extract an interface for
+  <code>get(url)</code>, pass a fake implementation returning canned JSON, and test
+  <code>lookup()</code> end to end with <code>runTest</code> from <code>kotlinx-coroutines-test</code>.</li>
+<li><strong>Add a timeout per city.</strong> Wrap each <code>async</code> body in
+  <code>withTimeoutOrNull(5_000)</code> and turn a <code>null</code> into
+  <code>CityResult.Failed(city, "timed out")</code>.</li>
+<li><strong>Hourly view.</strong> Request <code>&amp;hourly=temperature_2m</code> and use
+  <code>chunked</code>/<code>windowed</code> from <a href="../05-collections-deep-dive/">Module 5</a> to
+  print a compact sparkline of the next 24 hours.</li>
+<li><strong>Generic response envelope.</strong> Rework the decoding through a
+  <code>Result&lt;T&gt;</code>-style wrapper using <a href="../09-generics/">Module 9's</a> generics so
+  every endpoint shares one error-handling path.</li>
+</ul>
+<p>Finishing this means you've built a real multi-file, dependency-managed,
+tested Kotlin application against a live API — you're ready for
+<strong>Level 3 · Advanced</strong>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

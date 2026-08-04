@@ -52,4 +52,48 @@
          <loc>https://sigilipelli.github.io/kotlin-mastery-path/level-1/10-project-todo-app/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
+    <url>
+         <loc>https://sigilipelli.github.io/kotlin-mastery-path/level-2/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://sigilipelli.github.io/kotlin-mastery-path/level-2/01-oop-deep-dive/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://sigilipelli.github.io/kotlin-mastery-path/level-2/02-lambdas-higher-order-functions/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://sigilipelli.github.io/kotlin-mastery-path/level-2/03-coroutines-basics/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://sigilipelli.github.io/kotlin-mastery-path/level-2/04-null-safety-advanced/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://sigilipelli.github.io/kotlin-mastery-path/level-2/05-collections-deep-dive/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://sigilipelli.github.io/kotlin-mastery-path/level-2/06-testing-junit-kotest/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://sigilipelli.github.io/kotlin-mastery-path/level-2/07-working-with-json/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://sigilipelli.github.io/kotlin-mastery-path/level-2/08-gradle-basics/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://sigilipelli.github.io/kotlin-mastery-path/level-2/09-generics/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://sigilipelli.github.io/kotlin-mastery-path/level-2/10-project-weather-cli/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
 </urlset>
