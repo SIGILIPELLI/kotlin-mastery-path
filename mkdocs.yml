@@ -62,8 +62,19 @@ nav:
       - "08 · Data Classes": level-1/08-data-classes.md
       - "09 · Extension Functions Intro": level-1/09-extension-functions.md
       - "10 · Project — CLI To-Do App": level-1/10-project-todo-app.md
+  - "Level 2 · Intermediate":
+      - Overview: level-2/index.md
+      - "01 · OOP Deep Dive": level-2/01-oop-deep-dive.md
+      - "02 · Lambdas & Higher-Order Functions": level-2/02-lambdas-higher-order-functions.md
+      - "03 · Coroutines Basics": level-2/03-coroutines-basics.md
+      - "04 · Null Safety Advanced": level-2/04-null-safety-advanced.md
+      - "05 · Collections Deep Dive": level-2/05-collections-deep-dive.md
+      - "06 · Testing with JUnit/Kotest": level-2/06-testing-junit-kotest.md
+      - "07 · Working with JSON": level-2/07-working-with-json.md
+      - "08 · Gradle Basics": level-2/08-gradle-basics.md
+      - "09 · Generics": level-2/09-generics.md
+      - "10 · Project — Weather CLI": level-2/10-project-weather-cli.md
 # --- auto-pruned stub levels (see AdSense low-value-content fix) ---
 exclude_docs: |
-  level-2/*.md
   level-3/*.md
   level-4/*.md
