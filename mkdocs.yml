@@ -1,8 +1,8 @@
 site_name: Kotlin Mastery Path
 site_description: A structured, module-wise Kotlin training program from entry level to master level.
-site_url: https://sigilipelli.github.io/kotlin-mastery-path/
-repo_url: https://github.com/SIGILIPELLI/kotlin-mastery-path
-repo_name: kotlin-mastery-path
+site_url: https://sigilipelli.github.io/kotlin-skillmastery/
+repo_url: https://github.com/SIGILIPELLI/kotlin-skillmastery
+repo_name: kotlin-skillmastery
 
 theme:
   name: material
