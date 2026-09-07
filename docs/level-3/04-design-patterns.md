@@ -179,6 +179,37 @@ This is the whole "Observable property" idea, with zero framework code.
   `object`'s initializer run lazily, at a time determined by whoever
   references it first.
 
+## How It Actually Works
+
+`apply`/`also` aren't language keywords — they're ordinary `inline`
+extension functions in the standard library (`kotlin.apply`,
+`kotlin.also`), each roughly one line: `inline fun <T> T.apply(block: T.()
+-> Unit): T { block(); return this }`. Because they're marked `inline`,
+calling `.apply { it.url = ...; it.method = ... }` pastes that lambda's
+bytecode directly into your `main()` function at the call site — there is no
+extra method call, no extra `Function1` allocation, and no separate stack
+frame at runtime; it looks like a control-flow block because after
+inlining, that's essentially all it is. `apply`'s lambda has `T` as its
+*receiver* (so `it` isn't needed — properties resolve unqualified against
+the object being configured), while `also`'s lambda takes `T` as a regular
+parameter named via `it` — that difference is purely in the declared
+lambda type (`T.() -> Unit` vs `(T) -> Unit`), not in any special-casing by
+the compiler beyond ordinary lambda-with-receiver mechanics.
+
+`fun interface PricingStrategy` (a SAM — single-abstract-method interface)
+lets `PricingStrategy { base -> base }` compile a plain lambda directly into
+an instance of a compiler-generated anonymous class implementing
+`PricingStrategy`, whose one abstract method's body is the lambda — this is
+**SAM conversion**, and it's what lets Strategy-pattern code accept either a
+real named class implementing the interface or a bare lambda
+interchangeably: both end up as ordinary objects implementing the same
+interface, resolved by ordinary `invokeinterface` dispatch at the call site
+that eventually calls `.price(...)`. Without the `fun` modifier on the
+interface, this shorthand isn't available and you'd need to write out
+`object : PricingStrategy { override fun price(...) = ... }` by hand — the
+`fun interface` keyword is purely a compiler permission slip enabling the
+lambda-to-interface conversion, not a different runtime type.
+
 ## Cheat sheet
 
 | Pattern | Idiomatic Kotlin |

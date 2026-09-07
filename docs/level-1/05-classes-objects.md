@@ -192,6 +192,42 @@ MyApp v1.0.0
 MyApp v1.1.0
 ```
 
+## How It Actually Works
+
+`class Person(val name: String, var age: Int)` expands, at compile time, into
+exactly what you'd hand-write in Java: a `private final String name` field, a
+`private int age` field, a constructor that assigns both, a public
+`getName()`, and a public `getAge()`/`setAge(int)` pair (`var` gets a setter,
+`val` doesn't). Kotlin properties are always backed by this
+field-plus-accessors shape at the bytecode level — `person.age = 31` in
+Kotlin source literally compiles to an `invokevirtual` call to
+`setAge(31)`, not a direct field write, which is why you can later add
+validation logic inside `set(value)` without touching any call site.
+
+A computed property like `area` with only a custom `get()` compiles to a
+getter method containing that expression's bytecode and **no backing field
+at all** — `javap` on `Rectangle.class` shows no `area` field, only a
+`getArea()` method, confirming it's recomputed on every access rather than
+cached.
+
+`init` blocks and the primary constructor are merged by the compiler into a
+single actual JVM constructor: property initializers and `init { ... }`
+blocks run in the exact textual order they appear in the class body, all
+inside that one generated `<init>` method. A secondary constructor that
+delegates via `: this(...)` compiles to a call to that primary `<init>`
+method as its very first bytecode instruction (the JVM requires every
+constructor to invoke another constructor or `Object`'s before doing
+anything else) — so `init` blocks and property initializers always run
+first, then the secondary constructor's own body.
+
+`object AppConfig` is compiled to a normal class (`AppConfig.class`) with a
+`private` constructor and one `public static final AppConfig INSTANCE`
+field, eagerly initialized in a static initializer block (`<clinit>`) the
+first time the class is loaded by the JVM's classloader — thread-safe by
+construction, since class loading itself is synchronized by the JVM spec.
+`AppConfig.describe()` from Kotlin is really `AppConfig.INSTANCE.describe()`
+under the hood; the compiler just hides the `.INSTANCE` for you.
+
 ## Cheat sheet
 
 | Concept | Syntax |

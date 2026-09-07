@@ -188,6 +188,39 @@ The fix is almost always the same: copy the nullable `var`/property into a
 local `val` first, then null-check *that*. Local `val`s are the one thing
 the compiler can always fully reason about.
 
+## How It Actually Works
+
+Platform types (`String!`) are a fiction that exists **only inside the
+compiler's type-checking phase** — by the time bytecode is generated,
+`String!` erases to the exact same `java.lang.String` as `String` or
+`String?`. What's actually happening is that the compiler has no static
+information to run its nullability analysis on (no `@Nullable`/`@NotNull`
+annotation to read), so it disables the compile-time null-check entirely for
+that value and lets you use it as either type without a warning. This is why
+`email.length` in the example above compiles clean — the compiler isn't
+"guessing non-null," it's simply not checking at all, exactly as javac
+wouldn't. The runtime NPE you get isn't a Kotlin-specific exception either;
+it's a bare `java.lang.NullPointerException`, thrown by the JVM the instant
+`invokevirtual length()` is attempted on a null reference — the same failure
+mode Java itself has, because at that point there is no Kotlin null-safety
+machinery left to intercept it.
+
+`lateinit var title: String` compiles to a plain, ordinary (non-final)
+`String` field with no wrapper, no `Optional`, and critically **no
+initialization** in the constructor — the JVM defaults an uninitialized
+reference field to `null` automatically, same as Java, so `lateinit` is
+really "let the JVM's normal zero-value default stand in temporarily,
+but forbid me from reading it while it's still null." The compiler enforces
+that promise by inserting a null-check (`Intrinsics.checkNotNullField` /
+equivalent) into the generated getter for that property, so reading an
+unset `lateinit var` throws
+`UninitializedPropertyAccessException` (not a generic NPE — a distinct,
+more diagnostic exception type made specifically for this case). `this::title
+.isInitialized` compiles to a call into Kotlin reflection
+(`kotlin-reflect`, or an intrinsic check when reflection isn't on the
+classpath) that inspects the backing field directly to see if it's still
+null, bypassing the getter's own throwing check.
+
 ## Cheat sheet
 
 | Situation | Tool |

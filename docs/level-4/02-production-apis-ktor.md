@@ -167,6 +167,43 @@ limiting in Ktor is opt-in per route group via `rateLimit(RateLimitName)
   when adding a new route "near" existing authenticated ones but outside
   the block.
 
+## How It Actually Works
+
+JWT authentication in Ktor is fundamentally about verifying a cryptographic
+signature, not decoding secret content — a JWT's payload (the claims,
+including `username`) is only Base64URL-encoded, not encrypted, so anyone
+can read it; what actually protects it is the third segment, an HMAC-SHA256
+signature computed over the header+payload using `SECRET` as the key.
+`generateToken` produces that signature at issue time; `jwt("auth-jwt") {
+verifier(...) }` recomputes the same HMAC over the token it receives and
+byte-compares it against the signature attached to the token — if a client
+tampered with the payload (changing `username`, say), the recomputed HMAC
+won't match and verification fails, entirely independent of the `validate {
+}` block, which only runs *after* the signature check already passed. This
+is exactly why a mismatched `SECRET` between issuing and verifying fails
+silently with a bare 401: the verifier never even gets far enough to look at
+claims, it rejects at the signature-comparison step.
+
+`install(Authentication) { jwt(...) { } }` registers a named authentication
+provider that Ktor's routing pipeline consults whenever a route is wrapped
+in `authenticate("auth-jwt") { }` — under the hood this is implemented as a
+`Route` interceptor (a `PipelinePhase`) inserted before your handler's own
+phase runs, so `call.principal<JWTPrincipal>()` inside `/me` is reading a
+value the authentication phase already computed and stashed on the `call`'s
+attributes before your code ever executed; if authentication failed, the
+interceptor short-circuits the pipeline and responds 401 itself, and your
+route handler's code never runs at all.
+
+`RequestValidation` works the same way structurally: it's a plugin hooked
+into the pipeline's receive phase, so it runs `call.receive<T>()`'s
+deserialization (using the same `kotlinx.serialization`-generated code from
+earlier modules) and then applies your validation lambda to the *already
+fully deserialized* object, before your route body executes — which is why
+a route handler behind `RequestValidation` never needs a manual "is this
+field blank" check itself: by the time its code runs, the pipeline has
+already guaranteed the object passed validation or the request never got
+this far.
+
 ## Cheat sheet
 
 | Concern | Plugin/API |

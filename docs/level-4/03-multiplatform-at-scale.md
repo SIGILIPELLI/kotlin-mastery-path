@@ -146,6 +146,37 @@ once you have network access and an API you want to hit.)
   Multiplatform apps, JetBrains's own libraries) avoids repeating
   `actual` implementations per Apple architecture.
 
+## How It Actually Works
+
+`ktor-client-core` with no `-jvm`/`-iosarm64` suffix is a **Gradle Module
+Metadata** artifact, not a single jar — it publishes a manifest listing
+every platform-specific variant (`ktor-client-core-jvm`,
+`ktor-client-core-iosarm64`, `ktor-client-core-js`, ...) plus the rules for
+which one matches which target. When Gradle resolves `commonMain`'s
+dependency graph for the `jvm()` target specifically, it reads that
+manifest and substitutes in `ktor-client-core-jvm` transparently — this is
+why the same `implementation("io.ktor:ktor-client-core:2.3.12")` line in
+`commonMain` silently becomes a different physical jar depending on which
+target's compilation is being resolved; there's no special Kotlin-side
+logic for this at all, it's the Gradle dependency resolver following
+metadata the library published.
+
+`expect fun httpClientEngine(): HttpClientEngineFactory<*>` compiles for
+`commonMain` as an unresolved reference at the bytecode level in exactly the
+sense described in Level 3's multiplatform module — but here it's doing
+real architectural work: `HttpClient(httpClientEngine())` inside
+`GitHubClient` is ordinary shared code that calls this `expect` function
+like any other, and because Kotlin's type-checker only needs the *shape*
+(`HttpClientEngineFactory<*>`) to typecheck `commonMain`, the actual engine
+implementation (`CIO`'s coroutine-based non-blocking I/O on JVM, `Darwin`'s
+wrapper around `NSURLSession` on iOS) never needs to be visible to, or
+compilable by, the common source set at all — each platform's separate
+compiler invocation links in its own concrete `actual`, so `GitHubClient`'s
+business logic is compiled exactly once as source but produces different
+final machine code (JVM bytecode vs. an LLVM-compiled Kotlin/Native binary)
+per target, each wired to a genuinely different underlying networking
+implementation.
+
 ## Cheat sheet
 
 | Concern | Approach |

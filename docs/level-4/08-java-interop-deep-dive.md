@@ -163,6 +163,40 @@ Two defenses:
   to a private field plus a getter, which such a framework won't find
   unless `@JvmField` is added to expose the field itself.
 
+## How It Actually Works
+
+`legacy.score` resolving to `getScore()`/`setScore(int)` is a purely
+**syntactic** convenience the Kotlin compiler applies while reading Java
+bytecode: it recognizes the `getX`/`setX` method-pair naming convention on
+any class it imports (Kotlin or Java) and lets you spell the pair as
+property access — there's no new Java bytecode involved, `legacy.score`
+literally compiles to `legacy.getScore()`, and `legacy.score = 95` compiles
+to `legacy.setScore(95)`. This is why it also works for Kotlin classes:
+"properties" in Kotlin are always this same getter/setter shape underneath
+(as covered in the classes module), so the convention is symmetric in both
+directions.
+
+`@JvmStatic` on a companion-object function exists because, without it,
+`Greeter.staticGreet(...)` wouldn't compile from Java the way you'd expect:
+recall from the classes module that `object`/companion declarations compile
+to an `INSTANCE` field on a real class, meaning a companion function is
+normally an *instance* method on `Greeter.Companion`, reachable from Java
+only as the verbose `Greeter.Companion.staticGreet(...)`.
+`@JvmStatic` tells the compiler to additionally generate a real `static`
+method directly on `Greeter` itself (which just delegates to the
+companion's instance method), giving Java callers the plain, static-style
+call they'd expect from a factory or utility method. `@JvmOverloads` does
+something similar for default arguments: recall that a function with
+defaults compiles to a single method taking every parameter plus a hidden
+bitmask (covered in the functions module) — `@JvmOverloads` makes the
+compiler additionally emit one overload per suffix of trailing default
+parameters, so Java sees `greet(String)` and `greet(String, String)` as two
+real, separate methods instead of one method Java has no convenient way to
+call with fewer arguments. `@JvmName("createGreeter")` similarly overrides
+the synthetic `<FileName>Kt` static-method name Java would otherwise see
+for a top-level function, letting you present a cleaner name across the
+interop boundary without changing anything about how Kotlin callers see it.
+
 ## Cheat sheet
 
 | Concern | Annotation/pattern |

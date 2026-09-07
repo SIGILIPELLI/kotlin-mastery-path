@@ -133,6 +133,36 @@ No newline here... still the same line.
 This adds a newline automatically.
 ```
 
+## How It Actually Works
+
+Kotlin never runs "as Kotlin." `kotlinc` compiles your `.kt` file into standard
+JVM `.class` files containing bytecode — the same format `javac` produces from
+Java source. That's why a single `fun main()` at the top level of a file named
+`Hello.kt` gets compiled into a synthetic class called `HelloKt` with a
+`public static void main(String[] args)` method: the JVM has no concept of a
+"top-level function," so the compiler invents a container class named after
+the file (`<FileName>Kt`) and makes every top-level function/property a
+`static` member of it. You can see this yourself:
+
+```bash
+kotlinc Hello.kt -include-runtime -d hello.jar
+javap -p HelloKt.class
+```
+
+That will show `public static final void main(java.lang.String[])` — plain
+Java bytecode, nothing magical. The Kotlin standard library (`kotlin-stdlib.jar`)
+ships alongside your compiled classes and provides things like `println` as
+static calls into `kotlin.io.ConsoleKt`, which itself just forwards to
+`System.out.println`.
+
+The REPL works differently: it doesn't emit files, it compiles each line into
+an in-memory class immediately after you press Enter, executes it inside the
+same running JVM process, and keeps the resulting bindings (`x`, `y`, `res0`,
+...) as fields on synthetic wrapper classes it generates on the fly — which is
+why the REPL can feel slower to start (it boots a full JVM first) but
+instantaneous per-line after that (no new process, just new classes loaded
+into the existing one).
+
 ## Cheat sheet
 
 | Task | Command |

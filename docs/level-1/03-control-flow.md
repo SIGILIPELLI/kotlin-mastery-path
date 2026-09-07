@@ -217,6 +217,33 @@ i=3 j=1
 Labels (`outer@`) let `break`/`continue` target an outer loop directly —
 useful for nested loops without extra flag variables.
 
+## How It Actually Works
+
+`if` as an expression compiles down to exactly what you'd expect from Java
+bytecode — a conditional jump (`ifeq`/`ifne`) with the two branches merging
+back to a single point where the result is left on the stack — the JVM has
+always supported this pattern (it's how the ternary `?:` in Java compiles
+too); Kotlin just exposes it at the source level instead of restricting `if`
+to statement position. There is no separate "expression if" instruction; the
+compiler decides purely from context whether the value produced needs to be
+kept.
+
+`when` compiles very differently depending on what it's switching on. A
+`when` over `Int`/`enum`/`String` constants with dense, small integer-like
+cases can be compiled to a JVM `tableswitch` or `lookupswitch` instruction
+(true O(1) or O(log n) dispatch, like Java's `switch`) — but only when the
+Kotlin compiler can prove the branches are simple equality/constant checks.
+The moment a `when` branch uses a range (`in 1..10`), a type check (`is
+String`), or an arbitrary boolean condition, the compiler falls back to
+emitting a plain sequential chain of `if`/`else if` comparisons — there's no
+special bytecode instruction for "pattern matching," it's just chained
+conditionals with each branch's condition inlined as a boolean expression.
+The exhaustiveness check on `when`-as-expression is a compile-time-only
+analysis (it inspects `sealed class`/`enum` hierarchies to prove every case
+is covered); at runtime, if you did somehow reach no matching branch and
+there's no `else`, the compiler-generated code throws
+`NoWhenBranchMatchedException` rather than silently returning `Unit`.
+
 ## Cheat sheet
 
 | Concept | Syntax |

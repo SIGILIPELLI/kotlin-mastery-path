@@ -185,6 +185,41 @@ fun main() {
 6
 ```
 
+## How It Actually Works
+
+Kotlin does not have its own collection runtime — `List<String>`,
+`MutableList<String>`, `Set`, and `Map` all compile straight down to
+`java.util.List`, `java.util.Set`, and `java.util.Map`. There is no
+`kotlin.collections.ArrayList` class shipped separately at runtime; when you
+write `mutableListOf("apple", "banana")`, the compiler emits a call to
+`kotlin.collections.CollectionsKt.mutableListOf(...)`, which internally just
+constructs and returns a plain `java.util.ArrayList`. This is why Kotlin
+collections interoperate seamlessly with Java libraries — at the bytecode
+level, they *are* Java collections.
+
+The read-only vs. mutable distinction (`List` vs `MutableList`) is therefore
+a **compile-time-only illusion** layered on top of a single underlying Java
+type. `listOf(...)` returns the exact same `java.util.ArrayList` instance
+type that `mutableListOf(...)` does — it's just typed as `List<String>` by
+the Kotlin compiler, which then refuses to let you call `.add()` on that
+static type. If you cast that "read-only" `List` back to `MutableList` using
+an unchecked cast or reflection and call `.add()` on it, it succeeds at
+runtime, because the underlying object was mutable all along — the JVM never
+enforced read-only-ness, Kotlin's type checker did. Genuinely immutable
+collections (where mutation truly can't happen, even via casting) require
+`java.util.Collections.unmodifiableList` or Kotlin's `List.of`-style
+factories on newer stdlib versions.
+
+Operations like `.sorted()`, `.distinct()`, and `.reversed()` each allocate a
+**new** backing list rather than mutating or reordering the original — you
+can confirm this by checking that `numbers` still prints in its original
+order after calling `numbers.sorted()`. Internally, most of these are thin
+wrappers that copy the elements into a fresh `ArrayList`, delegate to
+`java.util.Collections.sort` (a well-tuned adaptive mergesort/Timsort
+variant) or build a `LinkedHashSet` (for `.distinct()`, which relies on
+`hashCode()`/`equals()` to detect duplicates while preserving insertion
+order) and return that as the new list.
+
 ## Cheat sheet
 
 | Task | Syntax |

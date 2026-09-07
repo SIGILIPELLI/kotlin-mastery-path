@@ -195,6 +195,39 @@ letting it propagate as an unhandled 500.
   a missing param, `NumberFormatException` for a non-numeric one) — worth
   handling both explicitly in real code rather than a blind `!!`.
 
+## How It Actually Works
+
+Ktor's routing DSL (`get { }`, `post { }`, nested `route("/tasks") { }`) is
+built entirely from ordinary Kotlin lambdas-with-receiver, the same
+mechanism behind Gradle's `build.gradle.kts` blocks — `routing { get("/") {
+...} }` is a function call taking a lambda whose receiver type is `Routing`,
+so unqualified calls like `get(...)` inside it resolve as extension
+functions on that receiver. None of this is special syntax; it's the
+regular Kotlin type system making a nested block of function calls read like
+a mini-language.
+
+Each request handler you register (`get("/tasks") { call.respond(...) }`) is
+compiled to a `suspend` lambda, stored internally as a `Function2`-style
+object (receiver + continuation) exactly like any other suspend lambda from
+the coroutines module — Ktor's Netty engine runs each incoming request on a
+coroutine, so a handler that calls a suspending database or HTTP client
+inside it doesn't block one of Netty's limited I/O threads while waiting;
+the request's continuation is parked and that thread goes back to servicing
+other connections, then resumes the specific request's state machine when
+the data arrives. This non-blocking-per-request model is the entire reason
+Ktor can serve large numbers of concurrent connections off a small,
+fixed-size thread pool.
+
+`call.respond(task)` reaching a `@Serializable` `Task` and turning it into
+JSON bytes on the wire uses the exact compiler-generated `serializer()`
+method from the JSON module — the `ContentNegotiation` plugin installed
+above just looks up `Task`'s generated `KSerializer` (via the reified-generic
+machinery from the generics module) and calls its `serialize()` method to
+produce the response body; there's no separate reflection-based JSON mapper
+involved, which is part of why Ktor + kotlinx.serialization stays fast even
+under heavy request volume — the serialization work was already done by the
+compiler, not discovered at request time.
+
 ## Cheat sheet
 
 | Concept | Kotlin/Ktor construct |

@@ -222,6 +222,36 @@ that never uploads it.
   most common source of a suite that's green on a laptop and red in
   Actions.
 
+## How It Actually Works
+
+`var balance: Long = initialBalance private set` demonstrates something
+about Kotlin properties worth making explicit: the `get()`/`set()` pair on a
+property can each carry **independent visibility**. The compiler still
+generates one field plus a getter and a setter as always, but here it emits
+the getter as `public` and the setter as `private` — meaning `account.balance`
+reads fine from any calling code, while `account.balance = 500` only
+compiles from inside `Account`'s own class body. This is why `deposit()`
+and `withdraw()` (both members of `Account`) can freely write `balance +=
+amount`, while `TransferService`, an outside class, can only call
+`from.withdraw(...)` and never touch the field directly — the compiler
+enforces the account's invariant (balance changes only via validated
+methods) the same way `private`/`public` normally enforces encapsulation,
+just split per-accessor instead of per-property.
+
+The hand-rolled `TestCase`/`assertEquals`/`assertThrows` here is a faithful
+miniature of what JUnit 5 actually does internally, not a toy simplification
+of something fundamentally different: JUnit's real
+`Assertions.assertEquals` is exactly this shape — compare two values,
+throw an `AssertionError` subtype with a descriptive message on mismatch —
+and its test runner is exactly this shape too, a loop over discovered test
+units, each invoked independently inside a `try`/`catch` so one failure's
+thrown exception doesn't stop the remaining tests from running, with
+pass/fail counted and reported at the end. The main things real JUnit adds
+on top are reflection-based discovery (finding `@Test`-annotated methods,
+as covered in the JUnit basics module) and a pluggable test-engine
+architecture — the actual assert-and-report mechanics are the same
+straightforward exception-based logic reproduced here in plain Kotlin.
+
 ## Cheat sheet
 
 | Concern | Approach |

@@ -163,6 +163,43 @@ call.
   `Collection.parallelStream()` (Java interop) or splitting work across
   coroutines explicitly.
 
+## How It Actually Works
+
+The `LongArray` vs `ArrayList<Long>` gap traces directly to a JVM memory
+layout difference, not anything Kotlin-specific: `LongArray` compiles to a
+genuine `long[]` — a single contiguous block of memory holding raw 8-byte
+values with no per-element object headers — while `ArrayList<Long>` (backed
+by `Object[]`) stores **references** to separately heap-allocated `Long`
+objects, each with its own object header (typically 16 bytes of overhead on
+a 64-bit JVM before the actual 8-byte value). Iterating the boxed version
+means chasing a pointer to a different heap location for every element,
+which is cache-unfriendly (each `Long` object can land anywhere the
+allocator put it) versus the primitive array's sequential memory scan,
+which the CPU's prefetcher handles efficiently — that's most of the
+order-of-magnitude gap measured above, on top of the allocation cost of
+100,000 separate `Long` objects versus one array allocation.
+
+`Sequence`'s advantage over chained `List` operators is really about
+avoiding **allocation churn** the JIT can't always optimize away — each
+`.map`/`.filter` on a `List` genuinely calls `new ArrayList<>()` and fills
+it, and while the JVM's generational garbage collector is very fast at
+reclaiming short-lived objects (this is precisely the case young-generation
+GC is tuned for), it's still work the CPU has to do that a single-pass
+`Sequence` skips by fusing every operator into one loop over the source,
+per element, with no intermediate container ever materializing.
+
+`inline` functions eliminate a different cost entirely: every non-inline
+lambda passed as an argument is a `Function1`/`Function2`-style object that
+usually has to be allocated (unless it's a captureless singleton, as
+discussed in the lambdas module) and then invoked through an interface
+call (`invokeinterface`), which the JIT can sometimes — but not always —
+inline back out via speculative devirtualization. Marking the higher-order
+function `inline` removes the uncertainty: the compiler pastes the lambda's
+actual bytecode directly into the call site during compilation, so there is
+provably no allocation and no indirect call at all, which is why the
+standard library's hottest, most-called higher-order functions (`map`,
+`let`, `filter`, `apply`) are all declared `inline`.
+
 ## Cheat sheet
 
 | Concern | Fix | When it matters |

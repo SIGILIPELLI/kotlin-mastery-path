@@ -218,6 +218,44 @@ runtime, so `value is T` there is a compile error, not just a bad idea.
 | Star projection | `List<*>` | "A `List` of something," read-only access |
 | Reified type parameter | `inline fun <reified T>` | `T` usable in `is T` checks at runtime |
 
+## How It Actually Works
+
+Kotlin generics use **type erasure**, exactly like Java's — `Box<T>`
+compiles to a single `.class` file with one field typed `Object` (or, if `T`
+has an upper bound like `Comparable<T>`, typed as that bound), and every
+`Box<Int>`, `Box<String>` at runtime is the *same* `Box` class with the same
+bytecode; there is no `Box$Int` or `Box$String` generated. `T get(): T`
+compiles to a method returning `Object`, with an invisible `checkcast`
+inserted at each call site by the compiler where the result gets assigned
+to a specific type — that's the "unchecked cast" every generics-erasure
+language quietly does for you. This is precisely why you can't write `T()`
+or check `if (x is T)` in a normal generic function: by the time the JVM
+runs your code, the `T` bytecode needed to make that check has already been
+erased down to `Object`, and there is no runtime record of what `T` was
+supposed to be.
+
+`reified` type parameters exist only because they're paired with `inline`.
+An `inline fun` doesn't compile to a callable method at all in the usual
+sense — the compiler literally **copies the function's bytecode into every
+call site** that invokes it, substituting the caller's actual type argument
+in place of `T` textually, the same way a C preprocessor macro would. So
+`list.filterByType<String>()` doesn't erase `String` to `Object` because
+there's no separate method being erased — the `is T` check becomes a
+concrete `is String` check baked directly into the caller's own bytecode at
+compile time. This is also why `reified` is forbidden outside `inline`
+functions: without inlining, there's no call site to paste concrete
+bytecode into, so the eraser would have nothing to substitute against.
+
+`out`/`in` variance is enforced entirely by the Kotlin compiler's type
+checker and has **no separate bytecode representation** on the JVM beyond
+what Java's own wildcard generics (`? extends T` / `? super T`) already
+provide — when Kotlin generates a Java-visible signature for a
+declaration-site-variant type, it actually emits Java wildcards
+(`Container<? extends Animal>`) into the class file's generic-signature
+metadata, so `out`/`in` is really "declare the variance once at the class,
+and let the compiler emit the equivalent Java use-site wildcard everywhere
+automatically" rather than a fundamentally new runtime capability.
+
 ## Exercise
 
 Write a generic class `Stack<T>` with `push(item: T)`, `pop(): T?`, and

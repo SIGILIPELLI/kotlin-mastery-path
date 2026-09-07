@@ -115,6 +115,36 @@ fun` (like `currentTimeMillis`) is stable and warning-free.
   deprecation warnings on current Kotlin Multiplatform Gradle plugin
   versions; they're warnings, not errors, for now.
 
+## How It Actually Works
+
+`commonMain` is never compiled to a runnable artifact by itself — the
+Kotlin Multiplatform Gradle plugin compiles it **once per target**, feeding
+the exact same `.kt` source files into a different backend compiler each
+time: the JVM target runs it through the standard Kotlin/JVM compiler
+producing `.class` bytecode, a JS target runs it through Kotlin/JS producing
+JavaScript, and a Native target (iOS) runs it through Kotlin/Native's LLVM
+based compiler producing a native binary — three genuinely different
+compilation pipelines sharing one parsed-and-type-checked source tree. This
+is why `expect`/`actual` has to exist: `expect class PlatformInfo` has no
+body to compile at all in `commonMain` — it's a **type-checking contract
+only**, telling the common-source compiler pass "trust that something
+matching this shape exists," while each platform's `actual` declaration is
+what the platform-specific compiler backend actually turns into real code.
+
+Critically, the compiler enforces that every `expect` declaration has
+exactly one matching `actual` per target *before* any platform-specific
+compilation is allowed to finish — if `jsMain` forgot to provide `actual
+fun currentTimeMillis()`, the JS compilation would fail with an unresolved
+reference, even though the JVM target compiles fine, because each target's
+build is otherwise fully independent once `commonMain`'s contract is
+satisfied for it. At the call site inside `greet(info)`, `info.name()`
+resolves against the `expect class`'s declared shape during common
+compilation, then gets rebound to whichever concrete `actual`
+implementation exists for the target actually being built — there's no
+runtime dispatch or reflection involved; it's link-time-style resolution
+performed separately for each platform compiler invocation, closer to how a
+C header/implementation split works than to virtual-method polymorphism.
+
 ## Cheat sheet
 
 | Concept | Purpose |

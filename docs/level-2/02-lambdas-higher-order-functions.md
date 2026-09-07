@@ -223,6 +223,37 @@ function work like a normal early return from the enclosing function (a
 Almost all of Kotlin's standard library higher-order functions (`filter`,
 `map`, `let`, `run`, `also`, `apply`) are `inline` for exactly this reason.
 
+## How It Actually Works
+
+The JVM (pre-invokedynamic-lambdas era, and still by default for Kotlin) has
+no native "function value" type, so every non-inline lambda has to become a
+real object implementing a real interface. Kotlin represents a function type
+`(Int) -> Int` as the generic interface `kotlin.jvm.functions.Function1<Int,
+Int>`, with a single abstract method `invoke(p1: P1): R`. A lambda literal
+like `{ x -> x * x }` compiles to an **anonymous class** implementing
+`Function1`, whose `invoke()` body is your lambda's code; `square(5)` then
+compiles to `square.invoke(5)`. Function types with different arities map to
+`Function0`, `Function2`, `Function3`, ... up to `Function22` — which is also
+why Kotlin lambdas historically topped out around 22 parameters.
+
+This matters for performance: each time a non-inline lambda literal is
+created, the compiler either allocates a new anonymous-class instance on the
+spot, or — if the lambda captures no variables from its enclosing scope (no
+closure) — reuses a single cached singleton instance of that anonymous class,
+since a captureless lambda is stateless and safe to share. A lambda that
+*does* capture a variable (a "closure") gets fields added to its generated
+anonymous class to hold the captured values, copied in via its generated
+constructor at the point the lambda literal is evaluated — which is why a
+`var` captured by a lambda in Kotlin is wrapped in a `Ref.IntRef`-style
+holder object internally, so multiple lambdas capturing and mutating the
+same outer `var` all see the same box rather than independent copies.
+
+The `it` shorthand is resolved entirely at compile time by name-lookup
+convention — the compiler simply binds the single implicit parameter to the
+identifier `it` while type-checking the lambda body; there's no runtime
+concept of "it" at all, it never appears in the generated `invoke()`
+method's bytecode as anything other than parameter slot 1.
+
 ## Cheat sheet
 
 | Syntax | Meaning |

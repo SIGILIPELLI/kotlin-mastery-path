@@ -164,6 +164,36 @@ BUILD SUCCESSFUL
   column count, non-numeric value for an `Int` parameter) fails at
   runtime with a `CsvSource`-specific error, not a compile error.
 
+## How It Actually Works
+
+`mockk<PaymentGateway>()` doesn't write a hand-coded fake — it generates a
+real class implementing `PaymentGateway` **at runtime**, using bytecode
+generation (via ByteBuddy/Objenesis under MockK's hood) to synthesize a
+proxy class whose every method is instrumented to record calls and consult
+a table of configured stub answers instead of running real logic. This is
+only possible because `PaymentGateway` is an interface — MockK's proxy class
+implements it directly, satisfying the JVM's normal `invokeinterface`
+dispatch, so `OrderService` calling `gateway.charge(...)` neither knows nor
+cares it's calling a synthetic, freshly-generated class rather than a
+production implementation. `coEvery { gateway.charge(500) } returns true`
+works by first calling the real (proxied) method inside a special
+recording mode that captures which method and arguments were invoked, then
+associates that call signature with the return value in an internal map
+consulted by every future matching call.
+
+`runTest` solves a specific problem with testing `suspend` code: a real
+`delay(5000)` suspends by scheduling a resume via a real clock, and a normal
+test would have to actually wait. `runTest` instead runs the coroutine
+under a special `TestDispatcher` backed by a **virtual, scheduler-controlled
+clock** — when code under test calls `delay(5000)`, the virtual clock simply
+advances its internal counter by 5000 "milliseconds" instantly, then runs
+any coroutines that became eligible to resume at that virtual time, with no
+real wall-clock wait happening at all. This works because `delay` is itself
+implemented via the current coroutine context's dispatcher/scheduler rather
+than a hardcoded `Thread.sleep` — swapping in a different scheduler for
+tests is enough to change what "time passing" means for every suspend
+function running under it, without touching `OrderService`'s code at all.
+
 ## Cheat sheet
 
 | Need | Tool |

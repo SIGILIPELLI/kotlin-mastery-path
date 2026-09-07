@@ -188,6 +188,45 @@ fun CounterScreen(viewModel: CounterViewModel) {
 `Text(text = "Count: $count")` registers this composable to recompose
 whenever the flow emits, without any manual "refresh the UI" call.
 
+## How It Actually Works
+
+`@Composable` is not a marker the JVM understands natively — Compose ships
+its own compiler plugin that runs alongside the standard Kotlin compiler and
+rewrites every composable function's signature, appending a hidden
+`Composer` parameter (roughly `fun CounterScreen(viewModel: ..., $composer:
+Composer, $changed: Int)`). That injected `Composer` is what lets Compose
+track, at runtime, exactly which piece of state each composable read while
+running, by recording reads into a data structure called the **slot
+table**. When `count` (from `collectAsState()`) changes, Compose doesn't
+re-run your whole UI tree — it looks up, via the slot table, precisely
+which composables read that specific state value last time, and
+re-invokes only those functions (this is "smart recomposition," and it's
+why Compose scales to complex screens without repainting everything on
+every state change).
+
+`by viewModel.count.collectAsState()` combines two mechanisms already
+covered elsewhere in this course: `collectAsState()` is a `@Composable`
+extension function that internally launches a coroutine collecting the
+`Flow` (using the Flow-collection mechanics from the coroutines-flow
+module) and stores each emitted value into a Compose `MutableState<Int>`
+object; the `by` is the same property-delegation mechanism from the Exposed
+module, where `State<T>` implements `getValue()`, so reading `count` really
+calls the delegate's `getValue`, which both returns the current value *and*
+registers this composable's `Composer` as an observer of that specific
+state slot — that registration is what triggers targeted recomposition when
+the state's `setValue` is later called from inside the coroutine collecting
+the flow.
+
+`ViewModel` surviving configuration changes is an ordinary object-lifetime
+trick, not magic: the Android framework retains the `ViewModelStore`
+instance itself across an `Activity` being destroyed and recreated (which
+genuinely happens — a brand new `Activity` object is constructed after a
+rotation), and hands the *same* `ViewModel` instance back to the new
+`Activity` when it asks for one with a matching key — so `ViewModel` state
+survives not because Kotlin makes it durable, but because the platform
+deliberately keeps that one object alive across an Activity teardown/rebuild
+cycle that destroys everything else.
+
 ## Kotlin-specific traps
 
 - **Configuration changes destroy the Activity, not the `ViewModel`.**

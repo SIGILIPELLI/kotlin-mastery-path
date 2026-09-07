@@ -151,6 +151,36 @@ runs inside a container instead of on bare metal:
   stdlib) into one runnable artifact, which is what `COPY --from=build`
   above expects to find.
 
+## How It Actually Works
+
+`System.getenv("PORT")` reads directly from the OS process's environment
+block — the same table of key/value strings every process on the machine
+inherits from its parent at `fork`/`exec` time, whether that parent is your
+shell (`PORT=9090 java -jar app.jar`) or the container runtime (`docker run
+-e PORT=8080`, or Kubernetes injecting a `Pod`'s env from a `ConfigMap`).
+Nothing about the JVM or Kotlin changes based on who set that variable —
+`getenv` is a thin wrapper over the platform's `environ`, so from the JVM's
+point of view a container's injected environment variable is
+indistinguishable from one set in a terminal, which is exactly why the code
+doesn't need to know or care it's now running inside a container.
+
+The multi-stage Dockerfile's size win comes from Docker's **layered
+filesystem** model: each `FROM`/`RUN`/`COPY` instruction creates a new
+image layer, and `COPY --from=build` copies files out of a *previous
+stage's* final filesystem snapshot into the *current* stage's layers,
+without pulling along any of that earlier stage's own layers (the Gradle
+distribution, the downloaded dependency cache, the JDK's `javac`/`kotlinc`
+binaries) — those live only in the intermediate `build` stage's image,
+which Docker discards after the final stage is built, unless you explicitly
+tag it. `eclipse-temurin:21-jre-alpine` is smaller for two independent
+reasons: the **JRE** omits the compiler and dev tools a JDK carries (`javac`,
+`jshell`, the full `jmods` set), and **Alpine** uses `musl libc` and
+BusyBox instead of a full glibc-based userland, trading some binary
+compatibility for a base image that's tens of megabytes instead of
+hundreds. None of this touches how your compiled `.jar` runs — bytecode is
+bytecode regardless of which JRE build executes it — it only affects how
+much unrelated filesystem content ships alongside it.
+
 ## Cheat sheet
 
 | Concern | Approach |

@@ -204,6 +204,39 @@ fun main() {
 HIGH
 ```
 
+## How It Actually Works
+
+`@Serializable` triggers a real **compiler plugin** (`kotlinx-serialization`
+hooks into the Kotlin compiler's IR backend), which runs during compilation
+and synthesizes an entire companion object method,
+`Product.Companion.serializer()`, plus a generated `KSerializer<Product>`
+implementation — all as ordinary bytecode sitting right there in
+`Product.class`, not generated at runtime and not using reflection at all.
+You can confirm this with `javap -p Product.class`: alongside the usual data
+class methods you'll find a static `serializer()` method and a nested
+`$serializer` class that knows, field by field, how to read and write each
+property — because the plugin literally writes that code for you at compile
+time, using the exact same IR the rest of the compiler works with.
+
+This is why `kotlinx.serialization` fails at **compile time**, not runtime,
+when your model doesn't line up: `Json.decodeFromString<Product>(json)`
+resolves the generated serializer via Kotlin's `reified` generics (see the
+generics module for how `<Product>` survives erasure here) and calls its
+compiler-generated `deserialize()` method directly — there's no
+`Class.forName` / field-reflection lookup at any point, so a missing
+property or type mismatch shows up as a `SerializationException` built from
+information the plugin already baked into the generated code, and structural
+issues (e.g. forgetting `@Serializable` on a nested class) are caught by the
+compiler itself before the program ever runs.
+
+Nested `@Serializable` classes and `List<Int>` work recursively because the
+generated `serializer()` for `Customer` calls `Address.serializer()` and
+`ListSerializer(Int.serializer())` internally — each `@Serializable` type
+contributes its own self-contained serializer, and the plugin wires them
+together into a tree that mirrors your object graph exactly, with the
+JSON encoder walking that tree field by field rather than inspecting the
+runtime object generically.
+
 ## Cheat sheet
 
 | Task | Syntax |

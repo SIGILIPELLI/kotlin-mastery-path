@@ -213,6 +213,40 @@ class AsyncTest {
 | Parameterized tests | `@ParameterizedTest` + `@ValueSource`/`@CsvSource` | Built-in data-driven testing (`forAll`, table tests) |
 | Good default when | Working across Java+Kotlin, or team already knows JUnit | Kotlin-only codebase wanting more readable specs |
 
+## How It Actually Works
+
+JUnit 5 has no special awareness of Kotlin — `@Test` is a plain annotation
+retained at runtime (`RetentionPolicy.RUNTIME`), and the JUnit Platform
+engine finds test methods purely by **reflection**: it scans compiled
+`.class` files on the test classpath, looks for methods carrying that
+annotation, instantiates the declaring class with its no-arg constructor,
+and invokes the method via `java.lang.reflect.Method.invoke()`. Nothing
+about this pipeline is Kotlin-specific — `CalculatorTest` is a completely
+ordinary JVM class from the runner's point of view, `Calculator()` inside it
+compiles to a normal constructor call, and `calculator.add(2, 3)` is a
+normal `invokevirtual`.
+
+Backtick-quoted test names like `` `add returns the sum of two numbers`()
+`` are possible because the JVM's class file format allows almost any
+string as a method name at the bytecode level (`invokevirtual` targets are
+resolved by a name-and-descriptor pair in the constant pool, not by
+identifier rules) — Kotlin source syntax normally restricts identifiers to
+valid characters, but backticks are an escape hatch letting you write a
+method name containing spaces, since the *bytecode* was always going to
+accept it. Reflection-based test discovery then reads that literal name
+straight out of the compiled method and displays it in reports verbatim.
+
+`@BeforeEach` relies on the same reflection scan: the JUnit engine
+instantiates a **fresh instance of the test class for every single test
+method** (this is the default JUnit 5 lifecycle,
+`PER_METHOD`), so `cart = ShoppingCart()` in `setUp()` isn't resetting
+shared state between tests — there is no shared state, because each test
+method literally runs against its own separate `ShoppingCartTest` object,
+freshly constructed and then torn down. That per-method isolation is why
+`lateinit var cart` is even safe to use here: the property is guaranteed to
+be assigned in `@BeforeEach` before any `@Test` method on that fresh
+instance can run.
+
 ## Cheat sheet
 
 | Need | JUnit 5 | Kotest |

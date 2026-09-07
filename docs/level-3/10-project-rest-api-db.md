@@ -248,6 +248,35 @@ the deleted book (id 1) is gone, and fetching it afterward correctly
 returns the `StatusPages`-mapped 404 with a JSON error body instead of a
 raw exception.
 
+## How It Actually Works
+
+`install(StatusPages) { exception<BookNotFoundException> { call, cause -> ...
+} }` relies on the reified-generics mechanism from the generics module:
+`exception<T>` is an `inline fun` with a `reified T` type parameter, so
+`exception<BookNotFoundException> { }` compiles with the concrete class
+`BookNotFoundException::class` baked directly into the registration call at
+compile time (via inlining, exactly as covered for `filterByType<T>()`) —
+that's what lets Ktor's plugin build a real runtime lookup table mapping
+exception classes to handlers, rather than needing reflection to recover an
+erased type parameter later. When a request handler throws, Ktor's pipeline
+walks that table checking `cause::class` (and its supertypes) against each
+registered exception type, in the exact same "closest matching supertype
+wins" order the JVM's own `catch` clause matching uses — a handler
+registered for `Throwable` will catch anything not already claimed by a more
+specific handler like `BookNotFoundException`, but only because it's checked
+after the more specific one, not because of any special precedence rule.
+
+`BookRepository.byId` throwing `BookNotFoundException` inside a `transaction
+{ }` block interacts with the Exposed transaction machinery from Module 3:
+throwing propagates the exception up through the transaction's
+`try`/`finally`, triggering `connection.rollback()` (a no-op here since a
+read never modified anything) before the exception continues unwinding
+through the coroutine's suspended state machine — because Ktor's Netty
+engine runs each request handler as a coroutine — until it reaches
+`StatusPages`'s installed interceptor, which is really just a `try`/`catch`
+wrapped around the rest of the request-processing pipeline at the point the
+plugin was installed.
+
 ## Stretch goals
 
 - Add a `PUT /books/{id}` route for full updates, and a `PATCH

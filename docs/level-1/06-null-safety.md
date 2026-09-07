@@ -195,6 +195,41 @@ hello
 null
 ```
 
+## How It Actually Works
+
+Null safety is almost entirely a **compile-time** feature — the JVM bytecode
+target has no idea what a nullable type is; `String` and `String?` erase to
+the exact same JVM type, `java.lang.String`. What Kotlin actually does is run
+a static "nullability analysis" during compilation that tracks, at every
+point in your code, whether an expression's flow-derived null-status is
+known-non-null, known-null, or unknown — and refuses to compile a dereference
+unless the compiler can prove the receiver is non-null at that point. This is
+why `nickname.length` is a compile error but assigning `realNickname` and
+calling `.length` right after works: it's smart-cast, not a runtime check.
+
+The safe-call operator `?.` **does** produce real bytecode, though: `nickname
+?.length` compiles to roughly `if (nickname != null) nickname.length else
+null` — a genuine `ifnull` bytecode check inserted by the compiler, wrapping
+the call. Chained safe calls (`person1?.address?.city`) become nested
+null-checks, short-circuiting on the first null exactly like the equivalent
+hand-written Java would. The Elvis operator `?:` is the same idea from the
+other direction — `nickname ?: "Anonymous"` compiles to a temporary variable,
+a null check, and a conditional expression, no different from writing `val
+tmp = nickname; if (tmp != null) tmp else "Anonymous"`.
+
+The `!!` operator (not shown above but coming later) is the one place
+nullability becomes a genuine *runtime* check: it compiles to an explicit
+`Intrinsics.checkNotNull(value)` call injected by the compiler, which throws
+`KotlinNullPointerException` immediately if the value is null — meaning `!!`
+is really just Kotlin choosing to fail loudly and immediately at the
+assertion site rather than let a stray `null` propagate and blow up somewhere
+less obvious later, which is exactly what Java's implicit NPEs do. In fact
+the compiler inserts these same `Intrinsics.checkNotNullParameter` calls at
+the top of every public function for non-null parameters, so a Java caller
+passing `null` into a Kotlin function still gets a fast, clear exception
+instead of silently violating Kotlin's non-null guarantee deep inside the
+function body.
+
 ## Cheat sheet
 
 | Operator | Purpose | Example |

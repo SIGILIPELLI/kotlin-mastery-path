@@ -255,6 +255,43 @@ This surprises people who expect `id` to matter. If identity fields live in
 a base class, prefer composition (a regular property) over inheritance for
 data classes, or override `equals()`/`hashCode()` yourself.
 
+## How It Actually Works
+
+Interfaces with default method bodies compile using the exact same JVM
+mechanism Java 8+ interfaces use: `default` methods in the interface's
+bytecode. `interface Greeter { fun greet(...) = ... }` produces a real
+`.class` file with `greet` marked `default` in its bytecode; a class that
+doesn't override it simply inherits that default method the way any JVM
+class inherits a default interface method — no synthetic delegation classes
+involved. Abstract *properties* in interfaces, though, are a Kotlin-only
+concept the JVM doesn't have: `val greeting: String` in the interface
+compiles to an abstract `getGreeting()` method declaration, and each
+implementing class is required to supply a concrete getter (here, backed by
+a real field since `EnglishGreeter` and `PirateGreeter` each declare
+`override val greeting = "..."`, which does allocate a backing field on the
+*implementing* class, not the interface — interfaces themselves can never
+hold instance fields on the JVM).
+
+The `super<A>.greet()` diamond-resolution syntax is a **compile-time-only**
+requirement — the compiler detects that `C` inherits two default
+implementations of the same signature and refuses to compile unless `C`
+overrides `greet()` itself, calling out which parent's version it means via
+`invokespecial` (the same bytecode instruction Java's `A.super.greet()`
+syntax compiles to). Without an explicit override, the JVM's own default-method
+conflict-resolution rules would apply, which Kotlin considers too implicit
+to allow silently.
+
+`open`-by-default's inversion of Java matters because it's not just a style
+choice — it's checked and enforced by the bytecode verifier. A non-`open`
+Kotlin class compiles with the `ACC_FINAL` flag set on the class file, and a
+non-`open` method compiles as a `final` method — meaning the JVM itself
+would refuse to load a subclass that tried to override it, not just the
+Kotlin compiler. `describe()` calling `sound()` on `Animal` compiles to a
+regular `invokevirtual`, which is what makes it dispatch to `Dog`'s override
+at runtime through the normal JVM vtable lookup — the same polymorphism
+mechanism as Java, just gated behind an opt-in keyword instead of being the
+default.
+
 ## Cheat sheet
 
 | Concept | Keyword | Key trait |

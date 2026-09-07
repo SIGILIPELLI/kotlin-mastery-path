@@ -159,6 +159,32 @@ fun main() {
 }
 ```
 
+## How It Actually Works
+
+`val` and `var` are a source-level distinction only — the JVM bytecode for a
+local `val` and a local `var` of the same type is identical (a slot on the
+stack frame, loaded/stored with `iload`/`istore` and friends). The
+`val`-cannot-be-reassigned rule is enforced entirely by the Kotlin compiler
+during the "immutability check" phase before code generation; there is no
+`final` flag involved for locals the way there is for fields. For a `val`
+declared as a class **property**, though, the compiler does emit a `final`
+field plus a getter (and no setter), so at the class level immutability is
+real, not just a compiler courtesy.
+
+The basic types are more interesting under the hood: `Int`, `Double`,
+`Boolean`, `Char`, etc. are not boxed objects by default. The compiler
+represents them as the JVM's raw primitives (`int`, `double`, `boolean`,
+`char`) whenever it can prove that's safe — e.g. a non-nullable `Int` local
+compiles to a plain `int`. Kotlin only *boxes* a primitive into its wrapper
+object (`java.lang.Integer`, etc.) when it must: when the value is nullable
+(`Int?`), stored in a generic collection (`List<Int>` erases to
+`List<Object>`, forcing boxing), or used through a type parameter. This is
+why `Int?` in Kotlin and `int` are genuinely different at the bytecode level
+— the `?` isn't cosmetic, it changes which JVM type gets emitted. `Long`'s
+`L` suffix and `Float`'s `f` suffix aren't runtime markers either; they only
+tell the compiler which literal-parsing rule to apply at compile time — by
+the time bytecode exists, the value is just a `long` or `float` slot.
+
 ## Cheat sheet
 
 | Concept | Syntax |

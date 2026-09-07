@@ -142,6 +142,42 @@ Product(name=Widget, price=9.99, quantity=3)
 Product(name=Gadget, price=19.99, quantity=1)
 ```
 
+## How It Actually Works
+
+The `data` modifier is a compile-time instruction to the compiler: "generate
+these standard methods for me based on the primary-constructor properties."
+`equals()`, `hashCode()`, `toString()`, `copy()`, and `componentN()` are all
+ordinary methods written into the `.class` file exactly as if you'd typed
+them by hand — nothing about them is a special JVM feature or reflective
+trick. You can prove it with `javap -p Product.class` and see plain methods
+like `public boolean equals(Object)`.
+
+The generated `equals()` compares every property listed in the primary
+constructor (not properties declared in the class body) using `==`, which
+for reference types means calling their own `.equals()` — so `Product`'s
+`equals` calls `String.equals` on `name`, boxed `Double.equals` on `price`,
+and boxed `Integer.equals` on `quantity`. `hashCode()` is generated to be
+consistent with that: it combines each property's `hashCode()` using the
+classic `31 * result + property.hashCode()` recipe, the same convention
+`Objects.hash()` and Java's IDE-generated hashCode use — which matters
+because it's what makes `HashMap`/`HashSet` correctly treat two data-class
+instances with equal fields as the same key.
+
+`copy()` is not reflective either — the compiler generates a real method
+that calls the primary constructor with each parameter defaulted to
+`this.propertyName`, and any arguments you pass to `copy()` override just
+those defaults. That's why `copy()` can only touch primary-constructor
+properties: there's no generic "clone with these fields changed" mechanism,
+just a generated call to the same constructor you already have.
+
+`componentN()` functions (`component1()`, `component2()`, ...) are what
+destructuring (`val (a, b) = instance`) actually compiles to — `val (x, y) =
+point` becomes `val x = point.component1(); val y = point.component2()`
+under the hood, resolved purely by position and by the `componentN` naming
+convention, which is also why destructuring works on `Pair`, `Map.Entry`,
+and any class you manually add `componentN()` functions to, data class or
+not.
+
 ## When to use a data class vs. a regular class
 
 | Use a data class when... | Use a regular class when... |

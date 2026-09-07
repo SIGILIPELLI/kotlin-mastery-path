@@ -143,6 +143,48 @@ tool."
   production** — real secrets belong in environment variables or a secrets
   manager, never committed to source control.
 
+## How It Actually Works
+
+bcrypt's slowness is structural, not a configuration knob layered on top of
+a fast hash — it's built on the **Blowfish** cipher's key-setup routine
+(`EksBlowfishSetup`), which was deliberately designed to be expensive to
+initialize, and the cost factor controls how many times (`2^cost`) that
+setup loop repeats before the actual hash is produced. This is fundamentally
+different from "SHA-256 run in a loop `N` times" because Blowfish's key
+schedule is memory-and-CPU-bound in a way that resists the two classic
+brute-force accelerants: GPUs (which excel at simple, massively parallel
+arithmetic like SHA-256 but are far less efficient at Blowfish's dependent,
+lookup-table-heavy setup) and ASICs built for hashing. The embedded salt
+isn't stored separately because bcrypt's output format
+(`$2a$12$<22-char-salt><31-char-hash>`) concatenates the algorithm version,
+cost factor, salt, and hash into one self-describing string — `verifyer()`
+parses that string to extract the exact same salt and cost factor used
+originally, recomputes the hash with the candidate password, and does a
+constant-time comparison against the stored one.
+
+`SecureRandom` differs from `kotlin.random.Random`/`java.util.Random` at the
+algorithm level, not just "how it's used": both `Random` implementations are
+**linear congruential generators** (LCGs) or similar — fast, deterministic
+formulas where each output is a mathematical function of the previous
+internal state, meaning observing enough consecutive outputs lets an
+attacker reconstruct the seed and predict every future value. `SecureRandom`
+instead draws entropy from OS-level unpredictable sources (interrupt
+timing, hardware noise, `/dev/urandom` on Linux) and runs it through a
+cryptographically-vetted algorithm (commonly a SHA-1/SHA-256-based DRBG),
+specifically engineered so that observing outputs gives no practical way to
+predict the next one.
+
+Exposed's parameterization traces to the JDBC layer underneath it:
+`Users.select { Users.username eq input }` compiles the query with a literal
+`?` placeholder in the SQL string sent to the database driver, and passes
+`input` separately via `PreparedStatement.setString(...)` — the database
+engine parses the SQL structure *before* the parameter value is substituted
+in, so a value like `' OR '1'='1` is bound as a single literal string value
+for comparison, never re-parsed as part of the SQL grammar. String
+concatenation-based queries fail exactly because they skip this
+structure-then-substitute separation, letting attacker input be parsed as
+SQL syntax rather than treated as inert data.
+
 ## Cheat sheet
 
 | Concern | Do | Don't |

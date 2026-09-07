@@ -238,6 +238,51 @@ fun main() = runBlocking {
 config loaded
 ```
 
+## How It Actually Works
+
+The JVM has no built-in notion of a suspendable function — coroutines are
+implemented entirely by the Kotlin compiler transforming your code via
+**Continuation-Passing Style (CPS)**. Every `suspend fun` is compiled with an
+extra, invisible parameter appended to its signature: a
+`Continuation<T>` — an interface with one method, `resumeWith(Result<T>)`.
+`suspend fun fetchGreeting(): String` really compiles to something shaped
+like `fun fetchGreeting(completion: Continuation<String>): Any?`, returning
+either the real result or a special marker object,
+`COROUTINE_SUSPENDED`, telling the caller "I've suspended, I'll call your
+continuation later instead of returning normally right now."
+
+For a `suspend` function with more than one suspension point (multiple
+`delay()`/`await()` calls, or any call to another `suspend` function), the
+compiler goes further and rewrites the function body into a **state
+machine**: it generates a class implementing `Continuation` with an integer
+`label` field tracking which suspension point execution last stopped at, and
+a `switch`/`when` on that label inside a single `invokeSuspend` method that
+jumps straight to the code after the appropriate `delay()` call when
+resumed. Local variables that need to survive a suspension point become
+fields on this generated state-machine object instead of JVM stack slots —
+because a real stack frame can't be paused and resumed on a different call
+later, but a heap-allocated object with fields can be. This is exactly why
+`delay(100)` doesn't block the thread the way `Thread.sleep(100)` does: it
+schedules a timer callback and returns `COROUTINE_SUSPENDED` immediately,
+freeing the underlying OS thread to go do other work (run other coroutines,
+even) until the timer fires and calls `resumeWith` on the continuation,
+which re-enters the state machine at the saved `label`.
+
+`launch` and `async` are ordinary higher-order functions (not compiler
+magic) built on top of this machinery — `launch` builds a `Job` wrapping a
+`StandaloneCoroutine`, wires up the passed lambda's compiler-generated
+continuation to run on the given `CoroutineDispatcher`'s thread pool, and
+returns immediately without waiting, which is precisely why "End of main"
+prints before the delayed `launch` body does. `async` does the same but
+wraps the eventual result in a `Deferred`, whose `.await()` is itself a
+`suspend` function — it suspends the calling coroutine (again by returning
+`COROUTINE_SUSPENDED` and registering a continuation) until the async block's
+`Job` completes, at which point resuming returns the actual value. Because
+both `async` blocks in the example are launched before either is awaited,
+their state machines are both handed to the dispatcher immediately, so their
+500ms `delay`s overlap — the measured time is ~500ms total, not ~1000ms,
+purely because launching is not the same event as awaiting.
+
 ## Cheat sheet
 
 | Concept | Purpose |

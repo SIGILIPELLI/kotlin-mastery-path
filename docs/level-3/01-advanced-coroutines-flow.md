@@ -177,6 +177,44 @@ subscribed was still delivered once a collector showed up.
 - **`flowOn` changes the upstream context, not downstream.** `flow{...}.flowOn(Dispatchers.IO).map{...}` runs the builder on IO but `map` still runs in the collector's context — a common point of confusion when reasoning about which dispatcher code executes on.
 - **`launchIn` needs a scope.** `flow.onEach{...}.launchIn(scope)` is the idiomatic way to start collecting without wrapping everything in `launch { flow.collect {} }`, but forgetting the scope argument is a common compile error.
 
+## How It Actually Works
+
+A `Flow<T>` is, at its core, a single-method interface:
+`suspend fun collect(collector: FlowCollector<T>)`. `flow { ... }` doesn't
+run anything — it just wraps your lambda body into an object implementing
+that interface, and `emit(value)` inside it is itself a `suspend` function
+call that invokes the downstream collector's own `suspend fun
+emit(value: T)` directly. This is why building `simpleFlow()` prints
+nothing: you've only constructed an object holding a reference to a lambda,
+and `collect { }` is the first thing that actually calls `invoke()` on it.
+Because `emit` calls straight into the collector's suspend function rather
+than pushing into a queue, the "producer suspends until the collector's
+lambda finishes" behavior isn't a design choice bolted on top — it's a
+direct consequence of `emit` being an ordinary (if compiler-transformed
+into a state machine) suspending call: control literally doesn't return to
+the `for` loop in `flow { }` until the collector lambda's own generated
+continuation resumes it.
+
+Each operator (`.map`, `.filter`, `.onEach`) is implemented as a new `Flow`
+that wraps the upstream one, so a chain like `.filter { }.map { }` is really
+nested `Flow` objects — the outer one, when collected, collects the flow
+underneath it and, in its own `emit` implementation, applies the
+transformation before forwarding the value onward, exactly mirroring the
+lazy `Sequence` wrapper-chain mechanics from the collections module, except
+each `emit`/collect step is a `suspend` call instead of a plain function
+call, which is what lets `.onEach { delay(10) }` genuinely pause between
+values without blocking a thread.
+
+`.catch { }` works by having the generated collector wrap the **upstream**
+`collect` call in a `try`/`catch` and route any exception thrown during
+upstream emission into the catch lambda instead of propagating it further —
+but it deliberately does **not** catch exceptions thrown by the *downstream*
+collector's own `collect { }` block, only ones from operators above it in
+the chain. That asymmetry is enforced by exactly where in the generated
+code the `try` block's boundaries sit, and it's why `.catch` must appear
+before `.collect` in the chain to have any effect on an exception thrown
+inside the upstream flow.
+
 ## Cheat sheet
 
 | Concept | Type | Key trait |

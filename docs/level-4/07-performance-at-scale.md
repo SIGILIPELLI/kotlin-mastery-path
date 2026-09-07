@@ -136,6 +136,42 @@ hand-rolled `measureNanoTime` loops like this module's do not.
   `take`, `first`); `sortedBy`, `groupBy`, and `toList` all force full
   evaluation regardless of whether the source is a `List` or `Sequence`.
 
+## How It Actually Works
+
+`value class UserId(val raw: Long)` achieves "type safety with zero
+allocation" through a compiler trick similar in spirit to `inline`
+functions: at most call sites, the compiler **erases the wrapper entirely**
+and substitutes the raw underlying value (`Long`) directly — a
+function parameter typed `UserId` compiles, wherever possible, to a plain
+`long` parameter, with the `UserId` type existing only during
+compile-time type-checking to stop you from accidentally passing a raw
+`Long` meant for something else (an `OrderId`, say) where a `UserId` is
+expected. This is why it's called "inline" historically: like an `inline`
+function's lambda, the wrapper class's *instance* mostly disappears from
+the compiled code, leaving only the value it wrapped. The compiler does
+have to fall back to actually boxing a `value class` into a real heap
+object in specific situations it can't erase — storing it in a generic
+collection (`List<UserId>`), returning it as `UserId?` (nullable value
+classes need a real object to represent null distinctly from the wrapped
+value), or passing it through a lambda/interface where erasure would change
+the method signature in a way that breaks binary compatibility — so the
+"zero allocation" guarantee is real but conditional, and worth checking with
+`javap` when a value class's performance matters somewhere hot.
+
+The JIT-warmup point in the benchmarks throughout this module has a
+mechanical explanation too: the JVM starts every method running in the
+**interpreter**, executing bytecode instruction-by-instruction, and only
+promotes a method to compiled machine code (via C1, then the more
+aggressively optimizing C2) once it's been invoked enough times to cross the
+JIT's hotness thresholds — which is also when optimizations like inlining,
+escape analysis (which can eliminate an allocation entirely if the JIT
+proves an object never escapes a method, sometimes turning even a boxed
+`Long` allocation into a stack-only value under the hood), and loop
+unrolling kick in. Measuring a method's first few calls times the slow
+interpreted path, not the steady-state compiled code production code
+actually runs under — which is exactly why every credible microbenchmark,
+including JMH, discards a warmup period before recording numbers.
+
 ## Cheat sheet
 
 | Concern | Approach |

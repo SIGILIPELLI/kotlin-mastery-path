@@ -144,6 +144,44 @@ control.
   entity property with a mismatched type is a compile error, which is
   actually a safety net compared to raw JDBC's stringly-typed result sets.
 
+## How It Actually Works
+
+`var name by Employees.name` is Kotlin's **property delegation** feature,
+and it compiles to something very concrete: instead of generating a normal
+backing field, the compiler generates a hidden field holding the delegate
+object (`Employees.name`, a `Column<String>`) and rewrites every read of
+`employee.name` into a call to that delegate's `getValue(thisRef, property)`
+operator function, and every write into a call to `setValue(thisRef,
+property, value)`. Exposed's `Column` implements exactly those two operator
+functions, and inside them it runs the actual SQL — `getValue` issues a
+`SELECT` (or reads from an already-loaded result cache) for that entity's
+row/column, and `setValue` queues an `UPDATE`. So `employee.name` never
+touches an in-memory field the way a normal property does; every access is
+secretly a database round-trip (or a cache hit) dressed up as ordinary
+property syntax — nothing about `by` itself is database-specific, it's the
+same generic mechanism `lazy { }` and `Delegates.observable` use.
+
+`transaction { }` is a higher-order function that opens a JDBC `Connection`,
+binds it to a thread-local (so nested Exposed calls inside the block find it
+without needing it passed explicitly), executes your lambda, and then calls
+`connection.commit()` if the lambda returns normally or
+`connection.rollback()` if it throws — implemented with a `try`/`finally`
+around the lambda invocation, using the same JVM exception-table mechanism
+discussed for the weather-CLI project's error handling. This is why
+`SchemaUtils.create(Employees)`, `Employee.new { }`, and every query inside
+the `transaction { }` block share one atomic unit of work: they're all
+literally running against the same JDBC connection object captured by that
+thread-local for the block's duration.
+
+`IntIdTable`/`IntEntity`/`IntEntityClass` generate the primary-key column
+and wiring through ordinary inheritance and generics — `IntEntityClass<Employee>`
+is a generic factory whose `new { }` builder constructs an `Employee`,
+assigns an auto-generated `EntityID<Int>`, and runs an `INSERT` inside the
+enclosing transaction, all using the same Kotlin mechanisms (constructors,
+generics, delegated properties) you've already seen elsewhere — Exposed adds
+no new JVM-level capability, it composes ordinary language features into a
+DSL that happens to talk to a database.
+
 ## Cheat sheet
 
 | Concept | Exposed construct |

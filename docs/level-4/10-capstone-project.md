@@ -261,6 +261,42 @@ validation failures, with fees calculated at the default 2.5% rate
 | 08 Java Interop | `@Synchronized` — a JVM/Java-originated primitive used directly from Kotlin |
 | 09 Code Quality | Consistent naming/formatting throughout, ready for `ktlintCheck`/`detekt` |
 
+## How It Actually Works
+
+`orders.map { order -> async { ... } }` synthesizes one child coroutine per
+order, and — as covered in the structured-concurrency module — each
+`async`'s `Deferred` registers itself as a child `Job` of the enclosing
+`coroutineScope`'s root `Job`. `deferred.map { it.await() }` then walks that
+list calling `await()` on each one in turn; because every `async` was
+already launched (handed to the dispatcher) before any is awaited, all five
+orders' validation and fee-calculation logic can run concurrently rather
+than one-at-a-time — the loop only *looks* sequential because `.map` visits
+the list in order, but the actual coroutine bodies were already scheduled
+to run as soon as `async { }` was called, back when the list was built.
+
+Catching `ValidationException` inside each `async` block rather than
+letting it escape is what keeps this capstone's structured concurrency
+useful instead of fragile: an *uncaught* exception from any one child would
+propagate to the parent `coroutineScope`, triggering the cancel-all-siblings
+behavior from the structured-concurrency module — exactly wrong for a batch
+job where one malformed order (`Order("ORD-3", "", 3_000)` with a blank
+customer name, or `Order("ORD-4", ..., -100)` with a negative amount)
+shouldn't take down every other order's processing. Converting the
+exception into a `OrderResult.Failure` value inside the `async` block turns
+what would be structured-concurrency's failure-propagation path into
+ordinary data flowing back through `await()` — a deliberate, well-known
+pattern for isolating expected per-item failures in a fan-out job.
+
+The `when (result) { is OrderResult.Success -> ...; is OrderResult.Failure
+-> ... }` block compiles without an `else` branch because `OrderResult` is
+a `sealed` type (referenced earlier in `Orders.kt`) — the compiler can
+enumerate every implementing class at compile time from the sealed
+hierarchy's metadata, the exact exhaustiveness check covered back in the
+control-flow module, which is what lets this `when` be used as an
+implicitly-exhaustive statement here with total confidence that a future
+`OrderResult` subtype addition would fail this file's compilation rather
+than silently falling through unhandled at runtime.
+
 ## Stretch goals
 
 - Wrap `OrderService` in a minimal Ktor `POST /orders` endpoint (module

@@ -171,6 +171,37 @@ fun main() {
 10.0
 ```
 
+## How It Actually Works
+
+Top-level functions like `greet` don't exist as a JVM concept — the bytecode
+verifier only understands methods that belong to a class. The compiler
+solves this the same way it does for top-level `main`: every top-level
+function in `Functions.kt` becomes a `public static` method on a synthetic
+class named `FunctionsKt`. That's why calling a top-level Kotlin function
+from Java looks like `FunctionsKt.greet("Alice")` — you're seeing the real
+generated class name.
+
+Default arguments are not a JVM feature either (the JVM has no notion of
+"optional parameter"), so the compiler fakes them with two techniques
+working together: it generates **one method that always takes every
+parameter**, and at each call site that omits some, it synthesizes the
+missing values inline. For a public/open function with defaults, the
+compiler additionally emits an overload suffixed with a hidden bitmask
+parameter (`$mask`) — visible if you run `javap` on the compiled class — that
+tells the method body which parameters were actually supplied by the caller,
+so it knows which ones to replace with their default expressions. This is
+why giving a function default parameters that is meant to be called from
+Java requires `@JvmOverloads`: without it, Java only sees the single method
+with the full parameter list plus the hidden mask, none of the convenient
+overloads Kotlin callers get for free.
+
+Named arguments are purely a compile-time convenience — the compiler
+resolves `punctuation = "?"` to the correct parameter *position* while
+generating the call, and the emitted bytecode is an ordinary method
+invocation with arguments in declared order. No parameter names survive
+into the bytecode's method signature (the JVM erases them, though `-parameters`
+debug metadata can optionally retain names for reflection).
+
 ## Cheat sheet
 
 | Concept | Syntax |

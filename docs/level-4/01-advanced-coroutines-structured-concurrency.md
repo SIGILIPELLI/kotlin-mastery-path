@@ -170,6 +170,37 @@ logging.
   (though it's still reported to the parent's exception propagation
   machinery unless the scope is a `SupervisorJob`).
 
+## How It Actually Works
+
+Structured concurrency is enforced through a real, inspectable data
+structure: every coroutine's `Job` maintains a set of references to its
+child `Job`s, forming a tree. `coroutineScope { }` creates a new `Job` as
+the root of that subtree, and every `launch`/`async` called textually inside
+its lambda registers its own `Job` as a child of that root — this parent-
+child linkage is what makes `coroutineScope` able to wait for "every
+coroutine launched inside it, directly or nested," because it isn't
+scanning source code, it's literally walking a live tree of `Job` objects at
+runtime. When Child B throws, its `Job` transitions to a `Cancelling` state
+and calls `cancel()` on its **parent's** `Job`, which propagates that
+cancellation down to every *other* child in the same subtree — cancellation
+itself is implemented as a special `CancellationException` thrown at the
+next suspension point inside each cancelled child's state machine (so a
+child mid-`delay()` gets resumed with that exception instead of its normal
+value), which is why Child A and Child C only truly stop once they hit their
+own next suspend point, not instantaneously.
+
+`supervisorScope` differs by exactly one thing in this tree: it uses a
+`SupervisorJob` as its root instead of a plain `Job`. A `SupervisorJob`'s
+`childCancelled()` override — the hook a child calls to report its own
+failure upward — is a no-op, so a failing child simply never triggers
+cancellation of its siblings; the exception still has nowhere else to go, so
+it flows to the coroutine's `CoroutineExceptionHandler` if one is installed
+in the context, or otherwise to the thread's default uncaught-exception
+handler — the same JVM-wide mechanism (`Thread.UncaughtExceptionHandler`)
+any Java thread uses, which is why the process doesn't crash: printing a
+stack trace to stderr on an uncaught exception is that handler's default
+behavior for a background thread, not something coroutines invented.
+
 ## Cheat sheet
 
 | Concept | API | Failure behavior |

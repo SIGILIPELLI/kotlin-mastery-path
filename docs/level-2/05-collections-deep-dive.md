@@ -198,6 +198,40 @@ fun main() {
     (like `first()`, `find()`, or `take()`) can short-circuit before
     processing everything.
 
+## How It Actually Works
+
+`filter { it.inStock }.filter { it.price < 20.0 }.map { it.name }` on a plain
+`List` is **eager and multi-pass**: each of those three calls fully iterates
+its input and allocates a brand-new `ArrayList` before the next call even
+starts. Under the hood, `filter` is implemented (in
+`kotlin.collections.CollectionsKt`) as roughly `val result = ArrayList<T>();
+for (e in this) if (predicate(e)) result.add(e); return result` — a real
+loop, a real allocation, every time. Chain four operations over a
+million-element list and you've built three intermediate lists you never
+otherwise wanted, purely as scaffolding between steps.
+
+`asSequence()` changes the underlying strategy entirely: it wraps the
+collection in a `Sequence<T>`, and each intermediate operation
+(`.filter`, `.map`) no longer executes anything — it just returns a new
+`Sequence` object that *remembers* the upstream sequence plus the
+transformation to apply, building up a lazy chain of wrapper objects. No
+actual work happens until a **terminal operation** (`.toList()`, `.first()`,
+`.sum()`, `.forEach { }`) pulls values through the chain one element at a
+time, applying every step to that one element before moving to the next.
+This is why sequences can short-circuit — `sequence.filter {...}.first {
+predicate }` can stop after finding the very first match instead of filtering
+the entire collection first — something a `List`-based chain fundamentally
+cannot do, since `.filter` on a `List` must finish before `.first` can even
+be called.
+
+`fold`/`reduce` are implemented as simple accumulator loops with no
+allocation per step — `fold(0.0) { acc, x -> acc + x }` compiles to a `for`
+loop carrying one running `Double` variable, calling the lambda's generated
+`invoke()` on each iteration; `reduce` is identical except it seeds the
+accumulator from `first()` instead of a supplied initial value, which is
+exactly why it has nothing to seed with — and throws
+`UnsupportedOperationException` — on an empty collection.
+
 ## Cheat sheet
 
 | Operation | Purpose |

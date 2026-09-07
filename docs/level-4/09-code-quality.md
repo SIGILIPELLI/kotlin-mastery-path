@@ -166,6 +166,37 @@ runner relied on to fail CI on a failing test.
   IDE plugin catches issues before a PR is even opened, instead of after
   a reviewer or CI run flags them.
 
+## How It Actually Works
+
+Neither `ktlint` nor `detekt` works by pattern-matching source text with
+regular expressions — both parse your `.kt` file into the same kind of
+**abstract syntax tree (PSI, the same PSI representation IntelliJ/the
+Kotlin compiler front-end itself uses)** that `kotlinc` builds before it
+ever gets to bytecode generation, then walk that tree looking for
+structural patterns. This is why ktlint can reliably say "Function body
+should be replaced with body expression" — it's not scanning for a text
+pattern like `{ return ... }`, it's inspecting the parsed function's actual
+`FunctionBody` node and recognizing "this block contains exactly one
+`if`/`else` expression whose result is returned," a structural fact only
+visible once the code is parsed into a tree rather than read as characters.
+Because parsing happens before any type information is resolved, both tools
+run fast and don't need a full compile — they operate one level "shallower"
+than the compiler's semantic-analysis phase, catching syntactic and
+naming issues without needing to know what any given type actually is.
+
+`ktlint -F`'s autocorrection works by rewriting nodes of that same syntax
+tree directly (converting a block body's AST shape into an expression-body
+AST shape, inserting whitespace tokens) and then re-serializing the tree
+back to text — which is exactly why it can safely fix spacing, indentation,
+and body-expression conversion (purely structural, semantics-preserving
+transformations) but refuses to rename `userAccount` to `UserAccount`: a
+class-name rename is not a local AST edit, it potentially requires finding
+and updating every reference to that symbol across the whole project (or
+even other modules/libraries depending on it), which needs real symbol
+resolution — the compiler's semantic-analysis machinery, not the shallow
+syntax-tree pass ktlint runs — so ktlint correctly refuses rather than risk
+silently breaking a reference it can't see.
+
 ## Cheat sheet
 
 | Concern | Tool/command |

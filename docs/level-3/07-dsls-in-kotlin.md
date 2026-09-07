@@ -191,6 +191,38 @@ confusing runtime structure.
   common meaning (e.g. `+` that doesn't commute) actively misleads
   readers — this is a taste/API-design trap, not a compiler-enforced one.
 
+## How It Actually Works
+
+A lambda with receiver, `Tag.() -> Unit`, compiles to
+`kotlin.jvm.functions.Function1<Tag, Unit>` — the **exact same** `Function1`
+interface as a plain `(Tag) -> Unit` lambda; there is no separate
+`ReceiverFunction` type at the bytecode level. The only difference lives in
+how the *call site* invokes it: `child.block()` for a lambda-with-receiver
+compiles to `block.invoke(child)`, passing the receiver as the sole
+argument, which is indistinguishable in bytecode from calling a regular
+one-parameter lambda with `child` as its parameter. What actually changes
+is purely how the **compiler resolves unqualified names inside the lambda
+body** — for `Tag.() -> Unit`, name resolution inside the lambda first
+checks members of `Tag` before falling back to the enclosing scope, which
+is why `attributes["class"] = "main"` inside `tag("body") { }` resolves to
+`Tag.attributes` without needing `this.` — that resolution rule is a
+compile-time-only convenience; by the time it's bytecode, it's just a method
+call on an object that happened to be passed as an argument.
+
+`infix fun mustBe(...)` similarly changes nothing about the generated method
+— `"age" mustBe "18"` and `"age".mustBe("18")` compile to the identical
+`invokevirtual`/`invokestatic` call; `infix` only relaxes the *parser's*
+grammar to accept the dot-less, no-parens call form for functions meeting
+its constraints (exactly one parameter, no default, no vararg). `@DslMarker`
+is even more purely compile-time: it's an annotation Kotlin's type-checker
+consults to restrict which implicit receivers are considered "in scope"
+when resolving a name at a given nesting depth, deliberately narrowing the
+resolution rule described above — it emits no bytecode of its own at all
+and has zero runtime footprint; you could strip every `@DslMarker`
+annotation after compilation succeeds and the resulting `.class` files would
+behave identically, because it only ever influenced whether compilation was
+*allowed* to proceed in the first place.
+
 ## Cheat sheet
 
 | Concept | Syntax | Purpose |

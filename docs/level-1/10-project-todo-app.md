@@ -201,6 +201,31 @@ java -jar todo.jar list
 Each run reloads `tasks.txt` from disk, so tasks persist across separate
 invocations of the program.
 
+## How It Actually Works
+
+`kotlinc Todo.kt -include-runtime -d todo.jar` does two things worth
+understanding: it compiles every class and top-level function in `Todo.kt`
+to individual `.class` files (one per class, plus a `TodoKt.class` holding
+`main` and any other top-level functions), then `-include-runtime` bundles
+the entire `kotlin-stdlib.jar` contents into the output jar alongside your
+own classes. That's why the resulting `todo.jar` can run with plain `java
+-jar`, no separate Kotlin runtime install needed on the machine executing
+it — without `-include-runtime` the jar would only contain your classes and
+`java -jar` would fail with `NoClassDefFoundError` the moment it hit a
+stdlib call like `println` (which, as covered in earlier modules, is a real
+static call into `kotlin.io.ConsoleKt`).
+
+The persistence model here — reload `tasks.txt` at the start of each
+invocation, rewrite it in full after each mutation — works precisely because
+each `java -jar todo.jar ...` command is a **separate JVM process** with no
+memory of the previous one; nothing is kept "in the app" between commands.
+This is also why the `Todo` data class matters structurally: its
+compiler-generated `toString()` (or a custom formatting extension, as built
+here) gives you a stable, parseable text representation to round-trip
+through a plain-text file, and its generated `equals()`/`copy()` make
+"mark task N done" a matter of finding the matching entry and replacing it
+with `task.copy(isDone = true)` rather than mutating shared state by hand.
+
 ## Stretch goals
 
 - Add a `clear-done` command that removes every task where `isDone` is true.

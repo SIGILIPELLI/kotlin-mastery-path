@@ -164,6 +164,38 @@ true
 false
 ```
 
+## How It Actually Works
+
+Extension functions are pure compiler illusion — the JVM has no concept of
+"attaching" a method to a class you don't own, so Kotlin doesn't actually
+modify `String` or `Rectangle` at all. `fun String.shout(): String` compiles
+to an ordinary **static method** on the file's synthetic container class,
+with the receiver passed as an invisible first parameter: effectively
+`public static String shout(String $this$shout)`. Calling `message.shout()`
+compiles to `ExtensionsKt.shout(message)` — a plain static call, not a
+virtual method invocation (`invokevirtual`). You can confirm this with
+`javap`: `String.class` itself never changes, and there's no `shout()`
+listed on it.
+
+This has a real, observable consequence: extension functions are resolved
+**statically, by the declared compile-time type**, not dynamically by the
+runtime type — the opposite of how member function overrides work. If you
+declare `fun Animal.speak() = "..."` and `fun Dog.speak() = "Woof"`, and call
+`speak()` on a variable declared as `Animal` but holding a `Dog` at runtime,
+the `Animal` extension wins, because the compiler picks which static method
+to call based on what it can see at the call site, before the program ever
+runs — there is no vtable lookup the way there is for a genuinely overridden
+member function. This is often the single most surprising thing about
+extension functions to Java developers: they look like polymorphic methods
+but behave like statically-dispatched free functions, because that's
+literally what they compile to.
+
+`this` inside an extension body refers to the receiver parameter that got
+passed in — the compiler substitutes every `this` with a read of that hidden
+first parameter, and unqualified property/function access resolves against
+it exactly like member access would, purely as a syntactic convenience layered
+over what is, underneath, an ordinary static utility function.
+
 ## Cheat sheet
 
 | Concept | Syntax |

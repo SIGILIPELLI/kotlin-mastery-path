@@ -625,6 +625,41 @@ $ echo $?
 | 07 · JSON | `@Serializable`, `@SerialName`, `ignoreUnknownKeys` |
 | 08 · Gradle | Two plugins, two dependencies, `application`, `installDist` |
 
+## How It Actually Works
+
+`withContext(Dispatchers.IO)` doesn't create a new coroutine — it suspends
+the current one, hands its continuation off to a different thread pool
+(`Dispatchers.IO`, tuned with many more threads than CPU cores since I/O
+threads mostly wait rather than compute), runs the blocking `client.send()`
+call there, and resumes the original coroutine with the result once it
+returns — potentially on a completely different underlying thread than the
+one that called `withContext` in the first place. This is the state-machine
+mechanism from Module 3 doing real work: the compiler-generated
+continuation for `get()` doesn't care which physical thread calls
+`resumeWith` on it, because all the state it needs to continue (the `request`,
+the eventual `response`) lives as fields on the generated state-machine
+object, not on a particular thread's call stack.
+
+`lookup`'s two failure paths compile to genuinely different bytecode shapes:
+the `null`-based "not found" path is just a value flowing through ordinary
+`if`/`when` branches (no exception machinery at all), while the `try`/`catch`
+around `geocode`/`forecast` compiles to a JVM **exception table** entry — a
+range of bytecode offsets paired with a handler address — that the JVM
+consults only when something actually throws, at essentially zero cost when
+nothing goes wrong. That's the mechanical reason the two failure styles feel
+so different to use: one is data flowing through normal control flow, the
+other unwinds the stack (in this case, unwinds through the coroutine's
+suspended state machine, which is why any pending `withContext` frame gets a
+chance to clean up before `catch` runs) and jumps straight to the handler
+frame.
+
+The `sealed interface CityResult` referenced in the table below compiles to
+an interface with a **closed, compiler-known set of implementing classes**,
+recorded in the class file's metadata — which is exactly what lets `when
+(result)` over a `CityResult` be checked for exhaustiveness at compile time
+without an `else` branch, the same static analysis discussed for `when` and
+`NoWhenBranchMatchedException` back in Level 1.
+
 ## Stretch goals
 
 - **Cache lookups.** Geocoding results never change; store them in a
