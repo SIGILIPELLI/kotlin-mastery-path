@@ -1047,6 +1047,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#stretch-goals" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2305,6 +2316,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#stretch-goals" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2513,6 +2535,28 @@ immutable <code>Task</code> in place in the list, and an extension function
 </code></pre></div>
 <p>Each run reloads <code>tasks.txt</code> from disk, so tasks persist across separate
 invocations of the program.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>kotlinc Todo.kt -include-runtime -d todo.jar</code> does two things worth
+understanding: it compiles every class and top-level function in <code>Todo.kt</code>
+to individual <code>.class</code> files (one per class, plus a <code>TodoKt.class</code> holding
+<code>main</code> and any other top-level functions), then <code>-include-runtime</code> bundles
+the entire <code>kotlin-stdlib.jar</code> contents into the output jar alongside your
+own classes. That's why the resulting <code>todo.jar</code> can run with plain <code>java
+-jar</code>, no separate Kotlin runtime install needed on the machine executing
+it — without <code>-include-runtime</code> the jar would only contain your classes and
+<code>java -jar</code> would fail with <code>NoClassDefFoundError</code> the moment it hit a
+stdlib call like <code>println</code> (which, as covered in earlier modules, is a real
+static call into <code>kotlin.io.ConsoleKt</code>).</p>
+<p>The persistence model here — reload <code>tasks.txt</code> at the start of each
+invocation, rewrite it in full after each mutation — works precisely because
+each <code>java -jar todo.jar ...</code> command is a <strong>separate JVM process</strong> with no
+memory of the previous one; nothing is kept "in the app" between commands.
+This is also why the <code>Todo</code> data class matters structurally: its
+compiler-generated <code>toString()</code> (or a custom formatting extension, as built
+here) gives you a stable, parseable text representation to round-trip
+through a plain-text file, and its generated <code>equals()</code>/<code>copy()</code> make
+"mark task N done" a matter of finding the matching entry and replacing it
+with <code>task.copy(isDone = true)</code> rather than mutating shared state by hand.</p>
 <h2 id="stretch-goals">Stretch goals<a class="headerlink" href="#stretch-goals" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Add a <code>clear-done</code> command that removes every task where <code>isDone</code> is true.</li>

@@ -1205,6 +1205,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2328,6 +2339,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2544,6 +2566,33 @@ function work like a normal early return from the enclosing function (a
 "non-local return") — without <code>inline</code>, that <code>return</code> wouldn't be legal.
 Almost all of Kotlin's standard library higher-order functions (<code>filter</code>,
 <code>map</code>, <code>let</code>, <code>run</code>, <code>also</code>, <code>apply</code>) are <code>inline</code> for exactly this reason.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>The JVM (pre-invokedynamic-lambdas era, and still by default for Kotlin) has
+no native "function value" type, so every non-inline lambda has to become a
+real object implementing a real interface. Kotlin represents a function type
+<code>(Int) -&gt; Int</code> as the generic interface <code>kotlin.jvm.functions.Function1&lt;Int,
+Int&gt;</code>, with a single abstract method <code>invoke(p1: P1): R</code>. A lambda literal
+like <code>{ x -&gt; x * x }</code> compiles to an <strong>anonymous class</strong> implementing
+<code>Function1</code>, whose <code>invoke()</code> body is your lambda's code; <code>square(5)</code> then
+compiles to <code>square.invoke(5)</code>. Function types with different arities map to
+<code>Function0</code>, <code>Function2</code>, <code>Function3</code>, ... up to <code>Function22</code> — which is also
+why Kotlin lambdas historically topped out around 22 parameters.</p>
+<p>This matters for performance: each time a non-inline lambda literal is
+created, the compiler either allocates a new anonymous-class instance on the
+spot, or — if the lambda captures no variables from its enclosing scope (no
+closure) — reuses a single cached singleton instance of that anonymous class,
+since a captureless lambda is stateless and safe to share. A lambda that
+<em>does</em> capture a variable (a "closure") gets fields added to its generated
+anonymous class to hold the captured values, copied in via its generated
+constructor at the point the lambda literal is evaluated — which is why a
+<code>var</code> captured by a lambda in Kotlin is wrapped in a <code>Ref.IntRef</code>-style
+holder object internally, so multiple lambdas capturing and mutating the
+same outer <code>var</code> all see the same box rather than independent copies.</p>
+<p>The <code>it</code> shorthand is resolved entirely at compile time by name-lookup
+convention — the compiler simply binds the single implicit parameter to the
+identifier <code>it</code> while type-checking the lambda body; there's no runtime
+concept of "it" at all, it never appears in the generated <code>invoke()</code>
+method's bytecode as anything other than parameter slot 1.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

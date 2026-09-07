@@ -1609,6 +1609,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2465,6 +2487,34 @@ This is the whole "Observable property" idea, with zero framework code.</p>
   <code>object</code>'s initializer run lazily, at a time determined by whoever
   references it first.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>apply</code>/<code>also</code> aren't language keywords — they're ordinary <code>inline</code>
+extension functions in the standard library (<code>kotlin.apply</code>,
+<code>kotlin.also</code>), each roughly one line: <code>inline fun &lt;T&gt; T.apply(block: T.()
+-&gt; Unit): T { block(); return this }</code>. Because they're marked <code>inline</code>,
+calling <code>.apply { it.url = ...; it.method = ... }</code> pastes that lambda's
+bytecode directly into your <code>main()</code> function at the call site — there is no
+extra method call, no extra <code>Function1</code> allocation, and no separate stack
+frame at runtime; it looks like a control-flow block because after
+inlining, that's essentially all it is. <code>apply</code>'s lambda has <code>T</code> as its
+<em>receiver</em> (so <code>it</code> isn't needed — properties resolve unqualified against
+the object being configured), while <code>also</code>'s lambda takes <code>T</code> as a regular
+parameter named via <code>it</code> — that difference is purely in the declared
+lambda type (<code>T.() -&gt; Unit</code> vs <code>(T) -&gt; Unit</code>), not in any special-casing by
+the compiler beyond ordinary lambda-with-receiver mechanics.</p>
+<p><code>fun interface PricingStrategy</code> (a SAM — single-abstract-method interface)
+lets <code>PricingStrategy { base -&gt; base }</code> compile a plain lambda directly into
+an instance of a compiler-generated anonymous class implementing
+<code>PricingStrategy</code>, whose one abstract method's body is the lambda — this is
+<strong>SAM conversion</strong>, and it's what lets Strategy-pattern code accept either a
+real named class implementing the interface or a bare lambda
+interchangeably: both end up as ordinary objects implementing the same
+interface, resolved by ordinary <code>invokeinterface</code> dispatch at the call site
+that eventually calls <code>.price(...)</code>. Without the <code>fun</code> modifier on the
+interface, this shorthand isn't available and you'd need to write out
+<code>object : PricingStrategy { override fun price(...) = ... }</code> by hand — the
+<code>fun interface</code> keyword is purely a compiler permission slip enabling the
+lambda-to-interface conversion, not a different runtime type.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

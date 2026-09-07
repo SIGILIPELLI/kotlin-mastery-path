@@ -1019,6 +1019,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2316,6 +2327,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2483,6 +2505,34 @@ means:</p>
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>true
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>false
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Extension functions are pure compiler illusion — the JVM has no concept of
+"attaching" a method to a class you don't own, so Kotlin doesn't actually
+modify <code>String</code> or <code>Rectangle</code> at all. <code>fun String.shout(): String</code> compiles
+to an ordinary <strong>static method</strong> on the file's synthetic container class,
+with the receiver passed as an invisible first parameter: effectively
+<code>public static String shout(String $this$shout)</code>. Calling <code>message.shout()</code>
+compiles to <code>ExtensionsKt.shout(message)</code> — a plain static call, not a
+virtual method invocation (<code>invokevirtual</code>). You can confirm this with
+<code>javap</code>: <code>String.class</code> itself never changes, and there's no <code>shout()</code>
+listed on it.</p>
+<p>This has a real, observable consequence: extension functions are resolved
+<strong>statically, by the declared compile-time type</strong>, not dynamically by the
+runtime type — the opposite of how member function overrides work. If you
+declare <code>fun Animal.speak() = "..."</code> and <code>fun Dog.speak() = "Woof"</code>, and call
+<code>speak()</code> on a variable declared as <code>Animal</code> but holding a <code>Dog</code> at runtime,
+the <code>Animal</code> extension wins, because the compiler picks which static method
+to call based on what it can see at the call site, before the program ever
+runs — there is no vtable lookup the way there is for a genuinely overridden
+member function. This is often the single most surprising thing about
+extension functions to Java developers: they look like polymorphic methods
+but behave like statically-dispatched free functions, because that's
+literally what they compile to.</p>
+<p><code>this</code> inside an extension body refers to the receiver parameter that got
+passed in — the compiler substitutes every <code>this</code> with a read of that hidden
+first parameter, and unqualified property/function access resolves against
+it exactly like member access would, purely as a syntactic convenience layered
+over what is, underneath, an ordinary static utility function.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

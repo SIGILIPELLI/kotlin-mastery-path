@@ -1311,6 +1311,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2316,6 +2327,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2569,6 +2591,35 @@ coroutines stay fast.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>JUnit 5 has no special awareness of Kotlin — <code>@Test</code> is a plain annotation
+retained at runtime (<code>RetentionPolicy.RUNTIME</code>), and the JUnit Platform
+engine finds test methods purely by <strong>reflection</strong>: it scans compiled
+<code>.class</code> files on the test classpath, looks for methods carrying that
+annotation, instantiates the declaring class with its no-arg constructor,
+and invokes the method via <code>java.lang.reflect.Method.invoke()</code>. Nothing
+about this pipeline is Kotlin-specific — <code>CalculatorTest</code> is a completely
+ordinary JVM class from the runner's point of view, <code>Calculator()</code> inside it
+compiles to a normal constructor call, and <code>calculator.add(2, 3)</code> is a
+normal <code>invokevirtual</code>.</p>
+<p>Backtick-quoted test names like <code>`add returns the sum of two numbers`()</code> are possible because the JVM's class file format allows almost any
+string as a method name at the bytecode level (<code>invokevirtual</code> targets are
+resolved by a name-and-descriptor pair in the constant pool, not by
+identifier rules) — Kotlin source syntax normally restricts identifiers to
+valid characters, but backticks are an escape hatch letting you write a
+method name containing spaces, since the <em>bytecode</em> was always going to
+accept it. Reflection-based test discovery then reads that literal name
+straight out of the compiled method and displays it in reports verbatim.</p>
+<p><code>@BeforeEach</code> relies on the same reflection scan: the JUnit engine
+instantiates a <strong>fresh instance of the test class for every single test
+method</strong> (this is the default JUnit 5 lifecycle,
+<code>PER_METHOD</code>), so <code>cart = ShoppingCart()</code> in <code>setUp()</code> isn't resetting
+shared state between tests — there is no shared state, because each test
+method literally runs against its own separate <code>ShoppingCartTest</code> object,
+freshly constructed and then torn down. That per-method isolation is why
+<code>lateinit var cart</code> is even safe to use here: the property is guaranteed to
+be assigned in <code>@BeforeEach</code> before any <code>@Test</code> method on that fresh
+instance can run.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

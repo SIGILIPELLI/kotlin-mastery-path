@@ -1974,6 +1974,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2250,6 +2261,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2413,6 +2435,44 @@ tool."</p>
   production</strong> — real secrets belong in environment variables or a secrets
   manager, never committed to source control.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>bcrypt's slowness is structural, not a configuration knob layered on top of
+a fast hash — it's built on the <strong>Blowfish</strong> cipher's key-setup routine
+(<code>EksBlowfishSetup</code>), which was deliberately designed to be expensive to
+initialize, and the cost factor controls how many times (<code>2^cost</code>) that
+setup loop repeats before the actual hash is produced. This is fundamentally
+different from "SHA-256 run in a loop <code>N</code> times" because Blowfish's key
+schedule is memory-and-CPU-bound in a way that resists the two classic
+brute-force accelerants: GPUs (which excel at simple, massively parallel
+arithmetic like SHA-256 but are far less efficient at Blowfish's dependent,
+lookup-table-heavy setup) and ASICs built for hashing. The embedded salt
+isn't stored separately because bcrypt's output format
+(<code>$2a$12$&lt;22-char-salt&gt;&lt;31-char-hash&gt;</code>) concatenates the algorithm version,
+cost factor, salt, and hash into one self-describing string — <code>verifyer()</code>
+parses that string to extract the exact same salt and cost factor used
+originally, recomputes the hash with the candidate password, and does a
+constant-time comparison against the stored one.</p>
+<p><code>SecureRandom</code> differs from <code>kotlin.random.Random</code>/<code>java.util.Random</code> at the
+algorithm level, not just "how it's used": both <code>Random</code> implementations are
+<strong>linear congruential generators</strong> (LCGs) or similar — fast, deterministic
+formulas where each output is a mathematical function of the previous
+internal state, meaning observing enough consecutive outputs lets an
+attacker reconstruct the seed and predict every future value. <code>SecureRandom</code>
+instead draws entropy from OS-level unpredictable sources (interrupt
+timing, hardware noise, <code>/dev/urandom</code> on Linux) and runs it through a
+cryptographically-vetted algorithm (commonly a SHA-1/SHA-256-based DRBG),
+specifically engineered so that observing outputs gives no practical way to
+predict the next one.</p>
+<p>Exposed's parameterization traces to the JDBC layer underneath it:
+<code>Users.select { Users.username eq input }</code> compiles the query with a literal
+<code>?</code> placeholder in the SQL string sent to the database driver, and passes
+<code>input</code> separately via <code>PreparedStatement.setString(...)</code> — the database
+engine parses the SQL structure <em>before</em> the parameter value is substituted
+in, so a value like <code>' OR '1'='1</code> is bound as a single literal string value
+for comparison, never re-parsed as part of the SQL grammar. String
+concatenation-based queries fail exactly because they skip this
+structure-then-substitute separation, letting attacker input be parsed as
+SQL syntax rather than treated as inert data.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

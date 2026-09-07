@@ -1160,6 +1160,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2305,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2566,6 +2588,39 @@ consider properties declared in the data class's <em>own</em> primary constructo
 <p>This surprises people who expect <code>id</code> to matter. If identity fields live in
 a base class, prefer composition (a regular property) over inheritance for
 data classes, or override <code>equals()</code>/<code>hashCode()</code> yourself.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Interfaces with default method bodies compile using the exact same JVM
+mechanism Java 8+ interfaces use: <code>default</code> methods in the interface's
+bytecode. <code>interface Greeter { fun greet(...) = ... }</code> produces a real
+<code>.class</code> file with <code>greet</code> marked <code>default</code> in its bytecode; a class that
+doesn't override it simply inherits that default method the way any JVM
+class inherits a default interface method — no synthetic delegation classes
+involved. Abstract <em>properties</em> in interfaces, though, are a Kotlin-only
+concept the JVM doesn't have: <code>val greeting: String</code> in the interface
+compiles to an abstract <code>getGreeting()</code> method declaration, and each
+implementing class is required to supply a concrete getter (here, backed by
+a real field since <code>EnglishGreeter</code> and <code>PirateGreeter</code> each declare
+<code>override val greeting = "..."</code>, which does allocate a backing field on the
+<em>implementing</em> class, not the interface — interfaces themselves can never
+hold instance fields on the JVM).</p>
+<p>The <code>super&lt;A&gt;.greet()</code> diamond-resolution syntax is a <strong>compile-time-only</strong>
+requirement — the compiler detects that <code>C</code> inherits two default
+implementations of the same signature and refuses to compile unless <code>C</code>
+overrides <code>greet()</code> itself, calling out which parent's version it means via
+<code>invokespecial</code> (the same bytecode instruction Java's <code>A.super.greet()</code>
+syntax compiles to). Without an explicit override, the JVM's own default-method
+conflict-resolution rules would apply, which Kotlin considers too implicit
+to allow silently.</p>
+<p><code>open</code>-by-default's inversion of Java matters because it's not just a style
+choice — it's checked and enforced by the bytecode verifier. A non-<code>open</code>
+Kotlin class compiles with the <code>ACC_FINAL</code> flag set on the class file, and a
+non-<code>open</code> method compiles as a <code>final</code> method — meaning the JVM itself
+would refuse to load a subclass that tried to override it, not just the
+Kotlin compiler. <code>describe()</code> calling <code>sound()</code> on <code>Animal</code> compiles to a
+regular <code>invokevirtual</code>, which is what makes it dispatch to <code>Dog</code>'s override
+at runtime through the normal JVM vtable lookup — the same polymorphism
+mechanism as Java, just gated behind an opt-in keyword instead of being the
+default.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

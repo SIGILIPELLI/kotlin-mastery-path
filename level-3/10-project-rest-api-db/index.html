@@ -1766,6 +1766,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#stretch-goals" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2239,6 +2250,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#stretch-goals" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2497,6 +2519,32 @@ actually run the tests, not from reading the code.</p>
 the deleted book (id 1) is gone, and fetching it afterward correctly
 returns the <code>StatusPages</code>-mapped 404 with a JSON error body instead of a
 raw exception.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>install(StatusPages) { exception&lt;BookNotFoundException&gt; { call, cause -&gt; ...
+} }</code> relies on the reified-generics mechanism from the generics module:
+<code>exception&lt;T&gt;</code> is an <code>inline fun</code> with a <code>reified T</code> type parameter, so
+<code>exception&lt;BookNotFoundException&gt; { }</code> compiles with the concrete class
+<code>BookNotFoundException::class</code> baked directly into the registration call at
+compile time (via inlining, exactly as covered for <code>filterByType&lt;T&gt;()</code>) —
+that's what lets Ktor's plugin build a real runtime lookup table mapping
+exception classes to handlers, rather than needing reflection to recover an
+erased type parameter later. When a request handler throws, Ktor's pipeline
+walks that table checking <code>cause::class</code> (and its supertypes) against each
+registered exception type, in the exact same "closest matching supertype
+wins" order the JVM's own <code>catch</code> clause matching uses — a handler
+registered for <code>Throwable</code> will catch anything not already claimed by a more
+specific handler like <code>BookNotFoundException</code>, but only because it's checked
+after the more specific one, not because of any special precedence rule.</p>
+<p><code>BookRepository.byId</code> throwing <code>BookNotFoundException</code> inside a <code>transaction
+{ }</code> block interacts with the Exposed transaction machinery from Module 3:
+throwing propagates the exception up through the transaction's
+<code>try</code>/<code>finally</code>, triggering <code>connection.rollback()</code> (a no-op here since a
+read never modified anything) before the exception continues unwinding
+through the coroutine's suspended state machine — because Ktor's Netty
+engine runs each request handler as a coroutine — until it reaches
+<code>StatusPages</code>'s installed interceptor, which is really just a <code>try</code>/<code>catch</code>
+wrapped around the rest of the request-processing pipeline at the point the
+plugin was installed.</p>
 <h2 id="stretch-goals">Stretch goals<a class="headerlink" href="#stretch-goals" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Add a <code>PUT /books/{id}</code> route for full updates, and a <code>PATCH

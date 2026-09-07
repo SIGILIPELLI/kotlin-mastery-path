@@ -1239,6 +1239,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2284,6 +2295,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2507,6 +2529,36 @@ can't guarantee another thread or a later line didn't reset it.</p>
 <p>The fix is almost always the same: copy the nullable <code>var</code>/property into a
 local <code>val</code> first, then null-check <em>that</em>. Local <code>val</code>s are the one thing
 the compiler can always fully reason about.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Platform types (<code>String!</code>) are a fiction that exists <strong>only inside the
+compiler's type-checking phase</strong> — by the time bytecode is generated,
+<code>String!</code> erases to the exact same <code>java.lang.String</code> as <code>String</code> or
+<code>String?</code>. What's actually happening is that the compiler has no static
+information to run its nullability analysis on (no <code>@Nullable</code>/<code>@NotNull</code>
+annotation to read), so it disables the compile-time null-check entirely for
+that value and lets you use it as either type without a warning. This is why
+<code>email.length</code> in the example above compiles clean — the compiler isn't
+"guessing non-null," it's simply not checking at all, exactly as javac
+wouldn't. The runtime NPE you get isn't a Kotlin-specific exception either;
+it's a bare <code>java.lang.NullPointerException</code>, thrown by the JVM the instant
+<code>invokevirtual length()</code> is attempted on a null reference — the same failure
+mode Java itself has, because at that point there is no Kotlin null-safety
+machinery left to intercept it.</p>
+<p><code>lateinit var title: String</code> compiles to a plain, ordinary (non-final)
+<code>String</code> field with no wrapper, no <code>Optional</code>, and critically <strong>no
+initialization</strong> in the constructor — the JVM defaults an uninitialized
+reference field to <code>null</code> automatically, same as Java, so <code>lateinit</code> is
+really "let the JVM's normal zero-value default stand in temporarily,
+but forbid me from reading it while it's still null." The compiler enforces
+that promise by inserting a null-check (<code>Intrinsics.checkNotNullField</code> /
+equivalent) into the generated getter for that property, so reading an
+unset <code>lateinit var</code> throws
+<code>UninitializedPropertyAccessException</code> (not a generic NPE — a distinct,
+more diagnostic exception type made specifically for this case). <code>this::title
+.isInitialized</code> compiles to a call into Kotlin reflection
+(<code>kotlin-reflect</code>, or an intrinsic check when reflection isn't on the
+classpath) that inspects the backing field directly to see if it's still
+null, bypassing the getter's own throwing check.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

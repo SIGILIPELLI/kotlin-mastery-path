@@ -1738,6 +1738,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2250,6 +2261,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2433,6 +2455,39 @@ call.</p>
   <code>Collection.parallelStream()</code> (Java interop) or splitting work across
   coroutines explicitly.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>The <code>LongArray</code> vs <code>ArrayList&lt;Long&gt;</code> gap traces directly to a JVM memory
+layout difference, not anything Kotlin-specific: <code>LongArray</code> compiles to a
+genuine <code>long[]</code> — a single contiguous block of memory holding raw 8-byte
+values with no per-element object headers — while <code>ArrayList&lt;Long&gt;</code> (backed
+by <code>Object[]</code>) stores <strong>references</strong> to separately heap-allocated <code>Long</code>
+objects, each with its own object header (typically 16 bytes of overhead on
+a 64-bit JVM before the actual 8-byte value). Iterating the boxed version
+means chasing a pointer to a different heap location for every element,
+which is cache-unfriendly (each <code>Long</code> object can land anywhere the
+allocator put it) versus the primitive array's sequential memory scan,
+which the CPU's prefetcher handles efficiently — that's most of the
+order-of-magnitude gap measured above, on top of the allocation cost of
+100,000 separate <code>Long</code> objects versus one array allocation.</p>
+<p><code>Sequence</code>'s advantage over chained <code>List</code> operators is really about
+avoiding <strong>allocation churn</strong> the JIT can't always optimize away — each
+<code>.map</code>/<code>.filter</code> on a <code>List</code> genuinely calls <code>new ArrayList&lt;&gt;()</code> and fills
+it, and while the JVM's generational garbage collector is very fast at
+reclaiming short-lived objects (this is precisely the case young-generation
+GC is tuned for), it's still work the CPU has to do that a single-pass
+<code>Sequence</code> skips by fusing every operator into one loop over the source,
+per element, with no intermediate container ever materializing.</p>
+<p><code>inline</code> functions eliminate a different cost entirely: every non-inline
+lambda passed as an argument is a <code>Function1</code>/<code>Function2</code>-style object that
+usually has to be allocated (unless it's a captureless singleton, as
+discussed in the lambdas module) and then invoked through an interface
+call (<code>invokeinterface</code>), which the JIT can sometimes — but not always —
+inline back out via speculative devirtualization. Marking the higher-order
+function <code>inline</code> removes the uncertainty: the compiler pastes the lambda's
+actual bytecode directly into the call site during compilation, so there is
+provably no allocation and no indirect call at all, which is why the
+standard library's hottest, most-called higher-order functions (<code>map</code>,
+<code>let</code>, <code>filter</code>, <code>apply</code>) are all declared <code>inline</code>.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

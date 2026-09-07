@@ -1216,6 +1216,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2305,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2548,6 +2570,47 @@ need to think about this until you're mixing CPU work and I/O.</p>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>config loaded
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>The JVM has no built-in notion of a suspendable function — coroutines are
+implemented entirely by the Kotlin compiler transforming your code via
+<strong>Continuation-Passing Style (CPS)</strong>. Every <code>suspend fun</code> is compiled with an
+extra, invisible parameter appended to its signature: a
+<code>Continuation&lt;T&gt;</code> — an interface with one method, <code>resumeWith(Result&lt;T&gt;)</code>.
+<code>suspend fun fetchGreeting(): String</code> really compiles to something shaped
+like <code>fun fetchGreeting(completion: Continuation&lt;String&gt;): Any?</code>, returning
+either the real result or a special marker object,
+<code>COROUTINE_SUSPENDED</code>, telling the caller "I've suspended, I'll call your
+continuation later instead of returning normally right now."</p>
+<p>For a <code>suspend</code> function with more than one suspension point (multiple
+<code>delay()</code>/<code>await()</code> calls, or any call to another <code>suspend</code> function), the
+compiler goes further and rewrites the function body into a <strong>state
+machine</strong>: it generates a class implementing <code>Continuation</code> with an integer
+<code>label</code> field tracking which suspension point execution last stopped at, and
+a <code>switch</code>/<code>when</code> on that label inside a single <code>invokeSuspend</code> method that
+jumps straight to the code after the appropriate <code>delay()</code> call when
+resumed. Local variables that need to survive a suspension point become
+fields on this generated state-machine object instead of JVM stack slots —
+because a real stack frame can't be paused and resumed on a different call
+later, but a heap-allocated object with fields can be. This is exactly why
+<code>delay(100)</code> doesn't block the thread the way <code>Thread.sleep(100)</code> does: it
+schedules a timer callback and returns <code>COROUTINE_SUSPENDED</code> immediately,
+freeing the underlying OS thread to go do other work (run other coroutines,
+even) until the timer fires and calls <code>resumeWith</code> on the continuation,
+which re-enters the state machine at the saved <code>label</code>.</p>
+<p><code>launch</code> and <code>async</code> are ordinary higher-order functions (not compiler
+magic) built on top of this machinery — <code>launch</code> builds a <code>Job</code> wrapping a
+<code>StandaloneCoroutine</code>, wires up the passed lambda's compiler-generated
+continuation to run on the given <code>CoroutineDispatcher</code>'s thread pool, and
+returns immediately without waiting, which is precisely why "End of main"
+prints before the delayed <code>launch</code> body does. <code>async</code> does the same but
+wraps the eventual result in a <code>Deferred</code>, whose <code>.await()</code> is itself a
+<code>suspend</code> function — it suspends the calling coroutine (again by returning
+<code>COROUTINE_SUSPENDED</code> and registering a continuation) until the async block's
+<code>Job</code> completes, at which point resuming returns the actual value. Because
+both <code>async</code> blocks in the example are launched before either is awaited,
+their state machines are both handed to the dispatcher immediately, so their
+500ms <code>delay</code>s overlap — the measured time is ~500ms total, not ~1000ms,
+purely because launching is not the same event as awaiting.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

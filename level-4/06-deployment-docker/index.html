@@ -2041,6 +2041,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2444,6 +2466,33 @@ runs inside a container instead of on bare metal:</p>
   stdlib) into one runnable artifact, which is what <code>COPY --from=build</code>
   above expects to find.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>System.getenv("PORT")</code> reads directly from the OS process's environment
+block — the same table of key/value strings every process on the machine
+inherits from its parent at <code>fork</code>/<code>exec</code> time, whether that parent is your
+shell (<code>PORT=9090 java -jar app.jar</code>) or the container runtime (<code>docker run
+-e PORT=8080</code>, or Kubernetes injecting a <code>Pod</code>'s env from a <code>ConfigMap</code>).
+Nothing about the JVM or Kotlin changes based on who set that variable —
+<code>getenv</code> is a thin wrapper over the platform's <code>environ</code>, so from the JVM's
+point of view a container's injected environment variable is
+indistinguishable from one set in a terminal, which is exactly why the code
+doesn't need to know or care it's now running inside a container.</p>
+<p>The multi-stage Dockerfile's size win comes from Docker's <strong>layered
+filesystem</strong> model: each <code>FROM</code>/<code>RUN</code>/<code>COPY</code> instruction creates a new
+image layer, and <code>COPY --from=build</code> copies files out of a <em>previous
+stage's</em> final filesystem snapshot into the <em>current</em> stage's layers,
+without pulling along any of that earlier stage's own layers (the Gradle
+distribution, the downloaded dependency cache, the JDK's <code>javac</code>/<code>kotlinc</code>
+binaries) — those live only in the intermediate <code>build</code> stage's image,
+which Docker discards after the final stage is built, unless you explicitly
+tag it. <code>eclipse-temurin:21-jre-alpine</code> is smaller for two independent
+reasons: the <strong>JRE</strong> omits the compiler and dev tools a JDK carries (<code>javac</code>,
+<code>jshell</code>, the full <code>jmods</code> set), and <strong>Alpine</strong> uses <code>musl libc</code> and
+BusyBox instead of a full glibc-based userland, trading some binary
+compatibility for a base image that's tens of megabytes instead of
+hundreds. None of this touches how your compiled <code>.jar</code> runs — bytecode is
+bytecode regardless of which JRE build executes it — it only affects how
+much unrelated filesystem content ships alongside it.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

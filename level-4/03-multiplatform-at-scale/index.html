@@ -1935,6 +1935,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2228,6 +2239,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2397,6 +2419,34 @@ once you have network access and an API you want to hit.)</p>
   Multiplatform apps, JetBrains's own libraries) avoids repeating
   <code>actual</code> implementations per Apple architecture.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>ktor-client-core</code> with no <code>-jvm</code>/<code>-iosarm64</code> suffix is a <strong>Gradle Module
+Metadata</strong> artifact, not a single jar — it publishes a manifest listing
+every platform-specific variant (<code>ktor-client-core-jvm</code>,
+<code>ktor-client-core-iosarm64</code>, <code>ktor-client-core-js</code>, ...) plus the rules for
+which one matches which target. When Gradle resolves <code>commonMain</code>'s
+dependency graph for the <code>jvm()</code> target specifically, it reads that
+manifest and substitutes in <code>ktor-client-core-jvm</code> transparently — this is
+why the same <code>implementation("io.ktor:ktor-client-core:2.3.12")</code> line in
+<code>commonMain</code> silently becomes a different physical jar depending on which
+target's compilation is being resolved; there's no special Kotlin-side
+logic for this at all, it's the Gradle dependency resolver following
+metadata the library published.</p>
+<p><code>expect fun httpClientEngine(): HttpClientEngineFactory&lt;*&gt;</code> compiles for
+<code>commonMain</code> as an unresolved reference at the bytecode level in exactly the
+sense described in Level 3's multiplatform module — but here it's doing
+real architectural work: <code>HttpClient(httpClientEngine())</code> inside
+<code>GitHubClient</code> is ordinary shared code that calls this <code>expect</code> function
+like any other, and because Kotlin's type-checker only needs the <em>shape</em>
+(<code>HttpClientEngineFactory&lt;*&gt;</code>) to typecheck <code>commonMain</code>, the actual engine
+implementation (<code>CIO</code>'s coroutine-based non-blocking I/O on JVM, <code>Darwin</code>'s
+wrapper around <code>NSURLSession</code> on iOS) never needs to be visible to, or
+compilable by, the common source set at all — each platform's separate
+compiler invocation links in its own concrete <code>actual</code>, so <code>GitHubClient</code>'s
+business logic is compiled exactly once as source but produces different
+final machine code (JVM bytecode vs. an LLVM-compiled Kotlin/Native binary)
+per target, each wired to a genuinely different underlying networking
+implementation.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

@@ -1907,6 +1907,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2228,6 +2239,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2421,6 +2443,39 @@ limiting in Ktor is opt-in per route group via <code>rateLimit(RateLimitName)
   when adding a new route "near" existing authenticated ones but outside
   the block.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>JWT authentication in Ktor is fundamentally about verifying a cryptographic
+signature, not decoding secret content — a JWT's payload (the claims,
+including <code>username</code>) is only Base64URL-encoded, not encrypted, so anyone
+can read it; what actually protects it is the third segment, an HMAC-SHA256
+signature computed over the header+payload using <code>SECRET</code> as the key.
+<code>generateToken</code> produces that signature at issue time; <code>jwt("auth-jwt") {
+verifier(...) }</code> recomputes the same HMAC over the token it receives and
+byte-compares it against the signature attached to the token — if a client
+tampered with the payload (changing <code>username</code>, say), the recomputed HMAC
+won't match and verification fails, entirely independent of the <code>validate {
+}</code> block, which only runs <em>after</em> the signature check already passed. This
+is exactly why a mismatched <code>SECRET</code> between issuing and verifying fails
+silently with a bare 401: the verifier never even gets far enough to look at
+claims, it rejects at the signature-comparison step.</p>
+<p><code>install(Authentication) { jwt(...) { } }</code> registers a named authentication
+provider that Ktor's routing pipeline consults whenever a route is wrapped
+in <code>authenticate("auth-jwt") { }</code> — under the hood this is implemented as a
+<code>Route</code> interceptor (a <code>PipelinePhase</code>) inserted before your handler's own
+phase runs, so <code>call.principal&lt;JWTPrincipal&gt;()</code> inside <code>/me</code> is reading a
+value the authentication phase already computed and stashed on the <code>call</code>'s
+attributes before your code ever executed; if authentication failed, the
+interceptor short-circuits the pipeline and responds 401 itself, and your
+route handler's code never runs at all.</p>
+<p><code>RequestValidation</code> works the same way structurally: it's a plugin hooked
+into the pipeline's receive phase, so it runs <code>call.receive&lt;T&gt;()</code>'s
+deserialization (using the same <code>kotlinx.serialization</code>-generated code from
+earlier modules) and then applies your validation lambda to the <em>already
+fully deserialized</em> object, before your route body executes — which is why
+a route handler behind <code>RequestValidation</code> never needs a manual "is this
+field blank" check itself: by the time its code runs, the pipeline has
+already guaranteed the object passed validation or the request never got
+this far.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

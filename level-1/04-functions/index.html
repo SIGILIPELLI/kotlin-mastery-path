@@ -879,6 +879,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2316,6 +2327,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2487,6 +2509,33 @@ that only make sense in one place.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>27.0
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>10.0
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Top-level functions like <code>greet</code> don't exist as a JVM concept — the bytecode
+verifier only understands methods that belong to a class. The compiler
+solves this the same way it does for top-level <code>main</code>: every top-level
+function in <code>Functions.kt</code> becomes a <code>public static</code> method on a synthetic
+class named <code>FunctionsKt</code>. That's why calling a top-level Kotlin function
+from Java looks like <code>FunctionsKt.greet("Alice")</code> — you're seeing the real
+generated class name.</p>
+<p>Default arguments are not a JVM feature either (the JVM has no notion of
+"optional parameter"), so the compiler fakes them with two techniques
+working together: it generates <strong>one method that always takes every
+parameter</strong>, and at each call site that omits some, it synthesizes the
+missing values inline. For a public/open function with defaults, the
+compiler additionally emits an overload suffixed with a hidden bitmask
+parameter (<code>$mask</code>) — visible if you run <code>javap</code> on the compiled class — that
+tells the method body which parameters were actually supplied by the caller,
+so it knows which ones to replace with their default expressions. This is
+why giving a function default parameters that is meant to be called from
+Java requires <code>@JvmOverloads</code>: without it, Java only sees the single method
+with the full parameter list plus the hidden mask, none of the convenient
+overloads Kotlin callers get for free.</p>
+<p>Named arguments are purely a compile-time convenience — the compiler
+resolves <code>punctuation = "?"</code> to the correct parameter <em>position</em> while
+generating the call, and the emitted bytecode is an ordinary method
+invocation with arguments in declared order. No parameter names survive
+into the bytecode's method signature (the JVM erases them, though <code>-parameters</code>
+debug metadata can optionally retain names for reflection).</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

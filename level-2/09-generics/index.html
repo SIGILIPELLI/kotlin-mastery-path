@@ -1395,6 +1395,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2305,6 +2316,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2569,6 +2591,40 @@ tool, not a change to how the JVM handles generics underneath.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Kotlin generics use <strong>type erasure</strong>, exactly like Java's — <code>Box&lt;T&gt;</code>
+compiles to a single <code>.class</code> file with one field typed <code>Object</code> (or, if <code>T</code>
+has an upper bound like <code>Comparable&lt;T&gt;</code>, typed as that bound), and every
+<code>Box&lt;Int&gt;</code>, <code>Box&lt;String&gt;</code> at runtime is the <em>same</em> <code>Box</code> class with the same
+bytecode; there is no <code>Box$Int</code> or <code>Box$String</code> generated. <code>T get(): T</code>
+compiles to a method returning <code>Object</code>, with an invisible <code>checkcast</code>
+inserted at each call site by the compiler where the result gets assigned
+to a specific type — that's the "unchecked cast" every generics-erasure
+language quietly does for you. This is precisely why you can't write <code>T()</code>
+or check <code>if (x is T)</code> in a normal generic function: by the time the JVM
+runs your code, the <code>T</code> bytecode needed to make that check has already been
+erased down to <code>Object</code>, and there is no runtime record of what <code>T</code> was
+supposed to be.</p>
+<p><code>reified</code> type parameters exist only because they're paired with <code>inline</code>.
+An <code>inline fun</code> doesn't compile to a callable method at all in the usual
+sense — the compiler literally <strong>copies the function's bytecode into every
+call site</strong> that invokes it, substituting the caller's actual type argument
+in place of <code>T</code> textually, the same way a C preprocessor macro would. So
+<code>list.filterByType&lt;String&gt;()</code> doesn't erase <code>String</code> to <code>Object</code> because
+there's no separate method being erased — the <code>is T</code> check becomes a
+concrete <code>is String</code> check baked directly into the caller's own bytecode at
+compile time. This is also why <code>reified</code> is forbidden outside <code>inline</code>
+functions: without inlining, there's no call site to paste concrete
+bytecode into, so the eraser would have nothing to substitute against.</p>
+<p><code>out</code>/<code>in</code> variance is enforced entirely by the Kotlin compiler's type
+checker and has <strong>no separate bytecode representation</strong> on the JVM beyond
+what Java's own wildcard generics (<code>? extends T</code> / <code>? super T</code>) already
+provide — when Kotlin generates a Java-visible signature for a
+declaration-site-variant type, it actually emits Java wildcards
+(<code>Container&lt;? extends Animal&gt;</code>) into the class file's generic-signature
+metadata, so <code>out</code>/<code>in</code> is really "declare the variance once at the class,
+and let the compiler emit the equivalent Java use-site wildcard everywhere
+automatically" rather than a fundamentally new runtime capability.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write a generic class <code>Stack&lt;T&gt;</code> with <code>push(item: T)</code>, <code>pop(): T?</code>, and
 <code>peek(): T?</code>, backed by a <code>MutableList&lt;T&gt;</code> internally. Then write an inline

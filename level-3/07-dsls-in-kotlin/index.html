@@ -1682,6 +1682,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2250,6 +2261,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2458,6 +2480,35 @@ confusing runtime structure.</p>
   common meaning (e.g. <code>+</code> that doesn't commute) actively misleads
   readers — this is a taste/API-design trap, not a compiler-enforced one.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>A lambda with receiver, <code>Tag.() -&gt; Unit</code>, compiles to
+<code>kotlin.jvm.functions.Function1&lt;Tag, Unit&gt;</code> — the <strong>exact same</strong> <code>Function1</code>
+interface as a plain <code>(Tag) -&gt; Unit</code> lambda; there is no separate
+<code>ReceiverFunction</code> type at the bytecode level. The only difference lives in
+how the <em>call site</em> invokes it: <code>child.block()</code> for a lambda-with-receiver
+compiles to <code>block.invoke(child)</code>, passing the receiver as the sole
+argument, which is indistinguishable in bytecode from calling a regular
+one-parameter lambda with <code>child</code> as its parameter. What actually changes
+is purely how the <strong>compiler resolves unqualified names inside the lambda
+body</strong> — for <code>Tag.() -&gt; Unit</code>, name resolution inside the lambda first
+checks members of <code>Tag</code> before falling back to the enclosing scope, which
+is why <code>attributes["class"] = "main"</code> inside <code>tag("body") { }</code> resolves to
+<code>Tag.attributes</code> without needing <code>this.</code> — that resolution rule is a
+compile-time-only convenience; by the time it's bytecode, it's just a method
+call on an object that happened to be passed as an argument.</p>
+<p><code>infix fun mustBe(...)</code> similarly changes nothing about the generated method
+— <code>"age" mustBe "18"</code> and <code>"age".mustBe("18")</code> compile to the identical
+<code>invokevirtual</code>/<code>invokestatic</code> call; <code>infix</code> only relaxes the <em>parser's</em>
+grammar to accept the dot-less, no-parens call form for functions meeting
+its constraints (exactly one parameter, no default, no vararg). <code>@DslMarker</code>
+is even more purely compile-time: it's an annotation Kotlin's type-checker
+consults to restrict which implicit receivers are considered "in scope"
+when resolving a name at a given nesting depth, deliberately narrowing the
+resolution rule described above — it emits no bytecode of its own at all
+and has zero runtime footprint; you could strip every <code>@DslMarker</code>
+annotation after compilation succeeds and the resulting <code>.class</code> files would
+behave identically, because it only ever influenced whether compilation was
+<em>allowed</em> to proceed in the first place.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

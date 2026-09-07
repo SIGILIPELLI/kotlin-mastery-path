@@ -2173,6 +2173,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#stretch-goals" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2296,6 +2307,17 @@
     <span class="md-ellipsis">
       
         What this capstone demonstrates from each module
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
       
     </span>
   </a>
@@ -2597,6 +2619,38 @@ validation failures, with fees calculated at the default 2.5% rate
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>orders.map { order -&gt; async { ... } }</code> synthesizes one child coroutine per
+order, and — as covered in the structured-concurrency module — each
+<code>async</code>'s <code>Deferred</code> registers itself as a child <code>Job</code> of the enclosing
+<code>coroutineScope</code>'s root <code>Job</code>. <code>deferred.map { it.await() }</code> then walks that
+list calling <code>await()</code> on each one in turn; because every <code>async</code> was
+already launched (handed to the dispatcher) before any is awaited, all five
+orders' validation and fee-calculation logic can run concurrently rather
+than one-at-a-time — the loop only <em>looks</em> sequential because <code>.map</code> visits
+the list in order, but the actual coroutine bodies were already scheduled
+to run as soon as <code>async { }</code> was called, back when the list was built.</p>
+<p>Catching <code>ValidationException</code> inside each <code>async</code> block rather than
+letting it escape is what keeps this capstone's structured concurrency
+useful instead of fragile: an <em>uncaught</em> exception from any one child would
+propagate to the parent <code>coroutineScope</code>, triggering the cancel-all-siblings
+behavior from the structured-concurrency module — exactly wrong for a batch
+job where one malformed order (<code>Order("ORD-3", "", 3_000)</code> with a blank
+customer name, or <code>Order("ORD-4", ..., -100)</code> with a negative amount)
+shouldn't take down every other order's processing. Converting the
+exception into a <code>OrderResult.Failure</code> value inside the <code>async</code> block turns
+what would be structured-concurrency's failure-propagation path into
+ordinary data flowing back through <code>await()</code> — a deliberate, well-known
+pattern for isolating expected per-item failures in a fan-out job.</p>
+<p>The <code>when (result) { is OrderResult.Success -&gt; ...; is OrderResult.Failure
+-&gt; ... }</code> block compiles without an <code>else</code> branch because <code>OrderResult</code> is
+a <code>sealed</code> type (referenced earlier in <code>Orders.kt</code>) — the compiler can
+enumerate every implementing class at compile time from the sealed
+hierarchy's metadata, the exact exhaustiveness check covered back in the
+control-flow module, which is what lets this <code>when</code> be used as an
+implicitly-exhaustive statement here with total confidence that a future
+<code>OrderResult</code> subtype addition would fail this file's compilation rather
+than silently falling through unhandled at runtime.</p>
 <h2 id="stretch-goals">Stretch goals<a class="headerlink" href="#stretch-goals" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Wrap <code>OrderService</code> in a minimal Ktor <code>POST /orders</code> endpoint (module

@@ -952,6 +952,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2305,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2484,6 +2506,37 @@ interop with Java APIs.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>99, 2, 3
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>6
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Kotlin does not have its own collection runtime — <code>List&lt;String&gt;</code>,
+<code>MutableList&lt;String&gt;</code>, <code>Set</code>, and <code>Map</code> all compile straight down to
+<code>java.util.List</code>, <code>java.util.Set</code>, and <code>java.util.Map</code>. There is no
+<code>kotlin.collections.ArrayList</code> class shipped separately at runtime; when you
+write <code>mutableListOf("apple", "banana")</code>, the compiler emits a call to
+<code>kotlin.collections.CollectionsKt.mutableListOf(...)</code>, which internally just
+constructs and returns a plain <code>java.util.ArrayList</code>. This is why Kotlin
+collections interoperate seamlessly with Java libraries — at the bytecode
+level, they <em>are</em> Java collections.</p>
+<p>The read-only vs. mutable distinction (<code>List</code> vs <code>MutableList</code>) is therefore
+a <strong>compile-time-only illusion</strong> layered on top of a single underlying Java
+type. <code>listOf(...)</code> returns the exact same <code>java.util.ArrayList</code> instance
+type that <code>mutableListOf(...)</code> does — it's just typed as <code>List&lt;String&gt;</code> by
+the Kotlin compiler, which then refuses to let you call <code>.add()</code> on that
+static type. If you cast that "read-only" <code>List</code> back to <code>MutableList</code> using
+an unchecked cast or reflection and call <code>.add()</code> on it, it succeeds at
+runtime, because the underlying object was mutable all along — the JVM never
+enforced read-only-ness, Kotlin's type checker did. Genuinely immutable
+collections (where mutation truly can't happen, even via casting) require
+<code>java.util.Collections.unmodifiableList</code> or Kotlin's <code>List.of</code>-style
+factories on newer stdlib versions.</p>
+<p>Operations like <code>.sorted()</code>, <code>.distinct()</code>, and <code>.reversed()</code> each allocate a
+<strong>new</strong> backing list rather than mutating or reordering the original — you
+can confirm this by checking that <code>numbers</code> still prints in its original
+order after calling <code>numbers.sorted()</code>. Internally, most of these are thin
+wrappers that copy the elements into a fresh <code>ArrayList</code>, delegate to
+<code>java.util.Collections.sort</code> (a well-tuned adaptive mergesort/Timsort
+variant) or build a <code>LinkedHashSet</code> (for <code>.distinct()</code>, which relies on
+<code>hashCode()</code>/<code>equals()</code> to detect duplicates while preserving insertion
+order) and return that as the new list.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

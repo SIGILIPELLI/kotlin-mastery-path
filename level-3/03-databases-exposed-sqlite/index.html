@@ -1559,6 +1559,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2228,6 +2239,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2398,6 +2420,40 @@ control.</p>
   entity property with a mismatched type is a compile error, which is
   actually a safety net compared to raw JDBC's stringly-typed result sets.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>var name by Employees.name</code> is Kotlin's <strong>property delegation</strong> feature,
+and it compiles to something very concrete: instead of generating a normal
+backing field, the compiler generates a hidden field holding the delegate
+object (<code>Employees.name</code>, a <code>Column&lt;String&gt;</code>) and rewrites every read of
+<code>employee.name</code> into a call to that delegate's <code>getValue(thisRef, property)</code>
+operator function, and every write into a call to <code>setValue(thisRef,
+property, value)</code>. Exposed's <code>Column</code> implements exactly those two operator
+functions, and inside them it runs the actual SQL — <code>getValue</code> issues a
+<code>SELECT</code> (or reads from an already-loaded result cache) for that entity's
+row/column, and <code>setValue</code> queues an <code>UPDATE</code>. So <code>employee.name</code> never
+touches an in-memory field the way a normal property does; every access is
+secretly a database round-trip (or a cache hit) dressed up as ordinary
+property syntax — nothing about <code>by</code> itself is database-specific, it's the
+same generic mechanism <code>lazy { }</code> and <code>Delegates.observable</code> use.</p>
+<p><code>transaction { }</code> is a higher-order function that opens a JDBC <code>Connection</code>,
+binds it to a thread-local (so nested Exposed calls inside the block find it
+without needing it passed explicitly), executes your lambda, and then calls
+<code>connection.commit()</code> if the lambda returns normally or
+<code>connection.rollback()</code> if it throws — implemented with a <code>try</code>/<code>finally</code>
+around the lambda invocation, using the same JVM exception-table mechanism
+discussed for the weather-CLI project's error handling. This is why
+<code>SchemaUtils.create(Employees)</code>, <code>Employee.new { }</code>, and every query inside
+the <code>transaction { }</code> block share one atomic unit of work: they're all
+literally running against the same JDBC connection object captured by that
+thread-local for the block's duration.</p>
+<p><code>IntIdTable</code>/<code>IntEntity</code>/<code>IntEntityClass</code> generate the primary-key column
+and wiring through ordinary inheritance and generics — <code>IntEntityClass&lt;Employee&gt;</code>
+is a generic factory whose <code>new { }</code> builder constructs an <code>Employee</code>,
+assigns an auto-generated <code>EntityID&lt;Int&gt;</code>, and runs an <code>INSERT</code> inside the
+enclosing transaction, all using the same Kotlin mechanisms (constructors,
+generics, delegated properties) you've already seen elsewhere — Exposed adds
+no new JVM-level capability, it composes ordinary language features into a
+DSL that happens to talk to a database.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

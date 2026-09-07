@@ -1615,6 +1615,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2228,6 +2239,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2370,6 +2392,33 @@ fun</code> (like <code>currentTimeMillis</code>) is stable and warning-free.</p>
   deprecation warnings on current Kotlin Multiplatform Gradle plugin
   versions; they're warnings, not errors, for now.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>commonMain</code> is never compiled to a runnable artifact by itself — the
+Kotlin Multiplatform Gradle plugin compiles it <strong>once per target</strong>, feeding
+the exact same <code>.kt</code> source files into a different backend compiler each
+time: the JVM target runs it through the standard Kotlin/JVM compiler
+producing <code>.class</code> bytecode, a JS target runs it through Kotlin/JS producing
+JavaScript, and a Native target (iOS) runs it through Kotlin/Native's LLVM
+based compiler producing a native binary — three genuinely different
+compilation pipelines sharing one parsed-and-type-checked source tree. This
+is why <code>expect</code>/<code>actual</code> has to exist: <code>expect class PlatformInfo</code> has no
+body to compile at all in <code>commonMain</code> — it's a <strong>type-checking contract
+only</strong>, telling the common-source compiler pass "trust that something
+matching this shape exists," while each platform's <code>actual</code> declaration is
+what the platform-specific compiler backend actually turns into real code.</p>
+<p>Critically, the compiler enforces that every <code>expect</code> declaration has
+exactly one matching <code>actual</code> per target <em>before</em> any platform-specific
+compilation is allowed to finish — if <code>jsMain</code> forgot to provide <code>actual
+fun currentTimeMillis()</code>, the JS compilation would fail with an unresolved
+reference, even though the JVM target compiles fine, because each target's
+build is otherwise fully independent once <code>commonMain</code>'s contract is
+satisfied for it. At the call site inside <code>greet(info)</code>, <code>info.name()</code>
+resolves against the <code>expect class</code>'s declared shape during common
+compilation, then gets rebound to whichever concrete <code>actual</code>
+implementation exists for the target actually being built — there's no
+runtime dispatch or reflection involved; it's link-time-style resolution
+performed separately for each platform compiler invocation, closer to how a
+C header/implementation split works than to virtual-method polymorphism.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

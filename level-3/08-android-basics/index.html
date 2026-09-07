@@ -1710,6 +1710,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#kotlin-specific-traps" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2261,6 +2272,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#kotlin-specific-traps" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2479,6 +2501,41 @@ collected via <code>collectAsState()</code>) changes.</p>
 <code>StateFlow</code> to a Compose-observed <code>State&lt;Int&gt;</code> — reading <code>count</code> inside
 <code>Text(text = "Count: $count")</code> registers this composable to recompose
 whenever the flow emits, without any manual "refresh the UI" call.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>@Composable</code> is not a marker the JVM understands natively — Compose ships
+its own compiler plugin that runs alongside the standard Kotlin compiler and
+rewrites every composable function's signature, appending a hidden
+<code>Composer</code> parameter (roughly <code>fun CounterScreen(viewModel: ..., $composer:
+Composer, $changed: Int)</code>). That injected <code>Composer</code> is what lets Compose
+track, at runtime, exactly which piece of state each composable read while
+running, by recording reads into a data structure called the <strong>slot
+table</strong>. When <code>count</code> (from <code>collectAsState()</code>) changes, Compose doesn't
+re-run your whole UI tree — it looks up, via the slot table, precisely
+which composables read that specific state value last time, and
+re-invokes only those functions (this is "smart recomposition," and it's
+why Compose scales to complex screens without repainting everything on
+every state change).</p>
+<p><code>by viewModel.count.collectAsState()</code> combines two mechanisms already
+covered elsewhere in this course: <code>collectAsState()</code> is a <code>@Composable</code>
+extension function that internally launches a coroutine collecting the
+<code>Flow</code> (using the Flow-collection mechanics from the coroutines-flow
+module) and stores each emitted value into a Compose <code>MutableState&lt;Int&gt;</code>
+object; the <code>by</code> is the same property-delegation mechanism from the Exposed
+module, where <code>State&lt;T&gt;</code> implements <code>getValue()</code>, so reading <code>count</code> really
+calls the delegate's <code>getValue</code>, which both returns the current value <em>and</em>
+registers this composable's <code>Composer</code> as an observer of that specific
+state slot — that registration is what triggers targeted recomposition when
+the state's <code>setValue</code> is later called from inside the coroutine collecting
+the flow.</p>
+<p><code>ViewModel</code> surviving configuration changes is an ordinary object-lifetime
+trick, not magic: the Android framework retains the <code>ViewModelStore</code>
+instance itself across an <code>Activity</code> being destroyed and recreated (which
+genuinely happens — a brand new <code>Activity</code> object is constructed after a
+rotation), and hands the <em>same</em> <code>ViewModel</code> instance back to the new
+<code>Activity</code> when it asks for one with a matching key — so <code>ViewModel</code> state
+survives not because Kotlin makes it durable, but because the platform
+deliberately keeps that one object alive across an Activity teardown/rebuild
+cycle that destroys everything else.</p>
 <h2 id="kotlin-specific-traps">Kotlin-specific traps<a class="headerlink" href="#kotlin-specific-traps" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Configuration changes destroy the Activity, not the <code>ViewModel</code>.</strong>

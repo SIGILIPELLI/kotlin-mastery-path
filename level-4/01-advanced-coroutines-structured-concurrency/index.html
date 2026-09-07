@@ -1890,6 +1890,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2250,6 +2261,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2440,6 +2462,34 @@ logging.</p>
   (though it's still reported to the parent's exception propagation
   machinery unless the scope is a <code>SupervisorJob</code>).</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Structured concurrency is enforced through a real, inspectable data
+structure: every coroutine's <code>Job</code> maintains a set of references to its
+child <code>Job</code>s, forming a tree. <code>coroutineScope { }</code> creates a new <code>Job</code> as
+the root of that subtree, and every <code>launch</code>/<code>async</code> called textually inside
+its lambda registers its own <code>Job</code> as a child of that root — this parent-
+child linkage is what makes <code>coroutineScope</code> able to wait for "every
+coroutine launched inside it, directly or nested," because it isn't
+scanning source code, it's literally walking a live tree of <code>Job</code> objects at
+runtime. When Child B throws, its <code>Job</code> transitions to a <code>Cancelling</code> state
+and calls <code>cancel()</code> on its <strong>parent's</strong> <code>Job</code>, which propagates that
+cancellation down to every <em>other</em> child in the same subtree — cancellation
+itself is implemented as a special <code>CancellationException</code> thrown at the
+next suspension point inside each cancelled child's state machine (so a
+child mid-<code>delay()</code> gets resumed with that exception instead of its normal
+value), which is why Child A and Child C only truly stop once they hit their
+own next suspend point, not instantaneously.</p>
+<p><code>supervisorScope</code> differs by exactly one thing in this tree: it uses a
+<code>SupervisorJob</code> as its root instead of a plain <code>Job</code>. A <code>SupervisorJob</code>'s
+<code>childCancelled()</code> override — the hook a child calls to report its own
+failure upward — is a no-op, so a failing child simply never triggers
+cancellation of its siblings; the exception still has nowhere else to go, so
+it flows to the coroutine's <code>CoroutineExceptionHandler</code> if one is installed
+in the context, or otherwise to the thread's default uncaught-exception
+handler — the same JVM-wide mechanism (<code>Thread.UncaughtExceptionHandler</code>)
+any Java thread uses, which is why the process doesn't crash: printing a
+stack trace to stderr on an uncaught exception is that handler's default
+behavior for a background thread, not something coroutines invented.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

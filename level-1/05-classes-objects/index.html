@@ -896,6 +896,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2305,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2511,6 +2533,37 @@ arguments.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>MyApp v1.0.0
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>MyApp v1.1.0
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>class Person(val name: String, var age: Int)</code> expands, at compile time, into
+exactly what you'd hand-write in Java: a <code>private final String name</code> field, a
+<code>private int age</code> field, a constructor that assigns both, a public
+<code>getName()</code>, and a public <code>getAge()</code>/<code>setAge(int)</code> pair (<code>var</code> gets a setter,
+<code>val</code> doesn't). Kotlin properties are always backed by this
+field-plus-accessors shape at the bytecode level — <code>person.age = 31</code> in
+Kotlin source literally compiles to an <code>invokevirtual</code> call to
+<code>setAge(31)</code>, not a direct field write, which is why you can later add
+validation logic inside <code>set(value)</code> without touching any call site.</p>
+<p>A computed property like <code>area</code> with only a custom <code>get()</code> compiles to a
+getter method containing that expression's bytecode and <strong>no backing field
+at all</strong> — <code>javap</code> on <code>Rectangle.class</code> shows no <code>area</code> field, only a
+<code>getArea()</code> method, confirming it's recomputed on every access rather than
+cached.</p>
+<p><code>init</code> blocks and the primary constructor are merged by the compiler into a
+single actual JVM constructor: property initializers and <code>init { ... }</code>
+blocks run in the exact textual order they appear in the class body, all
+inside that one generated <code>&lt;init&gt;</code> method. A secondary constructor that
+delegates via <code>: this(...)</code> compiles to a call to that primary <code>&lt;init&gt;</code>
+method as its very first bytecode instruction (the JVM requires every
+constructor to invoke another constructor or <code>Object</code>'s before doing
+anything else) — so <code>init</code> blocks and property initializers always run
+first, then the secondary constructor's own body.</p>
+<p><code>object AppConfig</code> is compiled to a normal class (<code>AppConfig.class</code>) with a
+<code>private</code> constructor and one <code>public static final AppConfig INSTANCE</code>
+field, eagerly initialized in a static initializer block (<code>&lt;clinit&gt;</code>) the
+first time the class is loaded by the JVM's classloader — thread-safe by
+construction, since class loading itself is synchronized by the JVM spec.
+<code>AppConfig.describe()</code> from Kotlin is really <code>AppConfig.INSTANCE.describe()</code>
+under the hood; the compiler just hides the <code>.INSTANCE</code> for you.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

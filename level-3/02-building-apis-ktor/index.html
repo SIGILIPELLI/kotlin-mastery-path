@@ -1531,6 +1531,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2228,6 +2239,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2448,6 +2470,35 @@ letting it propagate as an unhandled 500.</p>
   a missing param, <code>NumberFormatException</code> for a non-numeric one) — worth
   handling both explicitly in real code rather than a blind <code>!!</code>.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Ktor's routing DSL (<code>get { }</code>, <code>post { }</code>, nested <code>route("/tasks") { }</code>) is
+built entirely from ordinary Kotlin lambdas-with-receiver, the same
+mechanism behind Gradle's <code>build.gradle.kts</code> blocks — <code>routing { get("/") {
+...} }</code> is a function call taking a lambda whose receiver type is <code>Routing</code>,
+so unqualified calls like <code>get(...)</code> inside it resolve as extension
+functions on that receiver. None of this is special syntax; it's the
+regular Kotlin type system making a nested block of function calls read like
+a mini-language.</p>
+<p>Each request handler you register (<code>get("/tasks") { call.respond(...) }</code>) is
+compiled to a <code>suspend</code> lambda, stored internally as a <code>Function2</code>-style
+object (receiver + continuation) exactly like any other suspend lambda from
+the coroutines module — Ktor's Netty engine runs each incoming request on a
+coroutine, so a handler that calls a suspending database or HTTP client
+inside it doesn't block one of Netty's limited I/O threads while waiting;
+the request's continuation is parked and that thread goes back to servicing
+other connections, then resumes the specific request's state machine when
+the data arrives. This non-blocking-per-request model is the entire reason
+Ktor can serve large numbers of concurrent connections off a small,
+fixed-size thread pool.</p>
+<p><code>call.respond(task)</code> reaching a <code>@Serializable</code> <code>Task</code> and turning it into
+JSON bytes on the wire uses the exact compiler-generated <code>serializer()</code>
+method from the JSON module — the <code>ContentNegotiation</code> plugin installed
+above just looks up <code>Task</code>'s generated <code>KSerializer</code> (via the reified-generic
+machinery from the generics module) and calls its <code>serialize()</code> method to
+produce the response body; there's no separate reflection-based JSON mapper
+involved, which is part of why Ktor + kotlinx.serialization stays fast even
+under heavy request volume — the serialization work was already done by the
+compiler, not discovered at request time.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

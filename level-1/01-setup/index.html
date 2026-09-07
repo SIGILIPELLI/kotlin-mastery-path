@@ -784,6 +784,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2305,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2432,6 +2454,30 @@ confirming how an expression evaluates before pasting it into a real file.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>No newline here... still the same line.
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>This adds a newline automatically.
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Kotlin never runs "as Kotlin." <code>kotlinc</code> compiles your <code>.kt</code> file into standard
+JVM <code>.class</code> files containing bytecode — the same format <code>javac</code> produces from
+Java source. That's why a single <code>fun main()</code> at the top level of a file named
+<code>Hello.kt</code> gets compiled into a synthetic class called <code>HelloKt</code> with a
+<code>public static void main(String[] args)</code> method: the JVM has no concept of a
+"top-level function," so the compiler invents a container class named after
+the file (<code>&lt;FileName&gt;Kt</code>) and makes every top-level function/property a
+<code>static</code> member of it. You can see this yourself:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>kotlinc<span class="w"> </span>Hello.kt<span class="w"> </span>-include-runtime<span class="w"> </span>-d<span class="w"> </span>hello.jar
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>javap<span class="w"> </span>-p<span class="w"> </span>HelloKt.class
+</code></pre></div>
+<p>That will show <code>public static final void main(java.lang.String[])</code> — plain
+Java bytecode, nothing magical. The Kotlin standard library (<code>kotlin-stdlib.jar</code>)
+ships alongside your compiled classes and provides things like <code>println</code> as
+static calls into <code>kotlin.io.ConsoleKt</code>, which itself just forwards to
+<code>System.out.println</code>.</p>
+<p>The REPL works differently: it doesn't emit files, it compiles each line into
+an in-memory class immediately after you press Enter, executes it inside the
+same running JVM process, and keeps the resulting bindings (<code>x</code>, <code>y</code>, <code>res0</code>,
+...) as fields on synthetic wrapper classes it generates on the fly — which is
+why the REPL can feel slower to start (it boots a full JVM first) but
+instantaneous per-line after that (no new process, just new classes loaded
+into the existing one).</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

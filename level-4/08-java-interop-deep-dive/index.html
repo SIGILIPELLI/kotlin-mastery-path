@@ -2086,6 +2086,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2243,6 +2254,17 @@
     <span class="md-ellipsis">
       
         Traps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
       
     </span>
   </a>
@@ -2437,6 +2459,37 @@ Two defenses:</p>
   to a private field plus a getter, which such a framework won't find
   unless <code>@JvmField</code> is added to expose the field itself.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>legacy.score</code> resolving to <code>getScore()</code>/<code>setScore(int)</code> is a purely
+<strong>syntactic</strong> convenience the Kotlin compiler applies while reading Java
+bytecode: it recognizes the <code>getX</code>/<code>setX</code> method-pair naming convention on
+any class it imports (Kotlin or Java) and lets you spell the pair as
+property access — there's no new Java bytecode involved, <code>legacy.score</code>
+literally compiles to <code>legacy.getScore()</code>, and <code>legacy.score = 95</code> compiles
+to <code>legacy.setScore(95)</code>. This is why it also works for Kotlin classes:
+"properties" in Kotlin are always this same getter/setter shape underneath
+(as covered in the classes module), so the convention is symmetric in both
+directions.</p>
+<p><code>@JvmStatic</code> on a companion-object function exists because, without it,
+<code>Greeter.staticGreet(...)</code> wouldn't compile from Java the way you'd expect:
+recall from the classes module that <code>object</code>/companion declarations compile
+to an <code>INSTANCE</code> field on a real class, meaning a companion function is
+normally an <em>instance</em> method on <code>Greeter.Companion</code>, reachable from Java
+only as the verbose <code>Greeter.Companion.staticGreet(...)</code>.
+<code>@JvmStatic</code> tells the compiler to additionally generate a real <code>static</code>
+method directly on <code>Greeter</code> itself (which just delegates to the
+companion's instance method), giving Java callers the plain, static-style
+call they'd expect from a factory or utility method. <code>@JvmOverloads</code> does
+something similar for default arguments: recall that a function with
+defaults compiles to a single method taking every parameter plus a hidden
+bitmask (covered in the functions module) — <code>@JvmOverloads</code> makes the
+compiler additionally emit one overload per suffix of trailing default
+parameters, so Java sees <code>greet(String)</code> and <code>greet(String, String)</code> as two
+real, separate methods instead of one method Java has no convenient way to
+call with fewer arguments. <code>@JvmName("createGreeter")</code> similarly overrides
+the synthetic <code>&lt;FileName&gt;Kt</code> static-method name Java would otherwise see
+for a top-level function, letting you present a cleaner name across the
+interop boundary without changing anything about how Kotlin callers see it.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

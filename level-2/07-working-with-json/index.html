@@ -1328,6 +1328,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2305,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2503,6 +2525,35 @@ plain JSON string, no extra configuration needed.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>{&quot;title&quot;:&quot;Fix login bug&quot;,&quot;priority&quot;:&quot;HIGH&quot;}
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>HIGH
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>@Serializable</code> triggers a real <strong>compiler plugin</strong> (<code>kotlinx-serialization</code>
+hooks into the Kotlin compiler's IR backend), which runs during compilation
+and synthesizes an entire companion object method,
+<code>Product.Companion.serializer()</code>, plus a generated <code>KSerializer&lt;Product&gt;</code>
+implementation — all as ordinary bytecode sitting right there in
+<code>Product.class</code>, not generated at runtime and not using reflection at all.
+You can confirm this with <code>javap -p Product.class</code>: alongside the usual data
+class methods you'll find a static <code>serializer()</code> method and a nested
+<code>$serializer</code> class that knows, field by field, how to read and write each
+property — because the plugin literally writes that code for you at compile
+time, using the exact same IR the rest of the compiler works with.</p>
+<p>This is why <code>kotlinx.serialization</code> fails at <strong>compile time</strong>, not runtime,
+when your model doesn't line up: <code>Json.decodeFromString&lt;Product&gt;(json)</code>
+resolves the generated serializer via Kotlin's <code>reified</code> generics (see the
+generics module for how <code>&lt;Product&gt;</code> survives erasure here) and calls its
+compiler-generated <code>deserialize()</code> method directly — there's no
+<code>Class.forName</code> / field-reflection lookup at any point, so a missing
+property or type mismatch shows up as a <code>SerializationException</code> built from
+information the plugin already baked into the generated code, and structural
+issues (e.g. forgetting <code>@Serializable</code> on a nested class) are caught by the
+compiler itself before the program ever runs.</p>
+<p>Nested <code>@Serializable</code> classes and <code>List&lt;Int&gt;</code> work recursively because the
+generated <code>serializer()</code> for <code>Customer</code> calls <code>Address.serializer()</code> and
+<code>ListSerializer(Int.serializer())</code> internally — each <code>@Serializable</code> type
+contributes its own self-contained serializer, and the plugin wires them
+together into a tree that mirrors your object graph exactly, with the
+JSON encoder walking that tree field by field rather than inspecting the
+runtime object generically.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

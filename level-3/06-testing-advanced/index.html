@@ -1654,6 +1654,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2250,6 +2261,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2437,6 +2459,33 @@ inputs, reporting each as a separate result.</p>
   column count, non-numeric value for an <code>Int</code> parameter) fails at
   runtime with a <code>CsvSource</code>-specific error, not a compile error.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>mockk&lt;PaymentGateway&gt;()</code> doesn't write a hand-coded fake — it generates a
+real class implementing <code>PaymentGateway</code> <strong>at runtime</strong>, using bytecode
+generation (via ByteBuddy/Objenesis under MockK's hood) to synthesize a
+proxy class whose every method is instrumented to record calls and consult
+a table of configured stub answers instead of running real logic. This is
+only possible because <code>PaymentGateway</code> is an interface — MockK's proxy class
+implements it directly, satisfying the JVM's normal <code>invokeinterface</code>
+dispatch, so <code>OrderService</code> calling <code>gateway.charge(...)</code> neither knows nor
+cares it's calling a synthetic, freshly-generated class rather than a
+production implementation. <code>coEvery { gateway.charge(500) } returns true</code>
+works by first calling the real (proxied) method inside a special
+recording mode that captures which method and arguments were invoked, then
+associates that call signature with the return value in an internal map
+consulted by every future matching call.</p>
+<p><code>runTest</code> solves a specific problem with testing <code>suspend</code> code: a real
+<code>delay(5000)</code> suspends by scheduling a resume via a real clock, and a normal
+test would have to actually wait. <code>runTest</code> instead runs the coroutine
+under a special <code>TestDispatcher</code> backed by a <strong>virtual, scheduler-controlled
+clock</strong> — when code under test calls <code>delay(5000)</code>, the virtual clock simply
+advances its internal counter by 5000 "milliseconds" instantly, then runs
+any coroutines that became eligible to resume at that virtual time, with no
+real wall-clock wait happening at all. This works because <code>delay</code> is itself
+implemented via the current coroutine context's dispatcher/scheduler rather
+than a hardcoded <code>Thread.sleep</code> — swapping in a different scheduler for
+tests is enough to change what "time passing" means for every suspend
+function running under it, without touching <code>OrderService</code>'s code at all.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

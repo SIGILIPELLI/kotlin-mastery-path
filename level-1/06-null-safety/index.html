@@ -924,6 +924,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2305,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2484,6 +2506,37 @@ instead.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>hello
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>null
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Null safety is almost entirely a <strong>compile-time</strong> feature — the JVM bytecode
+target has no idea what a nullable type is; <code>String</code> and <code>String?</code> erase to
+the exact same JVM type, <code>java.lang.String</code>. What Kotlin actually does is run
+a static "nullability analysis" during compilation that tracks, at every
+point in your code, whether an expression's flow-derived null-status is
+known-non-null, known-null, or unknown — and refuses to compile a dereference
+unless the compiler can prove the receiver is non-null at that point. This is
+why <code>nickname.length</code> is a compile error but assigning <code>realNickname</code> and
+calling <code>.length</code> right after works: it's smart-cast, not a runtime check.</p>
+<p>The safe-call operator <code>?.</code> <strong>does</strong> produce real bytecode, though: <code>nickname
+?.length</code> compiles to roughly <code>if (nickname != null) nickname.length else
+null</code> — a genuine <code>ifnull</code> bytecode check inserted by the compiler, wrapping
+the call. Chained safe calls (<code>person1?.address?.city</code>) become nested
+null-checks, short-circuiting on the first null exactly like the equivalent
+hand-written Java would. The Elvis operator <code>?:</code> is the same idea from the
+other direction — <code>nickname ?: "Anonymous"</code> compiles to a temporary variable,
+a null check, and a conditional expression, no different from writing <code>val
+tmp = nickname; if (tmp != null) tmp else "Anonymous"</code>.</p>
+<p>The <code>!!</code> operator (not shown above but coming later) is the one place
+nullability becomes a genuine <em>runtime</em> check: it compiles to an explicit
+<code>Intrinsics.checkNotNull(value)</code> call injected by the compiler, which throws
+<code>KotlinNullPointerException</code> immediately if the value is null — meaning <code>!!</code>
+is really just Kotlin choosing to fail loudly and immediately at the
+assertion site rather than let a stray <code>null</code> propagate and blow up somewhere
+less obvious later, which is exactly what Java's implicit NPEs do. In fact
+the compiler inserts these same <code>Intrinsics.checkNotNullParameter</code> calls at
+the top of every public function for non-null parameters, so a Java caller
+passing <code>null</code> into a Kotlin function still gets a fast, clear exception
+instead of silently violating Kotlin's non-null guarantee deep inside the
+function body.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

@@ -1272,6 +1272,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2305,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2498,6 +2520,36 @@ operations over a <em>large</em> collection, especially if an early operation
 (like <code>first()</code>, <code>find()</code>, or <code>take()</code>) can short-circuit before
 processing everything.</p>
 </div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>filter { it.inStock }.filter { it.price &lt; 20.0 }.map { it.name }</code> on a plain
+<code>List</code> is <strong>eager and multi-pass</strong>: each of those three calls fully iterates
+its input and allocates a brand-new <code>ArrayList</code> before the next call even
+starts. Under the hood, <code>filter</code> is implemented (in
+<code>kotlin.collections.CollectionsKt</code>) as roughly <code>val result = ArrayList&lt;T&gt;();
+for (e in this) if (predicate(e)) result.add(e); return result</code> — a real
+loop, a real allocation, every time. Chain four operations over a
+million-element list and you've built three intermediate lists you never
+otherwise wanted, purely as scaffolding between steps.</p>
+<p><code>asSequence()</code> changes the underlying strategy entirely: it wraps the
+collection in a <code>Sequence&lt;T&gt;</code>, and each intermediate operation
+(<code>.filter</code>, <code>.map</code>) no longer executes anything — it just returns a new
+<code>Sequence</code> object that <em>remembers</em> the upstream sequence plus the
+transformation to apply, building up a lazy chain of wrapper objects. No
+actual work happens until a <strong>terminal operation</strong> (<code>.toList()</code>, <code>.first()</code>,
+<code>.sum()</code>, <code>.forEach { }</code>) pulls values through the chain one element at a
+time, applying every step to that one element before moving to the next.
+This is why sequences can short-circuit — <code>sequence.filter {...}.first {
+predicate }</code> can stop after finding the very first match instead of filtering
+the entire collection first — something a <code>List</code>-based chain fundamentally
+cannot do, since <code>.filter</code> on a <code>List</code> must finish before <code>.first</code> can even
+be called.</p>
+<p><code>fold</code>/<code>reduce</code> are implemented as simple accumulator loops with no
+allocation per step — <code>fold(0.0) { acc, x -&gt; acc + x }</code> compiles to a <code>for</code>
+loop carrying one running <code>Double</code> variable, calling the lambda's generated
+<code>invoke()</code> on each iteration; <code>reduce</code> is identical except it seeds the
+accumulator from <code>first()</code> instead of a supplied initial value, which is
+exactly why it has nothing to seed with — and throws
+<code>UnsupportedOperationException</code> — on an empty collection.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

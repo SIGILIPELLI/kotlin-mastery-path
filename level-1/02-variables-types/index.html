@@ -823,6 +823,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2316,6 +2327,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2516,6 +2538,29 @@ compile time.</p>
 <a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Limit: </span><span class="si">$</span><span class="n">MAX_USERS</span><span class="s">&quot;</span><span class="p">)</span>
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">}</span>
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>val</code> and <code>var</code> are a source-level distinction only — the JVM bytecode for a
+local <code>val</code> and a local <code>var</code> of the same type is identical (a slot on the
+stack frame, loaded/stored with <code>iload</code>/<code>istore</code> and friends). The
+<code>val</code>-cannot-be-reassigned rule is enforced entirely by the Kotlin compiler
+during the "immutability check" phase before code generation; there is no
+<code>final</code> flag involved for locals the way there is for fields. For a <code>val</code>
+declared as a class <strong>property</strong>, though, the compiler does emit a <code>final</code>
+field plus a getter (and no setter), so at the class level immutability is
+real, not just a compiler courtesy.</p>
+<p>The basic types are more interesting under the hood: <code>Int</code>, <code>Double</code>,
+<code>Boolean</code>, <code>Char</code>, etc. are not boxed objects by default. The compiler
+represents them as the JVM's raw primitives (<code>int</code>, <code>double</code>, <code>boolean</code>,
+<code>char</code>) whenever it can prove that's safe — e.g. a non-nullable <code>Int</code> local
+compiles to a plain <code>int</code>. Kotlin only <em>boxes</em> a primitive into its wrapper
+object (<code>java.lang.Integer</code>, etc.) when it must: when the value is nullable
+(<code>Int?</code>), stored in a generic collection (<code>List&lt;Int&gt;</code> erases to
+<code>List&lt;Object&gt;</code>, forcing boxing), or used through a type parameter. This is
+why <code>Int?</code> in Kotlin and <code>int</code> are genuinely different at the bytecode level
+— the <code>?</code> isn't cosmetic, it changes which JVM type gets emitted. <code>Long</code>'s
+<code>L</code> suffix and <code>Float</code>'s <code>f</code> suffix aren't runtime markers either; they only
+tell the compiler which literal-parsing rule to apply at compile time — by
+the time bytecode exists, the value is just a <code>long</code> or <code>float</code> slot.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

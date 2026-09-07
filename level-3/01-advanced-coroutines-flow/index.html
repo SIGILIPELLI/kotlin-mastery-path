@@ -1514,6 +1514,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2250,6 +2261,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2445,6 +2467,40 @@ subscribed was still delivered once a collector showed up.</p>
 <li><strong><code>flowOn</code> changes the upstream context, not downstream.</strong> <code>flow{...}.flowOn(Dispatchers.IO).map{...}</code> runs the builder on IO but <code>map</code> still runs in the collector's context — a common point of confusion when reasoning about which dispatcher code executes on.</li>
 <li><strong><code>launchIn</code> needs a scope.</strong> <code>flow.onEach{...}.launchIn(scope)</code> is the idiomatic way to start collecting without wrapping everything in <code>launch { flow.collect {} }</code>, but forgetting the scope argument is a common compile error.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>A <code>Flow&lt;T&gt;</code> is, at its core, a single-method interface:
+<code>suspend fun collect(collector: FlowCollector&lt;T&gt;)</code>. <code>flow { ... }</code> doesn't
+run anything — it just wraps your lambda body into an object implementing
+that interface, and <code>emit(value)</code> inside it is itself a <code>suspend</code> function
+call that invokes the downstream collector's own <code>suspend fun
+emit(value: T)</code> directly. This is why building <code>simpleFlow()</code> prints
+nothing: you've only constructed an object holding a reference to a lambda,
+and <code>collect { }</code> is the first thing that actually calls <code>invoke()</code> on it.
+Because <code>emit</code> calls straight into the collector's suspend function rather
+than pushing into a queue, the "producer suspends until the collector's
+lambda finishes" behavior isn't a design choice bolted on top — it's a
+direct consequence of <code>emit</code> being an ordinary (if compiler-transformed
+into a state machine) suspending call: control literally doesn't return to
+the <code>for</code> loop in <code>flow { }</code> until the collector lambda's own generated
+continuation resumes it.</p>
+<p>Each operator (<code>.map</code>, <code>.filter</code>, <code>.onEach</code>) is implemented as a new <code>Flow</code>
+that wraps the upstream one, so a chain like <code>.filter { }.map { }</code> is really
+nested <code>Flow</code> objects — the outer one, when collected, collects the flow
+underneath it and, in its own <code>emit</code> implementation, applies the
+transformation before forwarding the value onward, exactly mirroring the
+lazy <code>Sequence</code> wrapper-chain mechanics from the collections module, except
+each <code>emit</code>/collect step is a <code>suspend</code> call instead of a plain function
+call, which is what lets <code>.onEach { delay(10) }</code> genuinely pause between
+values without blocking a thread.</p>
+<p><code>.catch { }</code> works by having the generated collector wrap the <strong>upstream</strong>
+<code>collect</code> call in a <code>try</code>/<code>catch</code> and route any exception thrown during
+upstream emission into the catch lambda instead of propagating it further —
+but it deliberately does <strong>not</strong> catch exceptions thrown by the <em>downstream</em>
+collector's own <code>collect { }</code> block, only ones from operators above it in
+the chain. That asymmetry is enforced by exactly where in the generated
+code the <code>try</code> block's boundaries sit, and it's why <code>.catch</code> must appear
+before <code>.collect</code> in the chain to have any effect on an exception thrown
+inside the upstream flow.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

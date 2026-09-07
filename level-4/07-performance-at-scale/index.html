@@ -2069,6 +2069,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2433,6 +2455,39 @@ hand-rolled <code>measureNanoTime</code> loops like this module's do not.</p>
   <code>take</code>, <code>first</code>); <code>sortedBy</code>, <code>groupBy</code>, and <code>toList</code> all force full
   evaluation regardless of whether the source is a <code>List</code> or <code>Sequence</code>.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>value class UserId(val raw: Long)</code> achieves "type safety with zero
+allocation" through a compiler trick similar in spirit to <code>inline</code>
+functions: at most call sites, the compiler <strong>erases the wrapper entirely</strong>
+and substitutes the raw underlying value (<code>Long</code>) directly — a
+function parameter typed <code>UserId</code> compiles, wherever possible, to a plain
+<code>long</code> parameter, with the <code>UserId</code> type existing only during
+compile-time type-checking to stop you from accidentally passing a raw
+<code>Long</code> meant for something else (an <code>OrderId</code>, say) where a <code>UserId</code> is
+expected. This is why it's called "inline" historically: like an <code>inline</code>
+function's lambda, the wrapper class's <em>instance</em> mostly disappears from
+the compiled code, leaving only the value it wrapped. The compiler does
+have to fall back to actually boxing a <code>value class</code> into a real heap
+object in specific situations it can't erase — storing it in a generic
+collection (<code>List&lt;UserId&gt;</code>), returning it as <code>UserId?</code> (nullable value
+classes need a real object to represent null distinctly from the wrapped
+value), or passing it through a lambda/interface where erasure would change
+the method signature in a way that breaks binary compatibility — so the
+"zero allocation" guarantee is real but conditional, and worth checking with
+<code>javap</code> when a value class's performance matters somewhere hot.</p>
+<p>The JIT-warmup point in the benchmarks throughout this module has a
+mechanical explanation too: the JVM starts every method running in the
+<strong>interpreter</strong>, executing bytecode instruction-by-instruction, and only
+promotes a method to compiled machine code (via C1, then the more
+aggressively optimizing C2) once it's been invoked enough times to cross the
+JIT's hotness thresholds — which is also when optimizations like inlining,
+escape analysis (which can eliminate an allocation entirely if the JIT
+proves an object never escapes a method, sometimes turning even a boxed
+<code>Long</code> allocation into a stack-only value under the hood), and loop
+unrolling kick in. Measuring a method's first few calls times the slow
+interpreted path, not the steady-state compiled code production code
+actually runs under — which is exactly why every credible microbenchmark,
+including JMH, discards a warmup period before recording numbers.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
