@@ -236,6 +236,11 @@ null, bypassing the getter's own throwing check.
 | Possibly-absent collection | `List<T>?` |
 | Smart cast fails on a `var`/property | Copy to a local `val` first, then null-check |
 
+## 🔀 See this in another language
+
+- [C# — 05 · Nullable Reference Types & Null Safety](https://sigilipelli.github.io/csharp-mastery-path/level-2/05-nullable-reference-types/)
+- [Dart — 02 · Null Safety Advanced](https://sigilipelli.github.io/dart-mastery-path/level-2/02-null-safety-advanced/)
+
 ## Exercise
 
 Write a class `UserSession` with a `lateinit var token: String`. Add a

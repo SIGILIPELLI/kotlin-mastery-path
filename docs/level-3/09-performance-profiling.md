@@ -214,6 +214,12 @@ standard library's hottest, most-called higher-order functions (`map`,
 | Non-local return needed | Only works in `inline` functions | Early-exit from inside a lambda |
 | "Is this actually slow?" | `measureTimeMillis`/`measureNanoTime` + warmup, or a real profiler | Before optimizing anything |
 
+## 🔀 See this in another language
+
+- [Python — 10 · Profiling & Performance](https://sigilipelli.github.io/python-mastery-path/level-3/10-profiling-performance/)
+- [Java — 10 · Performance Profiling & Optimization](https://sigilipelli.github.io/java-mastery-path/level-3/10-profiling-optimization/)
+- [C++ — 09 · Performance Profiling](https://sigilipelli.github.io/cpp-mastery-path/level-3/09-performance-profiling/)
+
 ## Exercise
 
 Write a function that computes the sum of squares of even numbers from 1

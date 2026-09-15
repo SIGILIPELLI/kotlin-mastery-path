@@ -297,3 +297,9 @@ plugin was installed.
   `year` outside a sane range) using `StatusPages`' `exception<
   IllegalArgumentException>` to turn validation failures into 400
   responses instead of 500s.
+
+## 🔀 See this in another language
+
+- [Java — 11 · Project — REST API + Database CRUD Service](https://sigilipelli.github.io/java-mastery-path/level-3/11-project-rest-api-db/)
+- [Swift — 10 · Project — REST API + Database Service](https://sigilipelli.github.io/swift-mastery-path/level-3/10-project-rest-api-db/)
+- [Scala — 10 · Project — REST API + Database Service](https://sigilipelli.github.io/scala-mastery-path/level-3/10-project-rest-api-db/)

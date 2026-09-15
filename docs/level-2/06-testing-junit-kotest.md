@@ -262,6 +262,10 @@ instance can run.
 | Parameterize | `@ParameterizedTest` + `@ValueSource` | `withData(...)` / table tests |
 | Test a `suspend fun` | `runTest { }` (from `kotlinx-coroutines-test`) | same `runTest { }` works inside a spec |
 
+## 🔀 See this in another language
+
+- [Java — 07 · Unit Testing with JUnit 5](https://sigilipelli.github.io/java-mastery-path/level-2/07-junit-testing/)
+
 ## Exercise
 
 Write a small `PasswordValidator` class with a function `isValid(password:

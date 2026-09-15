@@ -197,6 +197,12 @@ much unrelated filesystem content ships alongside it.
 | Don't run as root | `USER appuser` in the Dockerfile |
 | Fat jar with all dependencies | `shadowJar`/`-include-runtime` |
 
+## 🔀 See this in another language
+
+- [TypeScript — 06 · Deployment with Docker](https://sigilipelli.github.io/typescript-mastery-path/level-4/06-deployment-docker/)
+- [C# — 07 · Deployment (Docker for .NET)](https://sigilipelli.github.io/csharp-mastery-path/level-4/07-deployment-docker/)
+- [Go — 06 · Deployment with Docker](https://sigilipelli.github.io/go-mastery-path/level-4/06-deployment-docker/)
+
 ## Exercise
 
 Add a third stage to the Dockerfile above that runs `gradle test` before

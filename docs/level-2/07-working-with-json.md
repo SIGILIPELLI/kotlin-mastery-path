@@ -254,6 +254,12 @@ runtime object generically.
 | Ignore unmodeled JSON fields | `Json { ignoreUnknownKeys = true }` |
 | Enum as a JSON string | `@Serializable enum class Foo { A, B }` |
 
+## 🔀 See this in another language
+
+- [JavaScript — 05 · Working with JSON & Fetch API](https://sigilipelli.github.io/javascript-mastery-path/level-2/05-json-fetch/)
+- [TypeScript — 08 · Working with JSON/APIs](https://sigilipelli.github.io/typescript-mastery-path/level-2/08-working-with-json-apis/)
+- [C# — 07 · Working with JSON (System.Text.Json)](https://sigilipelli.github.io/csharp-mastery-path/level-2/07-json-system-text-json/)
+
 ## Exercise
 
 Model a `@Serializable data class Book(val title: String, @SerialName("author_name")

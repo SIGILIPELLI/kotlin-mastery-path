@@ -213,6 +213,12 @@ silently breaking a reference it can't see.
 | Fail CI on violations | Both tasks exit non-zero by default |
 | Catch issues before PR | Pre-commit hook or IDE plugin |
 
+## 🔀 See this in another language
+
+- [Ruby — 09 · Code Quality & RuboCop](https://sigilipelli.github.io/ruby-mastery-path/level-4/09-code-quality-rubocop/)
+- [PHP — 09 · Code Quality Tools](https://sigilipelli.github.io/php-mastery-path/level-4/09-code-quality-tools/)
+- [Dart — 09 · Code Quality (`dart analyze` / lints)](https://sigilipelli.github.io/dart-mastery-path/level-4/09-code-quality/)
+
 ## Exercise
 
 Take the reformatted `MessyFixable.kt` from this module, manually rename

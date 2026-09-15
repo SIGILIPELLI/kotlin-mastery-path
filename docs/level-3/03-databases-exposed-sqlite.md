@@ -200,6 +200,10 @@ DSL that happens to talk to a database.
 | Update | mutate a fetched entity's `var` property |
 | Delete | `entity.delete()` |
 
+## 🔀 See this in another language
+
+- [Python — 06 · Databases (SQLite & SQLAlchemy)](https://sigilipelli.github.io/python-mastery-path/level-3/06-databases/)
+
 ## Exercise
 
 Add a `Department` table (`id`, `name`, `budget`) and a foreign key
