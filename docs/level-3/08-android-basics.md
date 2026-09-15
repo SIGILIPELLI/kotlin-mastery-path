@@ -1,3 +1,7 @@
+---
+description: "Android Basics — Android apps are ordinary JVM (or Kotlin/Native, for parts of Compose Multiplatform) programs built on top of the Android framework …"
+---
+
 # 08 · Android Basics
 
 !!! warning "About this module's verification"

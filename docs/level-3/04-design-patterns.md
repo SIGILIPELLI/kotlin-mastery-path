@@ -1,3 +1,7 @@
+---
+description: "Design Patterns in Kotlin — Classic Gang-of-Four patterns exist to work around limitations of older, more verbose OOP languages. Kotlin's language…"
+---
+
 # 04 · Design Patterns in Kotlin
 
 Classic Gang-of-Four patterns exist to work around limitations of older,

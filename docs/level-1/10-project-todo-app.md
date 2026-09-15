@@ -1,3 +1,7 @@
+---
+description: "Project — CLI To-Do App — A small end-to-end project combining everything from Level 1: data classes, collections, null safety, extension functions, and…"
+---
+
 # 10 · Project — CLI To-Do App
 
 A small end-to-end project combining everything from Level 1: data classes,
@@ -236,3 +240,9 @@ with `task.copy(isDone = true)` rather than mutating shared state by hand.
 - Add a `search <keyword>` command using `filter` on the task list.
 
 Completing this project means you're ready for **Level 2 · Intermediate**.
+
+## 🔀 See this in another language
+
+- [Scala — Project — CLI To-Do App](https://sigilipelli.github.io/scala-mastery-path/level-1/10-project-todo-app/)
+- [PowerShell — Project — System Info Reporter](https://sigilipelli.github.io/powershell-mastery-path/level-1/10-project-system-info-reporter/)
+- [C++ — Project — Bank Account CLI](https://sigilipelli.github.io/cpp-mastery-path/level-1/10-project-bank-account-cli/)

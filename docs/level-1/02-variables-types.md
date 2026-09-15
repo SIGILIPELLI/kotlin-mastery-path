@@ -1,3 +1,7 @@
+---
+description: "Variables & Types — Kotlin is statically typed like Java, but with type inference doing most of the work and a hard distinction between things that can…"
+---
+
 # 02 · Variables & Types
 
 Kotlin is statically typed like Java, but with type inference doing most of
@@ -197,6 +201,12 @@ the time bytecode exists, the value is just a `long` or `float` slot.
 | String template | `"$name is ${age + 1}"` |
 | Convert types | `i.toLong()`, `i.toDouble()`, `"42".toInt()` |
 | Compile-time constant | `const val NAME = value` |
+
+## 🔀 See this in another language
+
+- [Scala — Variables & Types](https://sigilipelli.github.io/scala-mastery-path/level-1/02-variables-types/)
+- [PowerShell — Variables & Types](https://sigilipelli.github.io/powershell-mastery-path/level-1/02-variables-types/)
+- [C++ — Variables, Types & Operators](https://sigilipelli.github.io/cpp-mastery-path/level-1/02-variables-types-operators/)
 
 ## Exercise
 

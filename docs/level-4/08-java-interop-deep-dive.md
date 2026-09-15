@@ -1,3 +1,7 @@
+---
+description: "Java Interop Deep Dive — Almost every real Kotlin codebase touches Java: an existing service being migrated incrementally, a Java library with no Kotlin…"
+---
+
 # 08 · Java Interop Deep Dive
 
 Almost every real Kotlin codebase touches Java: an existing service being

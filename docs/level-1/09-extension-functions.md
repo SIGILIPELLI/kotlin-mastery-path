@@ -1,3 +1,7 @@
+---
+description: "Extension Functions Intro — Extension functions let you add new functions to existing types — including types you don't own, like String or Int from the…"
+---
+
 # 09 · Extension Functions Intro
 
 Extension functions let you add new functions to *existing* types — including
@@ -204,6 +208,12 @@ over what is, underneath, an ordinary static utility function.
 | Extension property (computed only) | `val ReceiverType.name: Type get() = ...` |
 | Extension on nullable type | `fun String?.name(): Type { ... }` |
 | Resolution | Static — based on declared type, member functions win over extensions |
+
+## 🔀 See this in another language
+
+- [Scala — Traits Basics](https://sigilipelli.github.io/scala-mastery-path/level-1/09-traits-basics/)
+- [PowerShell — Modules Basics](https://sigilipelli.github.io/powershell-mastery-path/level-1/09-modules-basics/)
+- [C++ — Exception Handling Basics](https://sigilipelli.github.io/cpp-mastery-path/level-1/09-exception-handling/)
 
 ## Exercise
 

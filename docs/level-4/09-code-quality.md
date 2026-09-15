@@ -1,3 +1,7 @@
+---
+description: "Code Quality (detekt/ktlint) — A compiler enforces correctness; it says nothing about naming consistency, formatting, or the dozens of 'technically works…"
+---
+
 # 09 · Code Quality (detekt/ktlint)
 
 A compiler enforces correctness; it says nothing about naming

@@ -1,3 +1,7 @@
+---
+description: "Deployment (Docker) — A Kotlin service that only runs on your laptop isn't shipped. Docker packages the JVM, your compiled classes, and everything they…"
+---
+
 # 06 · Deployment (Docker)
 
 A Kotlin service that only runs on your laptop isn't shipped. Docker

@@ -1,3 +1,7 @@
+---
+description: "Control Flow — Kotlin's if and loops look familiar coming from Java, but if is an expression that can produce a value, and when — Kotlin's replacement for…"
+---
+
 # 03 · Control Flow
 
 Kotlin's `if` and loops look familiar coming from Java, but `if` is an
@@ -258,6 +262,12 @@ there's no `else`, the compiler-generated code throws
 | Step | `1..10 step 2` |
 | Loop with index | `for ((i, v) in list.withIndex())` |
 | Labeled continue | `continue@outer` |
+
+## 🔀 See this in another language
+
+- [Scala — Control Flow](https://sigilipelli.github.io/scala-mastery-path/level-1/03-control-flow/)
+- [PowerShell — Control Flow](https://sigilipelli.github.io/powershell-mastery-path/level-1/03-control-flow/)
+- [C++ — Control Flow](https://sigilipelli.github.io/cpp-mastery-path/level-1/03-control-flow/)
 
 ## Exercise
 

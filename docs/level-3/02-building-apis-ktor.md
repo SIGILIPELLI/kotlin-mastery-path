@@ -1,3 +1,7 @@
+---
+description: "Building APIs with Ktor — Module 8 of Level 2 covered Gradle, and suspend functions from Level 2's coroutines module are what make Ktor's request handlers…"
+---
+
 # 02 · Building APIs with Ktor
 
 [Module 8 of Level 2](../level-2/08-gradle-basics.md) covered Gradle, and

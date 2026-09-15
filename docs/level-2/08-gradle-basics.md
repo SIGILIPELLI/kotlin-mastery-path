@@ -1,3 +1,7 @@
+---
+description: "Gradle Basics — Every module so far has run a single .kt file straight through kotlinc. Real projects need more: managing dependencies (like the…"
+---
+
 # 08 · Gradle Basics
 
 Every module so far has run a single `.kt` file straight through `kotlinc`.

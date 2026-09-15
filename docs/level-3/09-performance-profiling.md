@@ -1,3 +1,7 @@
+---
+description: "Performance & Profiling — Kotlin's conveniences — collection operator chains, lambdas, boxed generics — mostly compile down to the same bytecode a…"
+---
+
 # 09 · Performance & Profiling
 
 Kotlin's conveniences — collection operator chains, lambdas, boxed

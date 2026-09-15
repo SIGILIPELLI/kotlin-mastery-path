@@ -1,3 +1,7 @@
+---
+description: "Advanced Coroutines & Structured Concurrency — Level 3's Flow module covered streams of values over time. This module covers the scoping rules that make…"
+---
+
 # 01 · Advanced Coroutines & Structured Concurrency
 
 [Level 3's Flow module](../level-3/01-advanced-coroutines-flow.md) covered

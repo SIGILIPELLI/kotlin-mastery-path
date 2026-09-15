@@ -1,3 +1,7 @@
+---
+description: "Testing at Scale & CI — A handful of tests in one file is easy to keep green. Hundreds of tests across dozens of files, run on every push, need structure…"
+---
+
 # 05 · Testing at Scale & CI
 
 A handful of tests in one file is easy to keep green. Hundreds of tests

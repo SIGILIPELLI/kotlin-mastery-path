@@ -1,3 +1,7 @@
+---
+description: "Working with JSON — Almost every real Kotlin project talks to something over JSON — a REST API, a config file, a message queue payload.…"
+---
+
 # 07 · Working with JSON
 
 Almost every real Kotlin project talks to something over JSON — a REST

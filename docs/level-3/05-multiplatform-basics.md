@@ -1,3 +1,7 @@
+---
+description: "Kotlin Multiplatform Basics — Everything so far has targeted the JVM. Kotlin Multiplatform (KMP) lets you share one Kotlin codebase across JVM, JS, Native…"
+---
+
 # 05 · Kotlin Multiplatform Basics
 
 Everything so far has targeted the JVM. **Kotlin Multiplatform (KMP)**

@@ -1,3 +1,7 @@
+---
+description: "Production APIs with Ktor — Level 3's Ktor module built routing, JSON, and basic error handling. A service headed for production needs more…"
+---
+
 # 02 · Production APIs with Ktor
 
 [Level 3's Ktor module](../level-3/02-building-apis-ktor.md) built routing,

@@ -1,3 +1,7 @@
+---
+description: "Lambdas & Higher-Order Functions — A lambda is a function literal — a block of code you can pass around as a value. A higher-order function is any…"
+---
+
 # 02 · Lambdas & Higher-Order Functions
 
 A **lambda** is a function literal — a block of code you can pass around as

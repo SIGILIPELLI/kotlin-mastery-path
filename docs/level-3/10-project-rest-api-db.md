@@ -1,3 +1,7 @@
+---
+description: "Project — REST API + Database Service — This project combines everything from Level 3: Ktor routing and error handling, Exposed against SQLite, and…"
+---
+
 # 10 · Project — REST API + Database Service
 
 This project combines everything from Level 3: [Ktor routing and error

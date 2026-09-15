@@ -1,3 +1,7 @@
+---
+description: "Performance at Scale — Kotlin compiles to JVM bytecode, so most performance work is really JVM performance work — but Kotlin's own abstractions (boxed…"
+---
+
 # 07 · Performance at Scale
 
 Kotlin compiles to JVM bytecode, so most performance work is really JVM

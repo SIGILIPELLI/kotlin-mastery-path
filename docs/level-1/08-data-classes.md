@@ -1,3 +1,7 @@
+---
+description: "Data Classes — data class is one of Kotlin's most useful idioms: a single keyword that generates equals(), hashCode(), toString(), and a copy() function…"
+---
+
 # 08 · Data Classes
 
 `data class` is one of Kotlin's most useful idioms: a single keyword that
@@ -195,6 +199,12 @@ not.
 | `equals()` / `hashCode()` | Structural (value-based) comparison |
 | `copy()` | `instance.copy(prop = newValue)` |
 | `componentN()` | Enables `val (a, b) = instance` destructuring |
+
+## 🔀 See this in another language
+
+- [Scala — Pattern Matching Intro](https://sigilipelli.github.io/scala-mastery-path/level-1/08-pattern-matching-intro/)
+- [PowerShell — Error Handling Basics](https://sigilipelli.github.io/powershell-mastery-path/level-1/08-error-handling-basics/)
+- [C++ — References & Pointers](https://sigilipelli.github.io/cpp-mastery-path/level-1/08-references-pointers/)
 
 ## Exercise
 

@@ -1,3 +1,7 @@
+---
+description: "Databases (Exposed/SQLite) — The Ktor module kept its 'database' in an in-memory Map. Real services need persistence — Exposed is JetBrains's Kotlin SQL…"
+---
+
 # 03 · Databases (Exposed/SQLite)
 
 The [Ktor module](02-building-apis-ktor.md) kept its "database" in an

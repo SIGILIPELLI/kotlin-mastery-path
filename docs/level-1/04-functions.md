@@ -1,3 +1,7 @@
+---
+description: "Functions — Functions are top-level citizens in Kotlin — they don't need to live inside a class the way they must in Java. This module covers declaring…"
+---
+
 # 04 · Functions
 
 Functions are top-level citizens in Kotlin — they don't need to live inside a
@@ -214,6 +218,12 @@ debug metadata can optionally retain names for reflection).
 | Spread operator | `f(*array)` |
 | Function reference | `::functionName` |
 | Function type | `(Int) -> Int` |
+
+## 🔀 See this in another language
+
+- [Scala — Functions](https://sigilipelli.github.io/scala-mastery-path/level-1/04-functions/)
+- [PowerShell — Functions](https://sigilipelli.github.io/powershell-mastery-path/level-1/04-functions/)
+- [C++ — Functions & Overloading](https://sigilipelli.github.io/cpp-mastery-path/level-1/04-functions-overloading/)
 
 ## Exercise
 

@@ -1,3 +1,7 @@
+---
+description: "Null Safety Advanced — Level 1 covered ?, ?., ?:, and !! — the everyday tools. This module covers the trickier corners: what happens when nullability…"
+---
+
 # 04 · Null Safety Advanced
 
 [Level 1](../level-1/06-null-safety.md) covered `?`, `?.`, `?:`, and `!!` —

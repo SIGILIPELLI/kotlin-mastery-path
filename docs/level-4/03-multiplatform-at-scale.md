@@ -1,3 +1,7 @@
+---
+description: "Multiplatform at Scale — Level 3's multiplatform module introduced expect/actual with a single JVM target. A real multiplatform app shares much more than…"
+---
+
 # 03 · Multiplatform at Scale
 
 [Level 3's multiplatform module](../level-3/05-multiplatform-basics.md)

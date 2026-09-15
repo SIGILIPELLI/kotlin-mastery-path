@@ -1,3 +1,7 @@
+---
+description: "Testing with JUnit/Kotest — Untested Kotlin code is a liability the moment more than one person touches it. This module covers the two most common testing…"
+---
+
 # 06 · Testing with JUnit/Kotest
 
 Untested Kotlin code is a liability the moment more than one person touches

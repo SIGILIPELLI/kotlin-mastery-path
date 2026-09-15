@@ -1,3 +1,7 @@
+---
+description: "Testing Advanced — Level 2's testing module covered plain JUnit 5 and Kotest fundamentals. Real services need more: mocking dependencies you don't want to…"
+---
+
 # 06 · Testing Advanced
 
 [Level 2's testing module](../level-2/06-testing-junit-kotest.md) covered

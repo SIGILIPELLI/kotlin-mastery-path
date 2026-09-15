@@ -1,3 +1,7 @@
+---
+description: "Classes & Objects Basics — Kotlin classes are more compact than Java's — constructor parameters and properties are often declared in one line. This module…"
+---
+
 # 05 · Classes & Objects Basics
 
 Kotlin classes are more compact than Java's — constructor parameters and
@@ -239,6 +243,12 @@ under the hood; the compiler just hides the `.INSTANCE` for you.
 | Validate arguments | `require(condition) { "message" }` |
 | Private member | `private var x` |
 | Singleton | `object Name { ... }` |
+
+## 🔀 See this in another language
+
+- [Scala — Collections Basics](https://sigilipelli.github.io/scala-mastery-path/level-1/05-collections-basics/)
+- [PowerShell — Working with Objects & the Pipeline](https://sigilipelli.github.io/powershell-mastery-path/level-1/05-objects-pipeline/)
+- [C++ — Arrays & std::vector Basics](https://sigilipelli.github.io/cpp-mastery-path/level-1/05-arrays-vector-basics/)
 
 ## Exercise
 

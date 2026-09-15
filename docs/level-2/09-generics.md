@@ -1,3 +1,7 @@
+---
+description: "Generics — Generics let a class or function work with any type while still giving you full compile-time type checking — no casts, no Any grab-bags.…"
+---
+
 # 09 · Generics
 
 Generics let a class or function work with any type while still giving you

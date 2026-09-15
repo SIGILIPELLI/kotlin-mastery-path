@@ -1,3 +1,7 @@
+---
+description: "Setup & First Program — Kotlin runs on the Java Virtual Machine (JVM), so you need a JDK installed before you can install Kotlin itself. This module gets…"
+---
+
 # 01 · Setup & First Program
 
 Kotlin runs on the Java Virtual Machine (JVM), so you need a JDK installed
@@ -174,6 +178,12 @@ into the existing one).
 | Run a `.kt` file directly | `kotlin File.kt` |
 | Start the REPL | `kotlinc` |
 | Exit the REPL | `:quit` |
+
+## 🔀 See this in another language
+
+- [Scala — Setup & First Program](https://sigilipelli.github.io/scala-mastery-path/level-1/01-setup/)
+- [PowerShell — Setup & First Script](https://sigilipelli.github.io/powershell-mastery-path/level-1/01-setup/)
+- [C++ — Setup & First Program](https://sigilipelli.github.io/cpp-mastery-path/level-1/01-setup/)
 
 ## Exercise
 

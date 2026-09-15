@@ -1,3 +1,7 @@
+---
+description: "Project — Weather CLI — The Level 1 capstone was a single .kt file compiled straight with kotlinc. This one is a real Gradle project: multiple source…"
+---
+
 # 10 · Project — Weather CLI
 
 The Level 1 capstone was a single `.kt` file compiled straight with

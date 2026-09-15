@@ -1,3 +1,7 @@
+---
+description: "Null Safety Basics — Kotlin's type system distinguishes nullable from non-nullable types at compile time, which eliminates most NullPointerExceptions…"
+---
+
 # 06 · Null Safety Basics
 
 Kotlin's type system distinguishes nullable from non-nullable types at
@@ -241,6 +245,12 @@ function body.
 | `!!` | Force non-null, throws if actually null | `x!!.length` |
 | `as?` | Safe cast — null instead of exception | `obj as? String` |
 | smart cast | Compiler narrows type after a null check | `if (x != null) x.length` |
+
+## 🔀 See this in another language
+
+- [Scala — Classes & Objects Basics](https://sigilipelli.github.io/scala-mastery-path/level-1/06-classes-objects/)
+- [PowerShell — Arrays & Hashtables](https://sigilipelli.github.io/powershell-mastery-path/level-1/06-arrays-hashtables/)
+- [C++ — Strings (std::string)](https://sigilipelli.github.io/cpp-mastery-path/level-1/06-strings/)
 
 ## Exercise
 

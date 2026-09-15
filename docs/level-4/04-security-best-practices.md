@@ -1,3 +1,7 @@
+---
+description: "Security Best Practices — Most application-level security bugs aren't exotic — they're plaintext passwords, string-concatenated SQL, and predictable…"
+---
+
 # 04 · Security Best Practices
 
 Most application-level security bugs aren't exotic — they're plaintext

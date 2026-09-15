@@ -1,3 +1,7 @@
+---
+description: "Coroutines Basics — Coroutines are Kotlin's answer to asynchronous, non-blocking code: lightweight 'tasks' that can suspend and resume without blocking an…"
+---
+
 # 03 · Coroutines Basics
 
 Coroutines are Kotlin's answer to asynchronous, non-blocking code:

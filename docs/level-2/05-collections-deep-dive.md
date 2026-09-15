@@ -1,3 +1,7 @@
+---
+description: "Collections Deep Dive — Level 1 covered List, Set, and Map themselves. This module is about the functional operations that make Kotlin collections so…"
+---
+
 # 05 · Collections Deep Dive
 
 [Level 1](../level-1/07-collections.md) covered `List`, `Set`, and `Map`

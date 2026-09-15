@@ -1,3 +1,7 @@
+---
+description: "OOP Deep Dive — Level 1 covered classes, objects, and data classes at a basic level. Real Kotlin codebases lean much harder on a handful of OOP idioms…"
+---
+
 # 01 · OOP Deep Dive
 
 Level 1 covered classes, objects, and data classes at a basic level. Real

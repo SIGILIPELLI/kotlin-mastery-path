@@ -1,3 +1,7 @@
+---
+description: "Capstone Project — This capstone combines every module in this level into one small but real project: an order-processing service. It validates input…"
+---
+
 # 10 · Capstone Project
 
 This capstone combines every module in this level into one small but

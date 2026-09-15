@@ -1,3 +1,7 @@
+---
+description: "Collections — Kotlin's standard library ships with rich, well-designed collection types out of the box — List, Set, and Map — each with both read-only and…"
+---
+
 # 07 · Collections
 
 Kotlin's standard library ships with rich, well-designed collection types out
@@ -234,6 +238,12 @@ order) and return that as the new list.
 | Add to mutable list | `list.add(value)` |
 | Iterate map | `for ((k, v) in map)` |
 | Combine key+value | `"key" to value` |
+
+## 🔀 See this in another language
+
+- [Scala — Case Classes](https://sigilipelli.github.io/scala-mastery-path/level-1/07-case-classes/)
+- [PowerShell — Working with Files](https://sigilipelli.github.io/powershell-mastery-path/level-1/07-working-with-files/)
+- [C++ — Classes & Objects Basics](https://sigilipelli.github.io/cpp-mastery-path/level-1/07-classes-objects/)
 
 ## Exercise
 
