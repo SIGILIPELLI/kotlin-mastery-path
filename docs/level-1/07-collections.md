@@ -241,9 +241,9 @@ order) and return that as the new list.
 
 ## 🔀 See this in another language
 
-- [Scala — Case Classes](https://sigilipelli.github.io/scala-mastery-path/level-1/07-case-classes/)
-- [PowerShell — Working with Files](https://sigilipelli.github.io/powershell-mastery-path/level-1/07-working-with-files/)
-- [C++ — Classes & Objects Basics](https://sigilipelli.github.io/cpp-mastery-path/level-1/07-classes-objects/)
+- [Scala — Case Classes](https://learnmasterypath.com/scala-mastery-path/level-1/07-case-classes/)
+- [PowerShell — Working with Files](https://learnmasterypath.com/powershell-mastery-path/level-1/07-working-with-files/)
+- [C++ — Classes & Objects Basics](https://learnmasterypath.com/cpp-mastery-path/level-1/07-classes-objects/)
 
 ## Exercise
 

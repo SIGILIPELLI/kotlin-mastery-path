@@ -202,7 +202,7 @@ DSL that happens to talk to a database.
 
 ## 🔀 See this in another language
 
-- [Python — 06 · Databases (SQLite & SQLAlchemy)](https://sigilipelli.github.io/python-mastery-path/level-3/06-databases/)
+- [Python — 06 · Databases (SQLite & SQLAlchemy)](https://learnmasterypath.com/python-mastery-path/level-3/06-databases/)
 
 ## Exercise
 

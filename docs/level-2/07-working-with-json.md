@@ -256,9 +256,9 @@ runtime object generically.
 
 ## 🔀 See this in another language
 
-- [JavaScript — 05 · Working with JSON & Fetch API](https://sigilipelli.github.io/javascript-mastery-path/level-2/05-json-fetch/)
-- [TypeScript — 08 · Working with JSON/APIs](https://sigilipelli.github.io/typescript-mastery-path/level-2/08-working-with-json-apis/)
-- [C# — 07 · Working with JSON (System.Text.Json)](https://sigilipelli.github.io/csharp-mastery-path/level-2/07-json-system-text-json/)
+- [JavaScript — 05 · Working with JSON & Fetch API](https://learnmasterypath.com/javascript-mastery-path/level-2/05-json-fetch/)
+- [TypeScript — 08 · Working with JSON/APIs](https://learnmasterypath.com/typescript-mastery-path/level-2/08-working-with-json-apis/)
+- [C# — 07 · Working with JSON (System.Text.Json)](https://learnmasterypath.com/csharp-mastery-path/level-2/07-json-system-text-json/)
 
 ## Exercise
 

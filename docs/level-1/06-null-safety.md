@@ -248,9 +248,9 @@ function body.
 
 ## 🔀 See this in another language
 
-- [Scala — Classes & Objects Basics](https://sigilipelli.github.io/scala-mastery-path/level-1/06-classes-objects/)
-- [PowerShell — Arrays & Hashtables](https://sigilipelli.github.io/powershell-mastery-path/level-1/06-arrays-hashtables/)
-- [C++ — Strings (std::string)](https://sigilipelli.github.io/cpp-mastery-path/level-1/06-strings/)
+- [Scala — Classes & Objects Basics](https://learnmasterypath.com/scala-mastery-path/level-1/06-classes-objects/)
+- [PowerShell — Arrays & Hashtables](https://learnmasterypath.com/powershell-mastery-path/level-1/06-arrays-hashtables/)
+- [C++ — Strings (std::string)](https://learnmasterypath.com/cpp-mastery-path/level-1/06-strings/)
 
 ## Exercise
 

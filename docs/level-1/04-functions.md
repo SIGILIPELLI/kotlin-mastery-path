@@ -221,9 +221,9 @@ debug metadata can optionally retain names for reflection).
 
 ## 🔀 See this in another language
 
-- [Scala — Functions](https://sigilipelli.github.io/scala-mastery-path/level-1/04-functions/)
-- [PowerShell — Functions](https://sigilipelli.github.io/powershell-mastery-path/level-1/04-functions/)
-- [C++ — Functions & Overloading](https://sigilipelli.github.io/cpp-mastery-path/level-1/04-functions-overloading/)
+- [Scala — Functions](https://learnmasterypath.com/scala-mastery-path/level-1/04-functions/)
+- [PowerShell — Functions](https://learnmasterypath.com/powershell-mastery-path/level-1/04-functions/)
+- [C++ — Functions & Overloading](https://learnmasterypath.com/cpp-mastery-path/level-1/04-functions-overloading/)
 
 ## Exercise
 

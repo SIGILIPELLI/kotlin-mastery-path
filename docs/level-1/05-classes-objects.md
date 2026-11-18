@@ -246,9 +246,9 @@ under the hood; the compiler just hides the `.INSTANCE` for you.
 
 ## 🔀 See this in another language
 
-- [Scala — Collections Basics](https://sigilipelli.github.io/scala-mastery-path/level-1/05-collections-basics/)
-- [PowerShell — Working with Objects & the Pipeline](https://sigilipelli.github.io/powershell-mastery-path/level-1/05-objects-pipeline/)
-- [C++ — Arrays & std::vector Basics](https://sigilipelli.github.io/cpp-mastery-path/level-1/05-arrays-vector-basics/)
+- [Scala — Collections Basics](https://learnmasterypath.com/scala-mastery-path/level-1/05-collections-basics/)
+- [PowerShell — Working with Objects & the Pipeline](https://learnmasterypath.com/powershell-mastery-path/level-1/05-objects-pipeline/)
+- [C++ — Arrays & std::vector Basics](https://learnmasterypath.com/cpp-mastery-path/level-1/05-arrays-vector-basics/)
 
 ## Exercise
 

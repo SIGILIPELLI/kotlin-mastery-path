@@ -216,9 +216,9 @@ standard library's hottest, most-called higher-order functions (`map`,
 
 ## 🔀 See this in another language
 
-- [Python — 10 · Profiling & Performance](https://sigilipelli.github.io/python-mastery-path/level-3/10-profiling-performance/)
-- [Java — 10 · Performance Profiling & Optimization](https://sigilipelli.github.io/java-mastery-path/level-3/10-profiling-optimization/)
-- [C++ — 09 · Performance Profiling](https://sigilipelli.github.io/cpp-mastery-path/level-3/09-performance-profiling/)
+- [Python — 10 · Profiling & Performance](https://learnmasterypath.com/python-mastery-path/level-3/10-profiling-performance/)
+- [Java — 10 · Performance Profiling & Optimization](https://learnmasterypath.com/java-mastery-path/level-3/10-profiling-optimization/)
+- [C++ — 09 · Performance Profiling](https://learnmasterypath.com/cpp-mastery-path/level-3/09-performance-profiling/)
 
 ## Exercise
 

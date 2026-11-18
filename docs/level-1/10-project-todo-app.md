@@ -243,6 +243,6 @@ Completing this project means you're ready for **Level 2 · Intermediate**.
 
 ## 🔀 See this in another language
 
-- [Scala — Project — CLI To-Do App](https://sigilipelli.github.io/scala-mastery-path/level-1/10-project-todo-app/)
-- [PowerShell — Project — System Info Reporter](https://sigilipelli.github.io/powershell-mastery-path/level-1/10-project-system-info-reporter/)
-- [C++ — Project — Bank Account CLI](https://sigilipelli.github.io/cpp-mastery-path/level-1/10-project-bank-account-cli/)
+- [Scala — Project — CLI To-Do App](https://learnmasterypath.com/scala-mastery-path/level-1/10-project-todo-app/)
+- [PowerShell — Project — System Info Reporter](https://learnmasterypath.com/powershell-mastery-path/level-1/10-project-system-info-reporter/)
+- [C++ — Project — Bank Account CLI](https://learnmasterypath.com/cpp-mastery-path/level-1/10-project-bank-account-cli/)

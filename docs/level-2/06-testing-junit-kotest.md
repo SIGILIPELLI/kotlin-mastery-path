@@ -264,7 +264,7 @@ instance can run.
 
 ## 🔀 See this in another language
 
-- [Java — 07 · Unit Testing with JUnit 5](https://sigilipelli.github.io/java-mastery-path/level-2/07-junit-testing/)
+- [Java — 07 · Unit Testing with JUnit 5](https://learnmasterypath.com/java-mastery-path/level-2/07-junit-testing/)
 
 ## Exercise
 

@@ -202,9 +202,9 @@ not.
 
 ## 🔀 See this in another language
 
-- [Scala — Pattern Matching Intro](https://sigilipelli.github.io/scala-mastery-path/level-1/08-pattern-matching-intro/)
-- [PowerShell — Error Handling Basics](https://sigilipelli.github.io/powershell-mastery-path/level-1/08-error-handling-basics/)
-- [C++ — References & Pointers](https://sigilipelli.github.io/cpp-mastery-path/level-1/08-references-pointers/)
+- [Scala — Pattern Matching Intro](https://learnmasterypath.com/scala-mastery-path/level-1/08-pattern-matching-intro/)
+- [PowerShell — Error Handling Basics](https://learnmasterypath.com/powershell-mastery-path/level-1/08-error-handling-basics/)
+- [C++ — References & Pointers](https://learnmasterypath.com/cpp-mastery-path/level-1/08-references-pointers/)
 
 ## Exercise
 

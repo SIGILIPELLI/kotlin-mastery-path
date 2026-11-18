@@ -211,9 +211,9 @@ over what is, underneath, an ordinary static utility function.
 
 ## 🔀 See this in another language
 
-- [Scala — Traits Basics](https://sigilipelli.github.io/scala-mastery-path/level-1/09-traits-basics/)
-- [PowerShell — Modules Basics](https://sigilipelli.github.io/powershell-mastery-path/level-1/09-modules-basics/)
-- [C++ — Exception Handling Basics](https://sigilipelli.github.io/cpp-mastery-path/level-1/09-exception-handling/)
+- [Scala — Traits Basics](https://learnmasterypath.com/scala-mastery-path/level-1/09-traits-basics/)
+- [PowerShell — Modules Basics](https://learnmasterypath.com/powershell-mastery-path/level-1/09-modules-basics/)
+- [C++ — Exception Handling Basics](https://learnmasterypath.com/cpp-mastery-path/level-1/09-exception-handling/)
 
 ## Exercise
 

@@ -265,9 +265,9 @@ there's no `else`, the compiler-generated code throws
 
 ## 🔀 See this in another language
 
-- [Scala — Control Flow](https://sigilipelli.github.io/scala-mastery-path/level-1/03-control-flow/)
-- [PowerShell — Control Flow](https://sigilipelli.github.io/powershell-mastery-path/level-1/03-control-flow/)
-- [C++ — Control Flow](https://sigilipelli.github.io/cpp-mastery-path/level-1/03-control-flow/)
+- [Scala — Control Flow](https://learnmasterypath.com/scala-mastery-path/level-1/03-control-flow/)
+- [PowerShell — Control Flow](https://learnmasterypath.com/powershell-mastery-path/level-1/03-control-flow/)
+- [C++ — Control Flow](https://learnmasterypath.com/cpp-mastery-path/level-1/03-control-flow/)
 
 ## Exercise
 

@@ -204,9 +204,9 @@ the time bytecode exists, the value is just a `long` or `float` slot.
 
 ## 🔀 See this in another language
 
-- [Scala — Variables & Types](https://sigilipelli.github.io/scala-mastery-path/level-1/02-variables-types/)
-- [PowerShell — Variables & Types](https://sigilipelli.github.io/powershell-mastery-path/level-1/02-variables-types/)
-- [C++ — Variables, Types & Operators](https://sigilipelli.github.io/cpp-mastery-path/level-1/02-variables-types-operators/)
+- [Scala — Variables & Types](https://learnmasterypath.com/scala-mastery-path/level-1/02-variables-types/)
+- [PowerShell — Variables & Types](https://learnmasterypath.com/powershell-mastery-path/level-1/02-variables-types/)
+- [C++ — Variables, Types & Operators](https://learnmasterypath.com/cpp-mastery-path/level-1/02-variables-types-operators/)
 
 ## Exercise
 
