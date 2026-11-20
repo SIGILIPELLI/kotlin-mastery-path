@@ -1,3 +1,7 @@
+---
+description: "Level 3 (Advanced) of the free Kotlin Mastery Path. Build real backend services with Kotlin — Ktor APIs, database access, Flow-based coroutines, and…"
+---
+
 # Level 3 · Advanced <span class="level-badge">APIs & architecture</span>
 
 Goal: build real backend services with Kotlin — Ktor APIs, database access,

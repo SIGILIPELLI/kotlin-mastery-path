@@ -1,3 +1,7 @@
+---
+description: "Level 2 (Intermediate) of the free Kotlin Mastery Path. Write idiomatic, testable Kotlin — coroutines, functional collection operations, generics, and the…"
+---
+
 # Level 2 · Intermediate <span class="level-badge">Idiomatic Kotlin</span>
 
 Goal: write idiomatic, testable Kotlin — coroutines, functional collection
