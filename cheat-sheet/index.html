@@ -1,0 +1,4744 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A free Kotlin cheat sheet: 36 quick-reference tables from every level of the Kotlin Mastery Path, each linked to its full lesson.">
+      
+      
+      
+        <link rel="canonical" href="https://learnmasterypath.com/kotlin-mastery-path/cheat-sheet/">
+      
+      
+        <link rel="prev" href="../interview-questions/">
+      
+      
+        <link rel="next" href="../level-1/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+  
+  <title>Kotlin Cheat Sheet: Quick Reference, Beginner to Advanced</title>
+
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/progress-tracker.css">
+    
+      <link rel="stylesheet" href="../stylesheets/final-quiz.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-05VBGCXN12"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-05VBGCXN12');
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mastery Path">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Kotlin Cheat Sheet: Quick Reference, Beginner to Advanced">
+  <meta property="og:description" content="A free Kotlin cheat sheet: 36 quick-reference tables from every level of the Kotlin Mastery Path, each linked to its full lesson.">
+  <meta property="og:url" content="https://learnmasterypath.com/kotlin-mastery-path/cheat-sheet/">
+  <meta property="og:image" content="https://learnmasterypath.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mastery Path: free structured courses, beginner to master">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kotlin Cheat Sheet: Quick Reference, Beginner to Advanced">
+  <meta name="twitter:description" content="A free Kotlin cheat sheet: 36 quick-reference tables from every level of the Kotlin Mastery Path, each linked to its full lesson.">
+  <meta name="twitter:image" content="https://learnmasterypath.com/og-image.png">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9440969811959397"
+     crossorigin="anonymous"></script><script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Mastery Path", "item": "https://learnmasterypath.com/"},
+      {"@type": "ListItem", "position": 2, "name": "Kotlin Mastery Path", "item": "https://learnmasterypath.com/kotlin-mastery-path/"},
+      {"@type": "ListItem", "position": 3, "name": "Cheat Sheet", "item": "https://learnmasterypath.com/kotlin-mastery-path/cheat-sheet/"}
+    ]
+  }
+  </script>
+  <style>
+    .md-banner a:hover { text-decoration: underline !important; }
+    .mp-related { margin-top: 2.4rem; padding-top: 1rem; border-top: 1px solid var(--md-default-fg-color--lightest); font-size: .78rem; }
+    .mp-related h2 { font-size: .9rem; margin: 0 0 .5rem; }
+    .mp-related ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem .9rem; }
+    .mp-related li { margin: 0 !important; }
+  </style>
+  <script type="application/json" id="mp-course-meta">{"home": false, "id": "kotlin-mastery-path", "name": "Kotlin Mastery Path", "repo": "https://github.com/SIGILIPELLI/kotlin-mastery-path", "src": "cheat-sheet.md", "url": "https://learnmasterypath.com/kotlin-mastery-path/"}</script>
+  <link rel="stylesheet" href="https://learnmasterypath.com/assets/learn.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://learnmasterypath.com/assets/course.css?v=1">
+  <script src="https://learnmasterypath.com/assets/learn.js" defer></script>
+  <script src="https://learnmasterypath.com/assets/signup.js" defer></script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#kotlin-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+            
+  <a href="https://learnmasterypath.com/" style="color: inherit; text-decoration: none;">
+    &larr; Mastery Path &middot; all 100+ free courses
+  </a>
+  <span style="opacity: .6; margin: 0 .6em;">|</span>
+  <a href="https://learnmasterypath.com/search/" style="color: inherit; text-decoration: none;">Search all courses</a>
+  <span style="opacity: .6; margin: 0 .6em;">|</span>
+  <a href="https://learnmasterypath.com/resume/" style="color: inherit; font-weight: 700; text-decoration: none;">
+    Got the skills? Free resume ATS check &rarr;
+  </a>
+
+          </div>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Kotlin Mastery Path" class="md-header__button md-logo" aria-label="Kotlin Mastery Path" data-md-component="logo">
+      <svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <circle cx="80" cy="80" r="74" fill="#FAF7EF" stroke="#2FA98D" stroke-width="5"/>
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kotlin Mastery Path
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Kotlin Cheat Sheet: Quick Reference, Beginner to Advanced
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SIGILIPELLI/kotlin-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    kotlin-mastery-path
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../interview-questions/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Interview Questions
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Cheat Sheet
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-1/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 1 · Entry
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 2 · Intermediate
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 3 · Advanced
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 4 · Master
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quiz/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Final Quiz
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Kotlin Mastery Path" class="md-nav__button md-logo" aria-label="Kotlin Mastery Path" data-md-component="logo">
+      <svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <circle cx="80" cy="80" r="74" fill="#FAF7EF" stroke="#2FA98D" stroke-width="5"/>
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg>
+    </a>
+    Kotlin Mastery Path
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SIGILIPELLI/kotlin-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    kotlin-mastery-path
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interview-questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interview Questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#level-1-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 1 · Entry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 1 · Entry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-setup-first-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Setup &amp; First Program
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-variables-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Variables &amp; Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-control-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Control Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-classes-objects-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Classes &amp; Objects Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-null-safety-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Null Safety Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-collections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Collections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-data-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Data Classes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-extension-functions-intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Extension Functions Intro
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-2-intermediate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 2 · Intermediate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 2 · Intermediate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-oop-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · OOP Deep Dive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-lambdas-higher-order-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Lambdas &amp; Higher-Order Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-coroutines-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Coroutines Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-null-safety-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Null Safety Advanced
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-collections-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Collections Deep Dive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-testing-with-junitkotest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Testing with JUnit/Kotest
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-working-with-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Working with JSON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-gradle-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Gradle Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-generics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Generics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-3-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 3 · Advanced
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 3 · Advanced">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-advanced-coroutines-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Advanced Coroutines (Flow)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-building-apis-with-ktor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Building APIs with Ktor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-databases-exposedsqlite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Databases (Exposed/SQLite)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-design-patterns-in-kotlin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Design Patterns in Kotlin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-kotlin-multiplatform-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Kotlin Multiplatform Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-testing-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Testing Advanced
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-dsls-in-kotlin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · DSLs in Kotlin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-android-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Android Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-performance-profiling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Performance &amp; Profiling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-4-master" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 4 · Master
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 4 · Master">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-advanced-coroutines-structured-concurrency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Advanced Coroutines &amp; Structured Concurrency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-production-apis-with-ktor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Production APIs with Ktor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-multiplatform-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Multiplatform at Scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-security-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Security Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-testing-at-scale-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Testing at Scale &amp; CI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-deployment-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Deployment (Docker)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-performance-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Performance at Scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-java-interop-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Java Interop Deep Dive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-code-quality-detektktlint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Code Quality (detekt/ktlint)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 1 · Entry
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 1 · Entry
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/01-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Setup & First Program
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/02-variables-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Variables & Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/03-control-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Control Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/04-functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/05-classes-objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Classes & Objects Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/06-null-safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Null Safety Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/07-collections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Collections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/08-data-classes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Data Classes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/09-extension-functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Extension Functions Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/10-project-todo-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — CLI To-Do App
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 2 · Intermediate
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 2 · Intermediate
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/01-oop-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · OOP Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/02-lambdas-higher-order-functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Lambdas & Higher-Order Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/03-coroutines-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Coroutines Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/04-null-safety-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Null Safety Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/05-collections-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Collections Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/06-testing-junit-kotest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Testing with JUnit/Kotest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/07-working-with-json/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Working with JSON
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/08-gradle-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Gradle Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/09-generics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Generics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/10-project-weather-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Weather CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 3 · Advanced
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 3 · Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/01-advanced-coroutines-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Advanced Coroutines (Flow)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/02-building-apis-ktor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Building APIs with Ktor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/03-databases-exposed-sqlite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Databases (Exposed/SQLite)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/04-design-patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Design Patterns in Kotlin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/05-multiplatform-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Kotlin Multiplatform Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/06-testing-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Testing Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/07-dsls-in-kotlin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · DSLs in Kotlin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/08-android-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Android Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/09-performance-profiling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Performance & Profiling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/10-project-rest-api-db/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — REST API + Database Service
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 4 · Master
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 4 · Master
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/01-advanced-coroutines-structured-concurrency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Advanced Coroutines & Structured Concurrency
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/02-production-apis-ktor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Production APIs with Ktor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/03-multiplatform-at-scale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Multiplatform at Scale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/04-security-best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Security Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/05-testing-at-scale-ci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Testing at Scale & CI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/06-deployment-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Deployment (Docker)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/07-performance-at-scale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Performance at Scale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/08-java-interop-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Java Interop Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/09-code-quality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Code Quality (detekt/ktlint)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/10-capstone-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Capstone Project
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Final Quiz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#level-1-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 1 · Entry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 1 · Entry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-setup-first-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Setup &amp; First Program
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-variables-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Variables &amp; Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-control-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Control Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-classes-objects-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Classes &amp; Objects Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-null-safety-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Null Safety Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-collections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Collections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-data-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Data Classes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-extension-functions-intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Extension Functions Intro
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-2-intermediate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 2 · Intermediate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 2 · Intermediate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-oop-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · OOP Deep Dive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-lambdas-higher-order-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Lambdas &amp; Higher-Order Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-coroutines-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Coroutines Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-null-safety-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Null Safety Advanced
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-collections-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Collections Deep Dive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-testing-with-junitkotest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Testing with JUnit/Kotest
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-working-with-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Working with JSON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-gradle-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Gradle Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-generics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Generics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-3-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 3 · Advanced
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 3 · Advanced">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-advanced-coroutines-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Advanced Coroutines (Flow)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-building-apis-with-ktor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Building APIs with Ktor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-databases-exposedsqlite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Databases (Exposed/SQLite)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-design-patterns-in-kotlin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Design Patterns in Kotlin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-kotlin-multiplatform-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Kotlin Multiplatform Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-testing-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Testing Advanced
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-dsls-in-kotlin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · DSLs in Kotlin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-android-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Android Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-performance-profiling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Performance &amp; Profiling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-4-master" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 4 · Master
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 4 · Master">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-advanced-coroutines-structured-concurrency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Advanced Coroutines &amp; Structured Concurrency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-production-apis-with-ktor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Production APIs with Ktor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-multiplatform-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Multiplatform at Scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-security-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Security Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-testing-at-scale-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Testing at Scale &amp; CI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-deployment-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Deployment (Docker)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-performance-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Performance at Scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-java-interop-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Java Interop Deep Dive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-code-quality-detektktlint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Code Quality (detekt/ktlint)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+
+
+  
+  
+
+
+<h1 id="kotlin-cheat-sheet">Kotlin Cheat Sheet<a class="headerlink" href="#kotlin-cheat-sheet" title="Permanent link">&para;</a></h1>
+<p>Quick-reference tables from <strong>36 lessons</strong> of the free Kotlin Mastery Path, in course order from beginner to advanced. Each section links to the full lesson with explanations and runnable examples.</p>
+<h2 id="level-1-entry">Level 1 · Entry<a class="headerlink" href="#level-1-entry" title="Permanent link">&para;</a></h2>
+<h3 id="01-setup-first-program"><a href="../level-1/01-setup/">01 · Setup &amp; First Program</a><a class="headerlink" href="#01-setup-first-program" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Check JDK version</td>
+<td><code>java -version</code></td>
+</tr>
+<tr>
+<td>Check Kotlin compiler version</td>
+<td><code>kotlinc -version</code></td>
+</tr>
+<tr>
+<td>Compile to a runnable jar</td>
+<td><code>kotlinc File.kt -include-runtime -d app.jar</code></td>
+</tr>
+<tr>
+<td>Run a jar</td>
+<td><code>java -jar app.jar</code></td>
+</tr>
+<tr>
+<td>Run a <code>.kt</code> file directly</td>
+<td><code>kotlin File.kt</code></td>
+</tr>
+<tr>
+<td>Start the REPL</td>
+<td><code>kotlinc</code></td>
+</tr>
+<tr>
+<td>Exit the REPL</td>
+<td><code>:quit</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="02-variables-types"><a href="../level-1/02-variables-types/">02 · Variables &amp; Types</a><a class="headerlink" href="#02-variables-types" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read-only variable</td>
+<td><code>val x = 10</code></td>
+</tr>
+<tr>
+<td>Mutable variable</td>
+<td><code>var x = 10</code></td>
+</tr>
+<tr>
+<td>Explicit type</td>
+<td><code>val x: Int = 10</code></td>
+</tr>
+<tr>
+<td>Long literal</td>
+<td><code>val x: Long = 10L</code></td>
+</tr>
+<tr>
+<td>Float literal</td>
+<td><code>val x: Float = 1.5f</code></td>
+</tr>
+<tr>
+<td>String template</td>
+<td><code>"$name is ${age + 1}"</code></td>
+</tr>
+<tr>
+<td>Convert types</td>
+<td><code>i.toLong()</code>, <code>i.toDouble()</code>, <code>"42".toInt()</code></td>
+</tr>
+<tr>
+<td>Compile-time constant</td>
+<td><code>const val NAME = value</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="03-control-flow"><a href="../level-1/03-control-flow/">03 · Control Flow</a><a class="headerlink" href="#03-control-flow" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>if</code> as expression</td>
+<td><code>val x = if (cond) a else b</code></td>
+</tr>
+<tr>
+<td><code>when</code> (switch replacement)</td>
+<td><code>when (x) { 1 -&gt; ...; else -&gt; ... }</code></td>
+</tr>
+<tr>
+<td><code>when</code> with no subject</td>
+<td><code>when { cond1 -&gt; ...; else -&gt; ... }</code></td>
+</tr>
+<tr>
+<td><code>when</code> with type check</td>
+<td><code>when (x) { is String -&gt; ...; }</code></td>
+</tr>
+<tr>
+<td>Inclusive range</td>
+<td><code>1..5</code></td>
+</tr>
+<tr>
+<td>Exclusive range</td>
+<td><code>1 until 5</code></td>
+</tr>
+<tr>
+<td>Reverse range</td>
+<td><code>5 downTo 1</code></td>
+</tr>
+<tr>
+<td>Step</td>
+<td><code>1..10 step 2</code></td>
+</tr>
+<tr>
+<td>Loop with index</td>
+<td><code>for ((i, v) in list.withIndex())</code></td>
+</tr>
+<tr>
+<td>Labeled continue</td>
+<td><code>continue@outer</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="04-functions"><a href="../level-1/04-functions/">04 · Functions</a><a class="headerlink" href="#04-functions" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basic function</td>
+<td><code>fun name(param: Type): ReturnType { ... }</code></td>
+</tr>
+<tr>
+<td>Single-expression function</td>
+<td><code>fun name(param: Type) = expression</code></td>
+</tr>
+<tr>
+<td>Default argument</td>
+<td><code>fun f(x: Int = 10)</code></td>
+</tr>
+<tr>
+<td>Named argument call</td>
+<td><code>f(x = 5, y = 10)</code></td>
+</tr>
+<tr>
+<td>Varargs</td>
+<td><code>fun f(vararg nums: Int)</code></td>
+</tr>
+<tr>
+<td>Spread operator</td>
+<td><code>f(*array)</code></td>
+</tr>
+<tr>
+<td>Function reference</td>
+<td><code>::functionName</code></td>
+</tr>
+<tr>
+<td>Function type</td>
+<td><code>(Int) -&gt; Int</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="05-classes-objects-basics"><a href="../level-1/05-classes-objects/">05 · Classes &amp; Objects Basics</a><a class="headerlink" href="#05-classes-objects-basics" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Class with constructor properties</td>
+<td><code>class Person(val name: String, var age: Int)</code></td>
+</tr>
+<tr>
+<td>Computed property</td>
+<td><code>val area: Double get() = width * height</code></td>
+</tr>
+<tr>
+<td>Init block</td>
+<td><code>init { ... }</code></td>
+</tr>
+<tr>
+<td>Secondary constructor</td>
+<td><code>constructor(...) : this(...)</code></td>
+</tr>
+<tr>
+<td>Validate arguments</td>
+<td><code>require(condition) { "message" }</code></td>
+</tr>
+<tr>
+<td>Private member</td>
+<td><code>private var x</code></td>
+</tr>
+<tr>
+<td>Singleton</td>
+<td><code>object Name { ... }</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="06-null-safety-basics"><a href="../level-1/06-null-safety/">06 · Null Safety Basics</a><a class="headerlink" href="#06-null-safety-basics" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>?</code></td>
+<td>Declare a nullable type</td>
+<td><code>var x: String? = null</code></td>
+</tr>
+<tr>
+<td><code>?.</code></td>
+<td>Safe call — no-op if receiver is null</td>
+<td><code>x?.length</code></td>
+</tr>
+<tr>
+<td><code>?:</code></td>
+<td>Elvis — default if left side is null</td>
+<td><code>x?.length ?: 0</code></td>
+</tr>
+<tr>
+<td><code>?:</code> + <code>return</code>/<code>throw</code></td>
+<td>Guard clause</td>
+<td><code>val v = x ?: return</code></td>
+</tr>
+<tr>
+<td><code>!!</code></td>
+<td>Force non-null, throws if actually null</td>
+<td><code>x!!.length</code></td>
+</tr>
+<tr>
+<td><code>as?</code></td>
+<td>Safe cast — null instead of exception</td>
+<td><code>obj as? String</code></td>
+</tr>
+<tr>
+<td>smart cast</td>
+<td>Compiler narrows type after a null check</td>
+<td><code>if (x != null) x.length</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="07-collections"><a href="../level-1/07-collections/">07 · Collections</a><a class="headerlink" href="#07-collections" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read-only list</td>
+<td><code>listOf(1, 2, 3)</code></td>
+</tr>
+<tr>
+<td>Mutable list</td>
+<td><code>mutableListOf(1, 2, 3)</code></td>
+</tr>
+<tr>
+<td>Read-only set</td>
+<td><code>setOf(1, 2, 3)</code></td>
+</tr>
+<tr>
+<td>Read-only map</td>
+<td><code>mapOf("a" to 1, "b" to 2)</code></td>
+</tr>
+<tr>
+<td>Mutable map</td>
+<td><code>mutableMapOf&lt;String, Int&gt;()</code></td>
+</tr>
+<tr>
+<td>Access by index</td>
+<td><code>list[0]</code></td>
+</tr>
+<tr>
+<td>Access map value</td>
+<td><code>map["key"]</code> (returns nullable)</td>
+</tr>
+<tr>
+<td>Add to mutable list</td>
+<td><code>list.add(value)</code></td>
+</tr>
+<tr>
+<td>Iterate map</td>
+<td><code>for ((k, v) in map)</code></td>
+</tr>
+<tr>
+<td>Combine key+value</td>
+<td><code>"key" to value</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="08-data-classes"><a href="../level-1/08-data-classes/">08 · Data Classes</a><a class="headerlink" href="#08-data-classes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Generated automatically for a <code>data class</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>toString()</code></td>
+<td><code>ClassName(prop1=val1, prop2=val2)</code></td>
+</tr>
+<tr>
+<td><code>equals()</code> / <code>hashCode()</code></td>
+<td>Structural (value-based) comparison</td>
+</tr>
+<tr>
+<td><code>copy()</code></td>
+<td><code>instance.copy(prop = newValue)</code></td>
+</tr>
+<tr>
+<td><code>componentN()</code></td>
+<td>Enables <code>val (a, b) = instance</code> destructuring</td>
+</tr>
+</tbody>
+</table>
+<h3 id="09-extension-functions-intro"><a href="../level-1/09-extension-functions/">09 · Extension Functions Intro</a><a class="headerlink" href="#09-extension-functions-intro" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Extension function</td>
+<td><code>fun ReceiverType.name(params): ReturnType { ... use this ... }</code></td>
+</tr>
+<tr>
+<td>Extension property (computed only)</td>
+<td><code>val ReceiverType.name: Type get() = ...</code></td>
+</tr>
+<tr>
+<td>Extension on nullable type</td>
+<td><code>fun String?.name(): Type { ... }</code></td>
+</tr>
+<tr>
+<td>Resolution</td>
+<td>Static — based on declared type, member functions win over extensions</td>
+</tr>
+</tbody>
+</table>
+<h2 id="level-2-intermediate">Level 2 · Intermediate<a class="headerlink" href="#level-2-intermediate" title="Permanent link">&para;</a></h2>
+<h3 id="01-oop-deep-dive"><a href="../level-2/01-oop-deep-dive/">01 · OOP Deep Dive</a><a class="headerlink" href="#01-oop-deep-dive" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Keyword</th>
+<th>Key trait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Capability contract</td>
+<td><code>interface</code></td>
+<td>Multiple per class, default methods, no state</td>
+</tr>
+<tr>
+<td>Shared base with state</td>
+<td><code>abstract class</code></td>
+<td>Single per class, can hold fields</td>
+</tr>
+<tr>
+<td>Fixed set of subtypes</td>
+<td><code>sealed class</code> / <code>sealed interface</code></td>
+<td>Exhaustive <code>when</code>, no <code>else</code> needed</td>
+</tr>
+<tr>
+<td>Singleton</td>
+<td><code>object</code></td>
+<td>Exactly one instance, lazily created</td>
+</tr>
+<tr>
+<td>Static-like members</td>
+<td><code>companion object</code></td>
+<td>Attached to the class, not an instance</td>
+</tr>
+<tr>
+<td>Opt-in overriding</td>
+<td><code>open</code> / <code>override</code></td>
+<td>Classes/members are final unless marked <code>open</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="02-lambdas-higher-order-functions"><a href="../level-2/02-lambdas-higher-order-functions/">02 · Lambdas &amp; Higher-Order Functions</a><a class="headerlink" href="#02-lambdas-higher-order-functions" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(Int) -&gt; String</code></td>
+<td>Function type: takes an <code>Int</code>, returns a <code>String</code></td>
+</tr>
+<tr>
+<td><code>{ x -&gt; x * 2 }</code></td>
+<td>Lambda literal with named parameter</td>
+</tr>
+<tr>
+<td><code>{ it * 2 }</code></td>
+<td>Lambda with implicit single parameter</td>
+</tr>
+<tr>
+<td><code>f(x) { ... }</code></td>
+<td>Trailing lambda -- last function-type param moves outside <code>()</code></td>
+</tr>
+<tr>
+<td><code>::functionName</code></td>
+<td>Reference to a top-level or member function</td>
+</tr>
+<tr>
+<td><code>inline fun f(block: () -&gt; Unit)</code></td>
+<td>Lambda body copied inline -- no allocation, allows non-local <code>return</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="03-coroutines-basics"><a href="../level-2/03-coroutines-basics/">03 · Coroutines Basics</a><a class="headerlink" href="#03-coroutines-basics" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>suspend fun</code></td>
+<td>A function that can pause without blocking a thread</td>
+</tr>
+<tr>
+<td><code>runBlocking { }</code></td>
+<td>Bridge blocking code (like <code>main</code>) into coroutine world</td>
+</tr>
+<tr>
+<td><code>launch { }</code></td>
+<td>Start a coroutine, get a <code>Job</code>, no return value</td>
+</tr>
+<tr>
+<td><code>async { }</code> / <code>.await()</code></td>
+<td>Start a coroutine that produces a value, run concurrently</td>
+</tr>
+<tr>
+<td><code>coroutineScope { }</code></td>
+<td>Structured concurrency -- waits for all children, propagates failure</td>
+</tr>
+<tr>
+<td><code>delay(ms)</code></td>
+<td>Non-blocking suspend for a duration</td>
+</tr>
+<tr>
+<td><code>isActive</code> / <code>ensureActive()</code></td>
+<td>Cooperative cancellation check in a loop</td>
+</tr>
+<tr>
+<td><code>withContext(NonCancellable)</code></td>
+<td>Run cleanup that must suspend, even while cancelling</td>
+</tr>
+</tbody>
+</table>
+<h3 id="04-null-safety-advanced"><a href="../level-2/04-null-safety-advanced/">04 · Null Safety Advanced</a><a class="headerlink" href="#04-null-safety-advanced" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Calling unannotated Java code</td>
+<td>Assign to an explicit <code>T?</code> immediately, don't trust the platform type</td>
+</tr>
+<tr>
+<td>Non-null property set later by external code</td>
+<td><code>lateinit var</code></td>
+</tr>
+<tr>
+<td>Expensive value computed once, lazily</td>
+<td><code>val x by lazy { ... }</code></td>
+</tr>
+<tr>
+<td>Nullable elements in a non-null collection</td>
+<td><code>List&lt;T?&gt;</code></td>
+</tr>
+<tr>
+<td>Possibly-absent collection</td>
+<td><code>List&lt;T&gt;?</code></td>
+</tr>
+<tr>
+<td>Smart cast fails on a <code>var</code>/property</td>
+<td>Copy to a local <code>val</code> first, then null-check</td>
+</tr>
+</tbody>
+</table>
+<h3 id="05-collections-deep-dive"><a href="../level-2/05-collections-deep-dive/">05 · Collections Deep Dive</a><a class="headerlink" href="#05-collections-deep-dive" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>map { }</code></td>
+<td>Transform each element</td>
+</tr>
+<tr>
+<td><code>filter { }</code></td>
+<td>Keep elements matching a predicate</td>
+</tr>
+<tr>
+<td><code>fold(initial) { acc, x -&gt; }</code></td>
+<td>Combine into one value, safe on empty collections</td>
+</tr>
+<tr>
+<td><code>reduce { acc, x -&gt; }</code></td>
+<td>Combine into one value, using the first element as the start (throws on empty)</td>
+</tr>
+<tr>
+<td><code>groupBy { }</code></td>
+<td>Bucket elements into a <code>Map&lt;Key, List&lt;Element&gt;&gt;</code></td>
+</tr>
+<tr>
+<td><code>associateBy { }</code></td>
+<td>Build a <code>Map&lt;Key, Element&gt;</code> (last one wins on duplicate keys)</td>
+</tr>
+<tr>
+<td><code>partition { }</code></td>
+<td>Split into a <code>Pair</code> of (matching, non-matching) lists</td>
+</tr>
+<tr>
+<td><code>flatMap { }</code></td>
+<td>Map then flatten one level of nesting</td>
+</tr>
+<tr>
+<td><code>sortedBy { }</code> / <code>sortedWith(compareBy(...))</code></td>
+<td>Sort by one or more keys</td>
+</tr>
+<tr>
+<td><code>asSequence()</code></td>
+<td>Switch to lazy, single-pass evaluation for a chain</td>
+</tr>
+</tbody>
+</table>
+<h3 id="06-testing-with-junitkotest"><a href="../level-2/06-testing-junit-kotest/">06 · Testing with JUnit/Kotest</a><a class="headerlink" href="#06-testing-with-junitkotest" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>JUnit 5</th>
+<th>Kotest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mark a test</td>
+<td><code>@Test</code></td>
+<td>A string literal or <code>test("...")</code> block</td>
+</tr>
+<tr>
+<td>Run before each test</td>
+<td><code>@BeforeEach</code></td>
+<td><code>beforeTest { }</code></td>
+</tr>
+<tr>
+<td>Assert equality</td>
+<td><code>assertEquals(expected, actual)</code></td>
+<td><code>actual shouldBe expected</code></td>
+</tr>
+<tr>
+<td>Assert an exception</td>
+<td><code>assertThrows(Type::class.java) { }</code></td>
+<td><code>shouldThrow&lt;Type&gt; { }</code></td>
+</tr>
+<tr>
+<td>Parameterize</td>
+<td><code>@ParameterizedTest</code> + <code>@ValueSource</code></td>
+<td><code>withData(...)</code> / table tests</td>
+</tr>
+<tr>
+<td>Test a <code>suspend fun</code></td>
+<td><code>runTest { }</code> (from <code>kotlinx-coroutines-test</code>)</td>
+<td>same <code>runTest { }</code> works inside a spec</td>
+</tr>
+</tbody>
+</table>
+<h3 id="07-working-with-json"><a href="../level-2/07-working-with-json/">07 · Working with JSON</a><a class="headerlink" href="#07-working-with-json" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mark a type serializable</td>
+<td><code>@Serializable data class Foo(...)</code></td>
+</tr>
+<tr>
+<td>Object to JSON string</td>
+<td><code>Json.encodeToString(value)</code></td>
+</tr>
+<tr>
+<td>JSON string to object</td>
+<td><code>Json.decodeFromString&lt;Foo&gt;(jsonString)</code></td>
+</tr>
+<tr>
+<td>Rename a field for the JSON key</td>
+<td><code>@SerialName("json_key") val ktName: Type</code></td>
+</tr>
+<tr>
+<td>Optional field with a default</td>
+<td><code>val field: Type = defaultValue</code></td>
+</tr>
+<tr>
+<td>Nullable field</td>
+<td><code>val field: Type? = null</code></td>
+</tr>
+<tr>
+<td>Ignore unmodeled JSON fields</td>
+<td><code>Json { ignoreUnknownKeys = true }</code></td>
+</tr>
+<tr>
+<td>Enum as a JSON string</td>
+<td><code>@Serializable enum class Foo { A, B }</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="08-gradle-basics"><a href="../level-2/08-gradle-basics/">08 · Gradle Basics</a><a class="headerlink" href="#08-gradle-basics" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Command / syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Build everything (compile + test + package)</td>
+<td><code>./gradlew build</code></td>
+</tr>
+<tr>
+<td>Run just the tests</td>
+<td><code>./gradlew test</code></td>
+</tr>
+<tr>
+<td>Run the application</td>
+<td><code>./gradlew run</code></td>
+</tr>
+<tr>
+<td>Clean build outputs</td>
+<td><code>./gradlew clean</code></td>
+</tr>
+<tr>
+<td>List available tasks</td>
+<td><code>./gradlew tasks</code></td>
+</tr>
+<tr>
+<td>Add a runtime dependency</td>
+<td><code>implementation("group:artifact:version")</code></td>
+</tr>
+<tr>
+<td>Add a test-only dependency</td>
+<td><code>testImplementation("group:artifact:version")</code></td>
+</tr>
+<tr>
+<td>Use JUnit 5</td>
+<td><code>tasks.test { useJUnitPlatform() }</code></td>
+</tr>
+<tr>
+<td>Reference a sibling module</td>
+<td><code>implementation(project(":module-name"))</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="09-generics"><a href="../level-2/09-generics/">09 · Generics</a><a class="headerlink" href="#09-generics" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Generic class/function</td>
+<td><code>class Box&lt;T&gt;(...)</code> / <code>fun &lt;T&gt; f(...)</code></td>
+<td>Works with any type, checked at compile time</td>
+</tr>
+<tr>
+<td>Upper bound</td>
+<td><code>&lt;T : Comparable&lt;T&gt;&gt;</code></td>
+<td>Restricts <code>T</code>, unlocks that type's members</td>
+</tr>
+<tr>
+<td>Covariance (producer)</td>
+<td><code>class C&lt;out T&gt;</code></td>
+<td><code>C&lt;Dog&gt;</code> is a subtype of <code>C&lt;Animal&gt;</code></td>
+</tr>
+<tr>
+<td>Contravariance (consumer)</td>
+<td><code>class C&lt;in T&gt;</code></td>
+<td><code>C&lt;Animal&gt;</code> is usable as <code>C&lt;Dog&gt;</code></td>
+</tr>
+<tr>
+<td>Star projection</td>
+<td><code>List&lt;*&gt;</code></td>
+<td>"A <code>List</code> of something," read-only access</td>
+</tr>
+<tr>
+<td>Reified type parameter</td>
+<td><code>inline fun &lt;reified T&gt;</code></td>
+<td><code>T</code> usable in <code>is T</code> checks at runtime</td>
+</tr>
+</tbody>
+</table>
+<h2 id="level-3-advanced">Level 3 · Advanced<a class="headerlink" href="#level-3-advanced" title="Permanent link">&para;</a></h2>
+<h3 id="01-advanced-coroutines-flow"><a href="../level-3/01-advanced-coroutines-flow/">01 · Advanced Coroutines (Flow)</a><a class="headerlink" href="#01-advanced-coroutines-flow" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Type</th>
+<th>Key trait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>flow { emit(x) }</code></td>
+<td>Cold <code>Flow&lt;T&gt;</code></td>
+<td>Runs per collector, from scratch</td>
+</tr>
+<tr>
+<td><code>.map</code>, <code>.filter</code>, <code>.onEach</code></td>
+<td>Operators</td>
+<td>Suspend-aware, chainable</td>
+</tr>
+<tr>
+<td><code>.catch { }</code></td>
+<td>Operator</td>
+<td>Catches only upstream exceptions</td>
+</tr>
+<tr>
+<td><code>MutableStateFlow(initial)</code></td>
+<td>Hot, <code>StateFlow&lt;T&gt;</code></td>
+<td>Has <code>.value</code>, conflates equal values</td>
+</tr>
+<tr>
+<td><code>MutableSharedFlow(replay = n)</code></td>
+<td>Hot, <code>SharedFlow&lt;T&gt;</code></td>
+<td>No current value, replays last <code>n</code></td>
+</tr>
+<tr>
+<td><code>.collect { }</code></td>
+<td>Terminal operator</td>
+<td>Suspends until flow completes (or forever for hot flows)</td>
+</tr>
+<tr>
+<td><code>.toList()</code>, <code>.first()</code>, <code>.count()</code></td>
+<td>Terminal operators</td>
+<td>Convenience collectors</td>
+</tr>
+</tbody>
+</table>
+<h3 id="02-building-apis-with-ktor"><a href="../level-3/02-building-apis-ktor/">02 · Building APIs with Ktor</a><a class="headerlink" href="#02-building-apis-with-ktor" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Kotlin/Ktor construct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Define a route</td>
+<td><code>get("/path") { }</code>, <code>post("/path") { }</code> in a <code>routing { }</code> block</td>
+</tr>
+<tr>
+<td>Read path param</td>
+<td><code>call.parameters["id"]</code> (nullable <code>String</code>)</td>
+</tr>
+<tr>
+<td>Read JSON body</td>
+<td><code>call.receive&lt;T&gt;()</code></td>
+</tr>
+<tr>
+<td>Send JSON response</td>
+<td><code>call.respond(value)</code> (needs <code>ContentNegotiation</code> + <code>json()</code>)</td>
+</tr>
+<tr>
+<td>Custom status + body</td>
+<td><code>call.respond(HttpStatusCode.Created, value)</code></td>
+</tr>
+<tr>
+<td>Map exceptions to responses</td>
+<td><code>install(StatusPages) { exception&lt;E&gt; { call, e -&gt; ... } }</code></td>
+</tr>
+<tr>
+<td>Call your own/another API</td>
+<td><code>HttpClient(CIO) { install(ContentNegotiation) { json() } }</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="03-databases-exposedsqlite"><a href="../level-3/03-databases-exposed-sqlite/">03 · Databases (Exposed/SQLite)</a><a class="headerlink" href="#03-databases-exposedsqlite" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Exposed construct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Define schema</td>
+<td><code>object X : IntIdTable() { val col = varchar(...) }</code></td>
+</tr>
+<tr>
+<td>Create tables</td>
+<td><code>SchemaUtils.create(X)</code> inside a transaction</td>
+</tr>
+<tr>
+<td>Wrap DB work</td>
+<td><code>transaction { ... }</code></td>
+</tr>
+<tr>
+<td>DAO entity</td>
+<td><code>class E(id) : IntEntity(id) { companion object : IntEntityClass&lt;E&gt;(X) }</code></td>
+</tr>
+<tr>
+<td>Insert (DAO)</td>
+<td><code>E.new { field = value }</code></td>
+</tr>
+<tr>
+<td>Query (DAO)</td>
+<td><code>E.find { X.col eq value }</code>, <code>E.all()</code></td>
+</tr>
+<tr>
+<td>Query (DSL)</td>
+<td><code>X.selectAll()</code>, <code>X.select(cols).where { }</code></td>
+</tr>
+<tr>
+<td>Update</td>
+<td>mutate a fetched entity's <code>var</code> property</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td><code>entity.delete()</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="04-design-patterns-in-kotlin"><a href="../level-3/04-design-patterns/">04 · Design Patterns in Kotlin</a><a class="headerlink" href="#04-design-patterns-in-kotlin" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Idiomatic Kotlin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Singleton</td>
+<td><code>object Name { ... }</code></td>
+</tr>
+<tr>
+<td>Builder</td>
+<td>Chainable methods returning <code>apply { }</code>, or named/default args</td>
+</tr>
+<tr>
+<td>Strategy</td>
+<td><code>fun interface</code> + lambda, or plain function type parameter</td>
+</tr>
+<tr>
+<td>Observer</td>
+<td><code>MutableList&lt;(T) -&gt; Unit&gt;</code> + custom property setter</td>
+</tr>
+<tr>
+<td>State</td>
+<td><code>sealed class</code>/<code>sealed interface</code> + exhaustive <code>when</code></td>
+</tr>
+<tr>
+<td>Factory</td>
+<td>A top-level or companion <code>fun create(...): Type</code></td>
+</tr>
+<tr>
+<td>Decorator</td>
+<td>Extension functions, or delegation via <code>by</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="05-kotlin-multiplatform-basics"><a href="../level-3/05-multiplatform-basics/">05 · Kotlin Multiplatform Basics</a><a class="headerlink" href="#05-kotlin-multiplatform-basics" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>commonMain</code></td>
+<td>Code shared across every target</td>
+</tr>
+<tr>
+<td><code>jvmMain</code>, <code>jsMain</code>, <code>iosMain</code>, ...</td>
+<td>Platform-specific code and <code>actual</code> implementations</td>
+</tr>
+<tr>
+<td><code>expect class</code>/<code>expect fun</code></td>
+<td>Declares an API <code>commonMain</code> needs, without an implementation</td>
+</tr>
+<tr>
+<td><code>actual class</code>/<code>actual fun</code></td>
+<td>Supplies the platform-specific implementation</td>
+</tr>
+<tr>
+<td><code>jvm()</code>, <code>js(IR) { browser() }</code>, <code>iosArm64()</code></td>
+<td>Declares which targets to build</td>
+</tr>
+<tr>
+<td><code>kotlinx-coroutines-core</code>, <code>kotlinx-serialization</code>, <code>kotlinx-datetime</code></td>
+<td>Multiplatform libraries usable directly from <code>commonMain</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="06-testing-advanced"><a href="../level-3/06-testing-advanced/">06 · Testing Advanced</a><a class="headerlink" href="#06-testing-advanced" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fake an interface</td>
+<td><code>mockk&lt;T&gt;()</code></td>
+</tr>
+<tr>
+<td>Stub a non-suspend function</td>
+<td><code>every { mock.fn() } returns value</code></td>
+</tr>
+<tr>
+<td>Stub a suspend function</td>
+<td><code>coEvery { mock.fn() } returns value</code></td>
+</tr>
+<tr>
+<td>Verify a call happened</td>
+<td><code>verify { mock.fn() }</code> / <code>coVerify { }</code></td>
+</tr>
+<tr>
+<td>Run suspend test code</td>
+<td><code>= runTest { ... }</code></td>
+</tr>
+<tr>
+<td>Assert an exception is thrown</td>
+<td><code>assertFailsWith&lt;E&gt; { ... }</code></td>
+</tr>
+<tr>
+<td>Run one test over many inputs</td>
+<td><code>@ParameterizedTest</code> + <code>@CsvSource</code>/<code>@ValueSource</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="07-dsls-in-kotlin"><a href="../level-3/07-dsls-in-kotlin/">07 · DSLs in Kotlin</a><a class="headerlink" href="#07-dsls-in-kotlin" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lambda with receiver</td>
+<td><code>block: Receiver.() -&gt; Unit</code></td>
+<td><code>this</code>/implicit receiver inside the lambda</td>
+</tr>
+<tr>
+<td>Type-safe builder</td>
+<td><code>fun receiver(block: T.() -&gt; Unit): T</code></td>
+<td>The core DSL-building pattern</td>
+</tr>
+<tr>
+<td>Infix function</td>
+<td><code>infix fun T.name(x: X)</code></td>
+<td>Operator-like call syntax: <code>a name b</code></td>
+</tr>
+<tr>
+<td>Operator overload</td>
+<td><code>operator fun T.plus(x: X)</code></td>
+<td>Reuse <code>+</code>, <code>-</code>, <code>[]</code>, etc. on custom types</td>
+</tr>
+<tr>
+<td><code>@DslMarker</code></td>
+<td>Annotation on an annotation, applied to builder classes</td>
+<td>Restricts implicit receivers to the nearest scope</td>
+</tr>
+</tbody>
+</table>
+<h3 id="08-android-basics"><a href="../level-3/08-android-basics/">08 · Android Basics</a><a class="headerlink" href="#08-android-basics" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single screen</td>
+<td><code>class X : ComponentActivity()</code></td>
+</tr>
+<tr>
+<td>Lifecycle callbacks</td>
+<td><code>onCreate</code>, <code>onStart</code>, <code>onResume</code>, <code>onPause</code>, <code>onStop</code>, <code>onDestroy</code></td>
+</tr>
+<tr>
+<td>Survives rotation</td>
+<td><code>class X : ViewModel()</code></td>
+</tr>
+<tr>
+<td>Observable state</td>
+<td><code>MutableStateFlow</code> + <code>StateFlow</code> (or Compose <code>mutableStateOf</code>)</td>
+</tr>
+<tr>
+<td>Declarative UI</td>
+<td><code>@Composable fun Screen() { ... }</code></td>
+</tr>
+<tr>
+<td>Bridge Flow to Compose</td>
+<td><code>val x by flow.collectAsState()</code></td>
+</tr>
+<tr>
+<td>Side effects in Compose</td>
+<td><code>LaunchedEffect(key) { ... }</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="09-performance-profiling"><a href="../level-3/09-performance-profiling/">09 · Performance &amp; Profiling</a><a class="headerlink" href="#09-performance-profiling" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Fix</th>
+<th>When it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Long operator chains</td>
+<td><code>.asSequence()</code> before the chain</td>
+<td>3+ chained operations, large collections</td>
+</tr>
+<tr>
+<td>Numeric collections</td>
+<td><code>IntArray</code>/<code>LongArray</code>/<code>DoubleArray</code></td>
+<td>Hot loops, large numeric datasets</td>
+</tr>
+<tr>
+<td>Hot higher-order functions</td>
+<td><code>inline fun</code></td>
+<td>Called extremely frequently, small body</td>
+</tr>
+<tr>
+<td>Non-local return needed</td>
+<td>Only works in <code>inline</code> functions</td>
+<td>Early-exit from inside a lambda</td>
+</tr>
+<tr>
+<td>"Is this actually slow?"</td>
+<td><code>measureTimeMillis</code>/<code>measureNanoTime</code> + warmup, or a real profiler</td>
+<td>Before optimizing anything</td>
+</tr>
+</tbody>
+</table>
+<h2 id="level-4-master">Level 4 · Master<a class="headerlink" href="#level-4-master" title="Permanent link">&para;</a></h2>
+<h3 id="01-advanced-coroutines-structured-concurrency"><a href="../level-4/01-advanced-coroutines-structured-concurrency/">01 · Advanced Coroutines &amp; Structured Concurrency</a><a class="headerlink" href="#01-advanced-coroutines-structured-concurrency" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>API</th>
+<th>Failure behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Structured child failure propagates</td>
+<td><code>coroutineScope { launch { } }</code></td>
+<td>One failure cancels all siblings</td>
+</tr>
+<tr>
+<td>Isolated child failures</td>
+<td><code>supervisorScope { launch { } }</code></td>
+<td>Failures don't cancel siblings</td>
+</tr>
+<tr>
+<td>Timeout, throws on expiry</td>
+<td><code>withTimeout(ms) { }</code></td>
+<td><code>TimeoutCancellationException</code></td>
+</tr>
+<tr>
+<td>Timeout, returns null on expiry</td>
+<td><code>withTimeoutOrNull(ms) { }</code></td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td>Unstructured (avoid in app code)</td>
+<td><code>GlobalScope.launch { }</code></td>
+<td>No parent, no automatic cancellation</td>
+</tr>
+<tr>
+<td>Handle otherwise-uncaught failures</td>
+<td><code>CoroutineExceptionHandler</code></td>
+<td>Installed on a <code>supervisorScope</code>/root scope</td>
+</tr>
+</tbody>
+</table>
+<h3 id="02-production-apis-with-ktor"><a href="../level-4/02-production-apis-ktor/">02 · Production APIs with Ktor</a><a class="headerlink" href="#02-production-apis-with-ktor" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Plugin/API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Verify a bearer JWT</td>
+<td><code>install(Authentication) { jwt("name") { verifier(...); validate { } } }</code></td>
+</tr>
+<tr>
+<td>Protect routes</td>
+<td><code>authenticate("name") { get("/x") { ... } }</code></td>
+</tr>
+<tr>
+<td>Access the verified token</td>
+<td><code>call.principal&lt;JWTPrincipal&gt;()</code></td>
+</tr>
+<tr>
+<td>Validate request bodies</td>
+<td><code>install(RequestValidation) { validate&lt;T&gt; { } }</code></td>
+</tr>
+<tr>
+<td>Map validation failures</td>
+<td><code>exception&lt;RequestValidationException&gt; { }</code> in <code>StatusPages</code></td>
+</tr>
+<tr>
+<td>Throttle a route group</td>
+<td><code>install(RateLimit) { register(...) }</code> + <code>rateLimit(name) { }</code></td>
+</tr>
+<tr>
+<td>Structured request logs</td>
+<td><code>install(CallLogging) { level = Level.INFO }</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="03-multiplatform-at-scale"><a href="../level-4/03-multiplatform-at-scale/">03 · Multiplatform at Scale</a><a class="headerlink" href="#03-multiplatform-at-scale" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multiplatform artifact naming</td>
+<td>Drop the <code>-jvm</code>/<code>-android</code> suffix in <code>commonMain</code> deps</td>
+</tr>
+<tr>
+<td>Networking across platforms</td>
+<td><code>expect fun engine(): HttpClientEngineFactory&lt;*&gt;</code></td>
+</tr>
+<tr>
+<td>Storage across platforms</td>
+<td><code>expect class Store</code> wrapping each platform's native API</td>
+</tr>
+<tr>
+<td>Apple-specific shared code</td>
+<td>An intermediate <code>iosMain</code> source set above per-arch ones</td>
+</tr>
+<tr>
+<td>Verify true portability</td>
+<td>Actually add and build a second target, don't assume</td>
+</tr>
+</tbody>
+</table>
+<h3 id="04-security-best-practices"><a href="../level-4/04-security-best-practices/">04 · Security Best Practices</a><a class="headerlink" href="#04-security-best-practices" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Store a password</td>
+<td><code>BCrypt.withDefaults().hashToString(cost, pw)</code></td>
+<td>Plaintext, or MD5/SHA-256 alone</td>
+</tr>
+<tr>
+<td>Generate a token/secret</td>
+<td><code>SecureRandom</code></td>
+<td><code>Random</code>/<code>kotlin.random.Random</code></td>
+</tr>
+<tr>
+<td>Build a query with user input</td>
+<td>Exposed DSL (<code>eq</code>, <code>like</code>), or JDBC <code>PreparedStatement</code></td>
+<td>String concatenation into SQL</td>
+</tr>
+<tr>
+<td>Compare a secret/HMAC</td>
+<td><code>MessageDigest.isEqual(a, b)</code></td>
+<td><code>==</code> / <code>.contentEquals()</code></td>
+</tr>
+<tr>
+<td>Log request data</td>
+<td>Mask/exclude sensitive fields</td>
+<td>Log raw bodies unconditionally</td>
+</tr>
+</tbody>
+</table>
+<h3 id="05-testing-at-scale-ci"><a href="../level-4/05-testing-at-scale-ci/">05 · Testing at Scale &amp; CI</a><a class="headerlink" href="#05-testing-at-scale-ci" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Assert equality</td>
+<td><code>assertEquals</code>/Kotest matchers, not <code>println</code> + eyeballing</td>
+</tr>
+<tr>
+<td>Assert an exception is thrown</td>
+<td><code>assertThrows&lt;T&gt; { }</code></td>
+</tr>
+<tr>
+<td>Coroutine tests</td>
+<td><code>runTest</code> from <code>kotlinx-coroutines-test</code>, not <code>runBlocking</code></td>
+</tr>
+<tr>
+<td>Fail the build on failing tests</td>
+<td>Ensure the test process exits non-zero</td>
+</tr>
+<tr>
+<td>CI trigger</td>
+<td><code>on: push</code>/<code>pull_request</code> in <code>.github/workflows/*.yml</code></td>
+</tr>
+<tr>
+<td>Debugging a red CI run</td>
+<td><code>if: always()</code> on an artifact-upload step for reports</td>
+</tr>
+</tbody>
+</table>
+<h3 id="06-deployment-docker"><a href="../level-4/06-deployment-docker/">06 · Deployment (Docker)</a><a class="headerlink" href="#06-deployment-docker" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small final image</td>
+<td>Multi-stage build, <code>COPY --from=build</code></td>
+</tr>
+<tr>
+<td>Base image for running</td>
+<td><code>eclipse-temurin:21-jre-alpine</code> (JRE, not JDK)</td>
+</tr>
+<tr>
+<td>Exclude files from build context</td>
+<td><code>.dockerignore</code></td>
+</tr>
+<tr>
+<td>Cap JVM heap to container limit</td>
+<td><code>-XX:MaxRAMPercentage=75.0</code></td>
+</tr>
+<tr>
+<td>Map container port to host</td>
+<td><code>docker run -p HOST:CONTAINER</code></td>
+</tr>
+<tr>
+<td>Don't run as root</td>
+<td><code>USER appuser</code> in the Dockerfile</td>
+</tr>
+<tr>
+<td>Fat jar with all dependencies</td>
+<td><code>shadowJar</code>/<code>-include-runtime</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="07-performance-at-scale"><a href="../level-4/07-performance-at-scale/">07 · Performance at Scale</a><a class="headerlink" href="#07-performance-at-scale" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Avoid boxing in hot numeric loops</td>
+<td>Primitive arrays/loops, not <code>ArrayList&lt;Long&gt;</code></td>
+</tr>
+<tr>
+<td>Large collection + early exit</td>
+<td><code>asSequence()</code> before <code>.first()</code>/<code>.take()</code></td>
+</tr>
+<tr>
+<td>Small collection, consumes everything</td>
+<td>Plain <code>List</code> chain — <code>Sequence</code> overhead not worth it</td>
+</tr>
+<tr>
+<td>Type-safe wrapper, zero allocation</td>
+<td><code>value class</code></td>
+</tr>
+<tr>
+<td>Measure before optimizing</td>
+<td><code>measureNanoTime</code>, or JMH for rigor</td>
+</tr>
+<tr>
+<td>Repeated string building in a loop</td>
+<td><code>StringBuilder</code>, not <code>+=</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="08-java-interop-deep-dive"><a href="../level-4/08-java-interop-deep-dive/">08 · Java Interop Deep Dive</a><a class="headerlink" href="#08-java-interop-deep-dive" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Annotation/pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Companion function as real Java <code>static</code></td>
+<td><code>@JvmStatic</code></td>
+</tr>
+<tr>
+<td>Default parameters usable from Java</td>
+<td><code>@JvmOverloads</code></td>
+</tr>
+<tr>
+<td>Rename the generated file-class or method</td>
+<td><code>@JvmName("...")</code></td>
+</tr>
+<tr>
+<td>Expose a raw field (not getter) to Java</td>
+<td><code>@JvmField</code></td>
+</tr>
+<tr>
+<td>Trust a Java API's nullability</td>
+<td><code>@Nullable</code>/<code>@NonNull</code> on the Java side</td>
+</tr>
+<tr>
+<td>Unknown Java nullability at a call site</td>
+<td>Platform type (<code>String!</code>) — wrap it</td>
+</tr>
+<tr>
+<td>Java getter/setter pair</td>
+<td>Kotlin property syntax (<code>obj.prop</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="09-code-quality-detektktlint"><a href="../level-4/09-code-quality/">09 · Code Quality (detekt/ktlint)</a><a class="headerlink" href="#09-code-quality-detektktlint" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Tool/command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Style/formatting check</td>
+<td><code>ktlint &lt;file&gt;</code> or <code>./gradlew ktlintCheck</code></td>
+</tr>
+<tr>
+<td>Auto-fix formatting</td>
+<td><code>ktlint -F &lt;file&gt;</code></td>
+</tr>
+<tr>
+<td>Static analysis (complexity, smells)</td>
+<td><code>detekt</code> or <code>./gradlew detekt</code></td>
+</tr>
+<tr>
+<td>Grandfather existing violations</td>
+<td>detekt <code>baseline.xml</code></td>
+</tr>
+<tr>
+<td>Tune rule thresholds</td>
+<td><code>detekt.yml</code></td>
+</tr>
+<tr>
+<td>Fail CI on violations</td>
+<td>Both tasks exit non-zero by default</td>
+</tr>
+<tr>
+<td>Catch issues before PR</td>
+<td>Pre-commit hook or IDE plugin</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>Go deeper with the full <a href="../">Kotlin Mastery Path</a> curriculum or test yourself with the <a href="../interview-questions/">interview questions</a>.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+  
+  <nav class="mp-related" aria-label="Related free courses">
+    <h2>Related free courses</h2>
+    <ul>
+      <li><a href="https://learnmasterypath.com/python-mastery-path/">Python</a></li><li><a href="https://learnmasterypath.com/java-mastery-path/">Java</a></li><li><a href="https://learnmasterypath.com/javascript-mastery-path/">JavaScript</a></li><li><a href="https://learnmasterypath.com/typescript-mastery-path/">TypeScript</a></li><li><a href="https://learnmasterypath.com/csharp-mastery-path/">C#</a></li>
+      <li><a href="https://learnmasterypath.com/">All 100+ courses &rarr;</a></li>
+    </ul>
+  </nav>
+  
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../interview-questions/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Interview Questions">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Interview Questions
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../level-1/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+  <div class="mp-foot">
+    <div class="mp-foot-inner">
+      <a class="mp-foot-brand" href="https://learnmasterypath.com/"><svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <circle cx="80" cy="80" r="74" fill="#FAF7EF" stroke="#2FA98D" stroke-width="5"/>
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg><span>Mastery Path</span></a>
+      <nav class="mp-sitelinks" aria-label="Site and legal links">
+        <a href="https://learnmasterypath.com/">All courses</a>
+        <a href="https://learnmasterypath.com/about.html">About</a>
+        <a href="https://learnmasterypath.com/contact.html">Contact</a>
+        <a href="https://learnmasterypath.com/kotlin-mastery-path/privacy/">Privacy Policy</a>
+        <a href="https://learnmasterypath.com/terms.html">Terms</a>
+        <a href="https://learnmasterypath.com/kotlin-mastery-path/license/">License</a>
+        <a href="https://learnmasterypath.com/verify/">Verify a certificate</a>
+      </nav>
+    </div>
+    <p class="mp-license-note">
+      © 2026 Vinod Kumar Sigilipelli · Except where otherwise noted, lesson content is licensed under
+      <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> and code examples under the
+      <a href="https://opensource.org/license/mit">MIT License</a>.
+    </p>
+  </div>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.path", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "navigation.indexes", "toc.follow", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/progress-tracker.js"></script>
+      
+        <script src="../javascripts/final-quiz.js"></script>
+      
+    
+  </body>
+</html>
